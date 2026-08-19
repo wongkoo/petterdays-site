@@ -163,14 +163,14 @@ function absolutePath(locale, page) {
 }
 
 function langLinks(page, current) {
-  return Object.entries(locales).map(([code, value]) => `<a href="${pathFor(code, page)}" hreflang="${code}"${code === current ? ' aria-current="page"' : ""}>${value.language}</a>`).join("");
+  return Object.entries(locales).map(([code, value]) => `<a href="${pathFor(code, page)}?lang=${code}" hreflang="${code}"${code === current ? ' aria-current="page"' : ""}>${value.language}</a>`).join("");
 }
 
 function header(locale, page) {
   const c = locales[locale];
   return `<a class="skip-link" href="#content">${locale === "en" ? "Skip to content" : locale === "ja" ? "本文へ移動" : locale === "ko" ? "본문으로 이동" : "跳至正文"}</a>
   <header class="site-header"><nav class="nav" aria-label="${c.nav.home}">
-    <a class="brand" href="${pathFor(locale, "home")}"><span class="brand-mark" aria-hidden="true"></span><span>Petter Days</span></a>
+    <a class="brand" href="${pathFor(locale, "home")}"><img class="brand-icon" src="/app-icon.png" alt=""><span>Petter Days</span></a>
     <div class="nav-links"><a href="${pathFor(locale, "privacy")}">${c.nav.privacy}</a><a href="${pathFor(locale, "terms")}">${c.nav.terms}</a><a href="${pathFor(locale, "support")}">${c.nav.support}</a>
       <details class="lang"><summary>${c.nav.language} ▾</summary><div class="lang-menu">${langLinks(page, locale)}</div></details>
     </div>
@@ -179,23 +179,22 @@ function header(locale, page) {
 
 function footer(locale) {
   const c = locales[locale];
-  return `<footer class="site-footer"><div class="footer-inner"><div><a class="brand" href="${pathFor(locale, "home")}"><span class="brand-mark" aria-hidden="true"></span><span>Petter Days</span></a><p class="footer-note">${c.common.medical}<br>${c.common.source}<br>© 2026 ZhenHui Wang</p></div><nav class="footer-links"><a href="${pathFor(locale, "privacy")}">${c.nav.privacy}</a><a href="${pathFor(locale, "choices")}">${locale === "en" ? "Data choices" : locale === "ja" ? "データ管理" : locale === "ko" ? "데이터 관리" : "数据管理"}</a><a href="${pathFor(locale, "terms")}">${c.nav.terms}</a><a href="${pathFor(locale, "support")}">${c.nav.support}</a></nav></div></footer>`;
+  return `<footer class="site-footer"><div class="footer-inner"><div><a class="brand" href="${pathFor(locale, "home")}"><img class="brand-icon" src="/app-icon.png" alt=""><span>Petter Days</span></a><p class="footer-note">${c.common.medical}<br>${c.common.source}<br>© 2026 ZhenHui Wang</p></div><nav class="footer-links"><a href="${pathFor(locale, "privacy")}">${c.nav.privacy}</a><a href="${pathFor(locale, "choices")}">${locale === "en" ? "Data choices" : locale === "ja" ? "データ管理" : locale === "ko" ? "데이터 관리" : "数据管理"}</a><a href="${pathFor(locale, "terms")}">${c.nav.terms}</a><a href="${pathFor(locale, "support")}">${c.nav.support}</a></nav></div></footer>`;
 }
 
 function document(locale, page, title, description, content) {
   const c = locales[locale];
   const canonical = absolutePath(locale, page);
   const alternates = Object.keys(locales).map((code) => `<link rel="alternate" hreflang="${code}" href="${absolutePath(code, page)}">`).join("");
-  return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#F3EFE7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)"><title>${title} · Petter Days</title><meta name="description" content="${description}"><link rel="canonical" href="${canonical}">${alternates}<link rel="alternate" hreflang="x-default" href="${absolutePath("zh-Hans", page)}"><link rel="stylesheet" href="/assets/styles.css"></head><body>${header(locale, page)}<main id="content">${content}</main>${footer(locale)}</body></html>`;
+  return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#F3EFE7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)"><title>${title} · Petter Days</title><meta name="description" content="${description}"><link rel="canonical" href="${canonical}">${alternates}<link rel="alternate" hreflang="x-default" href="${absolutePath("zh-Hans", page)}"><link rel="icon" type="image/png" href="/app-icon.png"><link rel="apple-touch-icon" href="/app-icon.png"><script src="/assets/language.js"></script><link rel="stylesheet" href="/assets/styles.css"></head><body>${header(locale, page)}<main id="content">${content}</main>${footer(locale)}</body></html>`;
 }
 
 function home(locale) {
   const c = locales[locale];
   const h = c.home;
-  const trust = h.trust.map(([title, text]) => `<div class="trust-item"><strong>${title}</strong>${text}</div>`).join("");
-  const features = h.features.map(([title, text]) => `<article class="feature"><h3>${title}</h3><p>${text}</p><span class="motif" aria-hidden="true"></span></article>`).join("");
-  const list = (items) => items.map((item) => `<li>${item}</li>`).join("");
-  const content = `<section class="hero"><div><p class="eyebrow">${h.eyebrow}</p><h1>${h.title}</h1><p class="hero-copy">${h.intro}</p><div class="actions"><span class="button" aria-disabled="true">${c.common.soon}</span><a class="button secondary" href="${pathFor(locale, "privacy")}">${c.common.learn}</a></div></div><div class="hero-art" aria-hidden="true"><span class="orb one"></span><span class="orb two"></span><span class="orb three"></span><span class="pet-face"><span class="eye left"></span><span class="eye right"></span><span class="nose"></span><span class="whisker"></span></span></div></section><section class="trust-strip">${trust}</section><section class="section"><div class="section-heading"><p class="eyebrow">Petter Days</p><h2>${h.featuresTitle}</h2><p>${h.featuresIntro}</p></div><div class="feature-grid">${features}</div></section><section class="section"><div class="section-heading"><h2>${h.plansTitle}</h2><p>${h.plansIntro}</p></div><div class="plans"><article class="plan"><h3>${h.free.title}</h3><p class="price">${h.free.price}</p><ul>${list(h.free.items)}</ul></article><article class="plan cloud"><h3>${h.cloud.title}</h3><p class="price">${h.cloud.price}</p><ul>${list(h.cloud.items)}</ul></article></div><p class="note">${h.cloudNote}</p></section>`;
+  const trust = h.trust.map(([title, text]) => `<div class="trust-item"><strong>${title}</strong><span>${text}</span></div>`).join("");
+  const features = h.features.map(([title, text], index) => `<article class="feature"><span class="feature-index" aria-hidden="true">0${index + 1}</span><div><h3>${title}</h3><p>${text}</p></div></article>`).join("");
+  const content = `<section class="hero"><div class="hero-content"><p class="eyebrow">${h.eyebrow}</p><h1>${h.title}</h1><p class="hero-copy">${h.intro}</p><div class="actions"><span class="button" aria-disabled="true">${c.common.soon}</span><a class="text-link" href="#how">${h.featuresTitle} ↓</a></div></div><div class="hero-visual" aria-hidden="true"><span class="hero-shape hero-shape-one"></span><span class="hero-shape hero-shape-two"></span><img class="hero-icon" src="/app-icon.png" alt=""></div></section><section class="trust-strip" aria-label="Petter Days">${trust}</section><section class="section feature-section" id="how"><div class="section-heading"><p class="eyebrow">Petter Days</p><h2>${h.featuresTitle}</h2><p>${h.featuresIntro}</p></div><div class="feature-list">${features}</div></section><section class="section ownership"><div class="ownership-panel"><div><p class="eyebrow">${h.plansTitle}</p><h2>${h.free.title} · ${h.cloud.title}</h2><p>${h.plansIntro}</p></div><div class="ownership-points"><p><strong>${h.free.price}</strong><span>${h.free.items[0]} · ${h.free.items[3]}</span></p><p><strong>${h.cloud.price}</strong><span>${h.cloud.items[0]} · ${h.cloud.items[2]}</span></p></div><p class="ownership-note">${h.cloudNote}</p></div></section><section class="section final-cta"><img src="/app-icon.png" alt=""><div><p class="eyebrow">Petter Days</p><h2>${h.title}</h2></div><div class="actions"><span class="button" aria-disabled="true">${c.common.soon}</span><a class="button secondary" href="${pathFor(locale, "privacy")}">${c.common.learn}</a></div></section>`;
   return document(locale, "home", h.title, h.intro, content);
 }
 

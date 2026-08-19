@@ -1,6 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { runInNewContext } from "node:vm";
 
 const root = new URL("../dist/", import.meta.url);
 const rootPath = fileURLToPath(root);
@@ -30,10 +31,28 @@ for (const file of files) {
   for (const token of ["<title>", 'name="description"', 'rel="canonical"', 'href="/assets/styles.css"', "Petter Days"]) {
     if (!html.includes(token)) throw new Error(`${file} misses ${token}`);
   }
-  if (/<script\b/i.test(html)) throw new Error(`${file} unexpectedly contains script`);
+  const scripts = [...html.matchAll(/<script\b[^>]*src="([^"]+)"[^>]*><\/script>/gi)].map((match) => match[1]);
+  if (scripts.length !== 1 || scripts[0] !== "/assets/language.js") throw new Error(`${file} contains an unexpected script`);
+  if (/<script\b(?![^>]*src="\/assets\/language\.js")[^>]*>/i.test(html)) throw new Error(`${file} contains inline or third-party script`);
   if (/google-analytics|googletagmanager|segment\.com|mixpanel|facebook\.net/i.test(html)) throw new Error(`${file} contains tracking reference`);
 }
 
 const headers = await readFile(new URL("_headers", root), "utf8");
-if (!headers.includes("script-src 'none'")) throw new Error("Strict script CSP missing");
-console.log(`Validated ${files.length} HTML files: localized pages, metadata, no scripts, no known trackers.`);
+if (!headers.includes("script-src 'self'")) throw new Error("Strict first-party script CSP missing");
+await readFile(new URL("assets/language.js", root));
+await readFile(new URL("app-icon.png", root));
+const languageScript = await readFile(new URL("assets/language.js", root), "utf8");
+for (const [language, destination] of [["zh-CN", undefined], ["zh-TW", "/zh-Hant/"], ["en-US", "/en/"], ["ja-JP", "/ja/"], ["ko-KR", "/ko/"]]) {
+  let redirectedTo;
+  runInNewContext(languageScript, {
+    URL,
+    navigator: { language, languages: [language] },
+    window: {
+      location: { href: "https://petterdays.wongkoo.group/", pathname: "/", replace: (path) => { redirectedTo = path; } },
+      localStorage: { getItem: () => null, setItem: () => {} },
+      history: { replaceState: () => {} },
+    },
+  });
+  if (redirectedTo !== destination) throw new Error(`Language ${language} routed to ${redirectedTo}, expected ${destination}`);
+}
+console.log(`Validated ${files.length} HTML files: localized pages, metadata, first-party language routing, no known trackers.`);
