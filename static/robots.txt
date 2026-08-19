@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://petterdays.wongkoo.group/sitemap.xml
