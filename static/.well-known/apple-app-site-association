@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "546HJ5BCYA.com.wongkoo.petterdays"
+        ],
+        "components": [
+          {
+            "/": "/open/",
+            "comment": "Open Petter Days from NFC tags and trusted web links."
+          }
+        ]
+      }
+    ]
+  }
+}

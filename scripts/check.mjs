@@ -7,7 +7,8 @@ const root = new URL("../dist/", import.meta.url);
 const rootPath = fileURLToPath(root);
 const required = [
   "index.html", "privacy/index.html", "privacy/choices/index.html", "terms/index.html", "support/index.html",
-  "zh-Hant/index.html", "en/index.html", "ja/index.html", "ko/index.html", "robots.txt", "sitemap.xml", "_headers", "404.html",
+  "open/index.html", "zh-Hant/index.html", "en/index.html", "ja/index.html", "ko/index.html", "robots.txt", "sitemap.xml", "_headers", "404.html",
+  ".well-known/apple-app-site-association",
 ];
 for (const path of required) {
   await readFile(new URL(path, root));
@@ -25,7 +26,7 @@ async function htmlFiles(dir) {
 }
 
 const files = await htmlFiles(rootPath);
-if (files.length !== 26) throw new Error(`Expected 26 HTML files, found ${files.length}`);
+if (files.length !== 27) throw new Error(`Expected 27 HTML files, found ${files.length}`);
 for (const file of files) {
   const html = await readFile(file, "utf8");
   for (const token of ["<title>", 'name="description"', 'rel="canonical"', 'href="/assets/styles.css"', "Petter Days"]) {
@@ -39,6 +40,21 @@ for (const file of files) {
 
 const headers = await readFile(new URL("_headers", root), "utf8");
 if (!headers.includes("script-src 'self'")) throw new Error("Strict first-party script CSP missing");
+if (!headers.includes("/.well-known/apple-app-site-association\n  Content-Type: application/json")) {
+  throw new Error("AASA JSON Content-Type rule missing");
+}
+const association = JSON.parse(await readFile(new URL(".well-known/apple-app-site-association", root), "utf8"));
+const associationDetails = association?.applinks?.details;
+if (!Array.isArray(associationDetails) || associationDetails.length !== 1) {
+  throw new Error("AASA must contain exactly one applinks detail");
+}
+const [associationDetail] = associationDetails;
+if (associationDetail.appIDs?.length !== 1 || associationDetail.appIDs[0] !== "546HJ5BCYA.com.wongkoo.petterdays") {
+  throw new Error("AASA App ID does not match the signed Petter Days identity");
+}
+if (associationDetail.components?.length !== 1 || associationDetail.components[0]?.["/"] !== "/open/") {
+  throw new Error("AASA must expose only the exact /open/ Universal Link route");
+}
 await readFile(new URL("assets/language.js", root));
 await readFile(new URL("app-icon.png", root));
 const languageScript = await readFile(new URL("assets/language.js", root), "utf8");
