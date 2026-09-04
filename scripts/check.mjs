@@ -56,7 +56,7 @@ if (associationDetail.components?.length !== 1 || associationDetail.components[0
   throw new Error("AASA must expose only version 1 Universal Link routes");
 }
 const redirects = await readFile(new URL("_redirects", root), "utf8");
-if (!redirects.split("\n").some((line) => line.trim() === "/1/* /link/index.html 200")) {
+if (!redirects.split("\n").some((line) => line.trim() === "/1/* /link/index.html?route=:splat 200")) {
   throw new Error("Universal Link fallback rewrite is missing");
 }
 await readFile(new URL("assets/language.js", root));
