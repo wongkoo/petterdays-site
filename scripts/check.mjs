@@ -7,7 +7,7 @@ const root = new URL("../dist/", import.meta.url);
 const rootPath = fileURLToPath(root);
 const required = [
   "index.html", "privacy/index.html", "privacy/choices/index.html", "terms/index.html", "support/index.html",
-  "open/index.html", "zh-Hant/index.html", "en/index.html", "ja/index.html", "ko/index.html", "robots.txt", "sitemap.xml", "_headers", "404.html",
+  "link/index.html", "zh-Hant/index.html", "en/index.html", "ja/index.html", "ko/index.html", "robots.txt", "sitemap.xml", "_headers", "_redirects", "404.html",
   ".well-known/apple-app-site-association",
 ];
 for (const path of required) {
@@ -52,8 +52,12 @@ const [associationDetail] = associationDetails;
 if (associationDetail.appIDs?.length !== 1 || associationDetail.appIDs[0] !== "546HJ5BCYA.com.wongkoo.petterdays") {
   throw new Error("AASA App ID does not match the signed Petter Days identity");
 }
-if (associationDetail.components?.length !== 1 || associationDetail.components[0]?.["/"] !== "/open/") {
-  throw new Error("AASA must expose only the exact /open/ Universal Link route");
+if (associationDetail.components?.length !== 1 || associationDetail.components[0]?.["/"] !== "/1/*") {
+  throw new Error("AASA must expose only version 1 Universal Link routes");
+}
+const redirects = await readFile(new URL("_redirects", root), "utf8");
+if (!redirects.split("\n").some((line) => line.trim() === "/1/* /link/index.html 200")) {
+  throw new Error("Universal Link fallback rewrite is missing");
 }
 await readFile(new URL("assets/language.js", root));
 await readFile(new URL("app-icon.png", root));

@@ -7,8 +7,8 @@
         ],
         "components": [
           {
-            "/": "/open/",
-            "comment": "Open Petter Days from NFC tags and trusted web links."
+            "/": "/1/*",
+            "comment": "Open version 1 Petter Days links from NFC tags and trusted web links."
           }
         ]
       }
