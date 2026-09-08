@@ -9,6 +9,10 @@
           {
             "/": "/1/*",
             "comment": "Open version 1 Petter Days links from NFC tags and trusted web links."
+          },
+          {
+            "/": "/2/*",
+            "comment": "Version 2 NFC preset references. Contents stay in the household library."
           }
         ]
       }

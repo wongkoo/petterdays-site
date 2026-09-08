@@ -52,13 +52,14 @@ const [associationDetail] = associationDetails;
 if (associationDetail.appIDs?.length !== 1 || associationDetail.appIDs[0] !== "546HJ5BCYA.com.wongkoo.petterdays") {
   throw new Error("AASA App ID does not match the signed Petter Days identity");
 }
-if (associationDetail.components?.length !== 1 || associationDetail.components[0]?.["/"] !== "/1/*") {
-  throw new Error("AASA must expose only version 1 Universal Link routes");
+if (JSON.stringify(associationDetail.components?.map((item) => item["/"])) !== JSON.stringify(["/1/*", "/2/*"])) {
+  throw new Error("AASA must expose only the published version 1 and NFC preset version 2 routes");
 }
 const redirects = await readFile(new URL("_redirects", root), "utf8");
 if (!redirects.split("\n").some((line) => line.trim() === "/1/* /link/?route=:splat 200")) {
   throw new Error("Universal Link fallback rewrite is missing");
 }
+if (!redirects.includes("/2/* /link/?route=:splat 200")) throw new Error("NFC preset fallback rewrite is missing");
 await readFile(new URL("assets/language.js", root));
 await readFile(new URL("app-icon.png", root));
 const languageScript = await readFile(new URL("assets/language.js", root), "utf8");

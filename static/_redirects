@@ -1,1 +1,2 @@
 /1/* /link/?route=:splat 200
+/2/* /link/?route=:splat 200
