@@ -7,30 +7,43 @@
   <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)">
   <title>打开 Petter Days · Petter Days</title>
   <meta name="description" content="通过受支持的链接打开 Petter Days。">
-  <link rel="canonical" href="https://p.wongkoo.group/1/r/a">
-  <link rel="icon" type="image/png" href="/app-icon.png">
-  <link rel="apple-touch-icon" href="/app-icon.png">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="canonical" href="https://p.wongkoo.group/link/">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{FAVICON_URL}}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{TOUCH_ICON_URL}}">
+  <meta name="apple-itunes-app" content="app-id={{APP_STORE_ID}}">
   <script src="/assets/language.js"></script>
+  <script src="/assets/nfc-wire.js" defer></script>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
   <a class="skip-link" href="#content">跳至正文</a>
   <header class="site-header">
     <nav class="nav" aria-label="首页">
-      <a class="brand" href="https://petterdays.wongkoo.group/"><img class="brand-icon" src="/app-icon.png" alt=""><span>Petter Days</span></a>
+      <a class="brand" href="https://petterdays.wongkoo.group/"><img class="brand-icon" src="{{APP_ICON_URL}}" alt=""><span>Petter Days</span></a>
       <div class="nav-links"><a href="https://petterdays.wongkoo.group/privacy/">隐私</a><a href="https://petterdays.wongkoo.group/support/">支持</a></div>
     </nav>
   </header>
   <main id="content">
     <header class="legal-hero">
       <p class="eyebrow">Petter Days</p>
-      <h1>请在安装了 App 的设备上打开</h1>
-      <p>如果 Petter Days 已安装，iPhone 会打开对应的记录功能。当前看到此页面，通常表示设备尚未安装 App，或系统选择在浏览器中继续。</p>
-      <div class="actions"><a class="button secondary" href="https://petterdays.wongkoo.group/">返回官网</a><a class="text-link" href="https://petterdays.wongkoo.group/support/">获取支持</a></div>
+      <h1 id="nfc-title">请在安装了 App 的设备上打开</h1>
+      <p id="nfc-intro">如果 Petter Days 已安装，iPhone 会打开对应的记录功能。当前看到此页面，通常表示设备尚未安装 App，或系统选择在浏览器中继续。</p>
+      <section class="nfc-summary" id="nfc-summary" hidden aria-live="polite">
+        <div><span id="nfc-type-label">记录类型</span><strong id="nfc-type"></strong></div>
+        <div><span id="nfc-mode-label">打开方式</span><strong id="nfc-mode"></strong></div>
+        <p id="nfc-prefill"></p>
+      </section>
+      <details class="nfc-details" id="nfc-details" hidden>
+        <summary>查看标签中的详细内容</summary>
+        <p></p>
+        <dl></dl>
+      </details>
+      <div class="actions"><a class="button" id="nfc-store" href="{{APP_STORE_URL}}">App Store 下载</a><a class="button secondary" id="nfc-back" href="https://petterdays.wongkoo.group/">返回官网</a><a class="text-link" id="nfc-support" href="https://petterdays.wongkoo.group/support/">获取支持</a></div>
     </header>
   </main>
   <footer class="site-footer">
-    <div class="footer-inner"><div><a class="brand" href="https://petterdays.wongkoo.group/"><img class="brand-icon" src="/app-icon.png" alt=""><span>Petter Days</span></a><p class="footer-note">此页面不使用 Cookie、分析、广告或追踪脚本。<br>© 2026 ZhenHui Wang</p></div></div>
+    <div class="footer-inner"><div><a class="brand" href="https://petterdays.wongkoo.group/"><img class="brand-icon" src="{{APP_ICON_URL}}" alt=""><span>Petter Days</span></a><p class="footer-note">此页面不使用 Cookie、分析、广告或追踪脚本。<br>© 2026 ZhenHui Wang</p></div></div>
   </footer>
 </body>
 </html>

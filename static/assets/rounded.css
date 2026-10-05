@@ -1,0 +1,9 @@
+@font-face { font-family: "Petter Days Web Rounded SC"; src: url("/assets/fonts/rounded-sc.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Petter Days Web Rounded TC"; src: url("/assets/fonts/rounded-tc.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Petter Days Web Rounded J"; src: url("/assets/fonts/rounded-j.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Petter Days Web Rounded K"; src: url("/assets/fonts/rounded-k.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+:root { --rounded: "Petter Days Web Rounded SC", ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", sans-serif; }
+:root:lang(zh-Hant) { --rounded: "Petter Days Web Rounded TC", ui-rounded, sans-serif; }
+:root:lang(ja) { --rounded: "Petter Days Web Rounded J", ui-rounded, sans-serif; }
+:root:lang(ko) { --rounded: "Petter Days Web Rounded K", ui-rounded, sans-serif; }
+h1, h2, .brand { font-family: var(--rounded); }

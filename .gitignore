@@ -2,3 +2,7 @@
 node_modules/
 dist/
 artifacts/
+.wrangler/
+.env
+.env.*
+!.env.example

@@ -8,8 +8,19 @@
   Content-Type: application/json
   Cache-Control: public, max-age=300
 
+/assets/brand/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/app-icon.png
+  Cache-Control: public, max-age=300
+
 /privacy/*
   Cache-Control: public, max-age=300
 
 /terms/*
   Cache-Control: public, max-age=300
+
+/2/*
+  Cache-Control: no-store
+  Referrer-Policy: no-referrer
+  X-Robots-Tag: noindex, nofollow

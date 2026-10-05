@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 850 1320 1550" role="img" aria-labelledby="title desc">
+  <title id="title">Petter Days · NFC · 水分</title>
+  <desc id="desc">NFC feature illustration</desc>
+  <defs>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#856D50"/><stop offset=".44" stop-color="#3B3024"/><stop offset="1" stop-color="#6B5841"/></linearGradient>
+    <linearGradient id="tag" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFCF7"/><stop offset="1" stop-color="#F0E1C8"/></linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#AAD1D7"/><stop offset="1" stop-color="#75ABB8"/></linearGradient>
+    <filter id="phone-shadow" x="-.4" y="-.3" width="1.8" height="1.8"><feGaussianBlur in="SourceAlpha" stdDeviation="24"/><feOffset dy="28"/><feComponentTransfer><feFuncA type="linear" slope=".14"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="tag-shadow" x="-.4" y="-.4" width="1.8" height="1.8"><feGaussianBlur in="SourceAlpha" stdDeviation="16"/><feOffset dy="18"/><feComponentTransfer><feFuncA type="linear" slope=".13"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <ellipse cx="758" cy="2240" rx="376" ry="57" fill="#6E5234" opacity=".045"/>
+
+  <!-- The handset and record are illustrations, not captured App or system UI. -->
+  <g transform="rotate(10 785 1530)" filter="url(#phone-shadow)">
+    <rect x="514" y="1004" width="535" height="1080" rx="82" fill="url(#edge)"/>
+    <rect x="524" y="1014" width="515" height="1060" rx="74" fill="#C6B393"/>
+    <rect x="531" y="1021" width="501" height="1046" rx="69" fill="#FFFCF5"/>
+    <rect x="700" y="1041" width="165" height="35" rx="18" fill="#342C24"/>
+    <rect x="1046" y="1194" width="9" height="133" rx="4" fill="#67533B"/>
+    <rect x="507" y="1190" width="9" height="82" rx="4" fill="#67533B"/>
+    <rect x="507" y="1290" width="9" height="82" rx="4" fill="#67533B"/>
+
+    <text x="584" y="1188" fill="#34291F" font-family="-apple-system,'PingFang SC',sans-serif" font-size="43" font-weight="600">乔治</text>
+    <circle cx="957" cy="1172" r="17" fill="#F0BA63"/>
+
+    <rect x="572" y="1270" width="420" height="530" rx="45" fill="#F5EEE0"/>
+    <g transform="translate(702 1320)">
+      <circle cx="79" cy="94" r="99" fill="#E2ECE8"/>
+      <path d="M79 26 C62 50 39 77 39 102 C39 132 59 151 79 151 C101 151 120 130 120 103 C120 80 99 51 79 26Z" fill="url(#water)"/>
+      <path d="M58 109 Q55 130 74 134" fill="none" stroke="#DDEFF0" stroke-width="7" stroke-linecap="round"/>
+    </g>
+    <g fill="#34291F" font-family="-apple-system,'PingFang SC',sans-serif" text-anchor="middle">
+      <text x="782" y="1590" font-size="49" font-weight="600">水分</text>
+      <text x="780" y="1715" font-size="100" font-weight="650" letter-spacing="-4">180<tspan font-size="43" letter-spacing="-1"> ml</tspan></text>
+    </g>
+    <rect x="574" y="1850" width="244" height="18" rx="9" fill="#DFD4C3"/>
+    <rect x="574" y="1897" width="156" height="13" rx="6.5" fill="#EBE2D4"/>
+    <rect x="689" y="2017" width="189" height="9" rx="4.5" fill="#B8A992"/>
+  </g>
+
+  <!-- A simple round NFC sticker, with a clean printed identifier. -->
+  <g transform="rotate(-10 297 1171)" filter="url(#tag-shadow)">
+    <circle cx="297" cy="1180" r="151" fill="#D8C6A9"/>
+    <circle cx="297" cy="1171" r="151" fill="url(#tag)"/>
+    <circle cx="297" cy="1171" r="138" fill="#FFFCF5" stroke="#FFFFFF" stroke-opacity=".9" stroke-width="3"/>
+    <circle cx="297" cy="1171" r="119" fill="none" stroke="#CAB899" stroke-opacity=".45" stroke-width="2.5"/>
+    <path d="M232 1068 A122 122 0 0 1 351 1062" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+    <text x="298" y="1191" font-family="-apple-system,sans-serif" text-anchor="middle" font-size="60" font-weight="650" letter-spacing="3" fill="#755633">NFC</text>
+  </g>
+  <g fill="none" stroke="#CC943F" stroke-linecap="round">
+    <path d="M486 971 Q544 989 555 1043" stroke-width="10"/>
+    <path d="M474 924 Q594 952 606 1073" stroke-width="7" opacity=".48"/>
+    <path d="M550 867 L566 890 M611 900 L634 910" stroke-width="6" opacity=".38"/>
+  </g>
+
+  <!-- One completion cue carries the benefit; no process or result copy. -->
+  <g transform="translate(999 1876)" filter="url(#tag-shadow)">
+    <circle r="91" fill="#FFFCF5"/>
+    <circle r="72" fill="#607F5A"/>
+    <path d="M-33 2 L-8 26 L37-25" fill="none" stroke="#FFFCF5" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <path d="M166 1607 L199 1595 M152 1680 L183 1682" fill="none" stroke="#D5A868" stroke-width="6" stroke-linecap="round" opacity=".4"/>
+  <circle cx="301" cy="2151" r="9" fill="#B2C5AD" opacity=".6"/>
+  <circle cx="1164" cy="1390" r="11" fill="#D9B582" opacity=".6"/>
+</svg>

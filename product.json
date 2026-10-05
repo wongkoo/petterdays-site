@@ -1,0 +1,13 @@
+{
+  "appStoreAppleID": "6802897091",
+  "iconSource": "PetterDaysApp/Resources/Assets.xcassets/AppIcon.appiconset/PetterDaysAppIcon.png",
+  "iconSourceSHA256": "55140293fd2489fe894c29713e573d08203332a33daae8636aca64cb91775ea7",
+  "assets": {
+    "/assets/brand/app-icon-55140293fd24.png": "04c359565480b681c0ef8fc584d121ece5009aba413885fb984f6bd3e2430700",
+    "/assets/brand/favicon-55140293fd24.png": "d5a9b01bbc1fa72cabbfe19470f6d3370a06c23d0c1c54a04bc9016a543eb45f",
+    "/assets/brand/apple-touch-icon-55140293fd24.png": "6184320e231b0bba63dead5a9118ed1f7ee3184eb4ac6f2fe5bad01dabf70c0b"
+  },
+  "icon": "/assets/brand/app-icon-55140293fd24.png",
+  "favicon": "/assets/brand/favicon-55140293fd24.png",
+  "touchIcon": "/assets/brand/apple-touch-icon-55140293fd24.png"
+}
