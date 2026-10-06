@@ -14,6 +14,12 @@
 /app-icon.png
   Cache-Control: public, max-age=300
 
+/app-review/videos/*
+  Content-Type: video/mp4
+  Content-Disposition: inline
+  Cache-Control: public, max-age=3600
+  X-Robots-Tag: noindex, nofollow
+
 /privacy/*
   Cache-Control: public, max-age=300
 
