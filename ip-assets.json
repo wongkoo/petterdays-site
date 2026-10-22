@@ -1,0 +1,20 @@
+{
+  "registry": "design-assets/ip-registry.json",
+  "assets": {
+    "cat-sitting-v2": {
+      "source": "design-assets/assets/01-cats/cat-sitting-v2.png",
+      "url": "/assets/home/ip/cat-sitting-v2.png",
+      "sha256": "c1dd2f52528529a646a2bd4eadc2566816ee23092ab95199593fca22453e3193"
+    },
+    "dog-sitting": {
+      "source": "design-assets/assets/02-dogs/dog-sitting.png",
+      "url": "/assets/home/ip/dog-sitting.png",
+      "sha256": "25b440e3c29bce61b23d67996c7fae1ee25a48d19cdf9053bd0d606ec7c70cc4"
+    },
+    "diary": {
+      "source": "design-assets/assets/03-scenes/diary.png",
+      "url": "/assets/home/ip/diary.png",
+      "sha256": "bf8a7ecc3233a8d539cd7982f88e71125dd57973e2d3328751051c618f7a9e7e"
+    }
+  }
+}

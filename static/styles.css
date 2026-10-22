@@ -53,16 +53,16 @@
 html { scrollbar-gutter: stable; }
 .site-page {
   color-scheme: light;
-  --canvas: #fffdfa;
+  --canvas: #fcf9f2;
   --card: #fff;
   --raised: #fff;
   --nested: #f4f0e8;
-  --ink: #342d27;
+  --ink: #3c352d;
   --secondary: #756a5f;
   --tertiary: #736b63;
   --separator: #e8e2d8;
   --brand: #f4ba50;
-  --brand-ink: #85561f;
+  --brand-ink: #5d704b;
   --brand-soft: #fbf6f0;
   --shadow: #44312014;
   --max: 1240px;

@@ -1,8 +1,9 @@
 // Product storytelling is kept separate from the legal and support disclosures.
 export const homeContent = {
   "zh-Hans": {
+    showcase: {"tabs": ["日常记录", "自由定义", "用品管理"], "hello": ["好好记录，", "好好陪伴。"], "devices": ["每个小日常。", "都有合适的位置。"], "label": "选择 App 画面", "nav": "功能章节", "diary": "猫和狗一起写日记"},
     title: "宠物照护记录 App，认真记好每一天", description: "Petter Days 是 iPhone 和 iPad 上的多宠物照护记录 App：记录饮水、饮食、体重、用药与护理，自定义记录，安排照护计划、管理用品，支持离线记录与 NFC 快捷入口。",
-    nav: ["特色", "NFC", "支持"], hero: ["它的每一天。", "都值得好好记。"], intro: "从一口水，到一份陪伴。", explore: "看看它能做什么", devices: "在 iPhone 和 iPad 上，照顾好每个小日常。",
+    nav: ["特色", "NFC", "支持"], hero: ["它们的每一天。", "都值得好好记。"], intro: "从一口水，到一份陪伴。", explore: "看看它的小日常", devices: "在 iPhone 和 iPad 上，照顾好每个小日常。",
     records: { label: "日常记录", title: ["小小日常。", "大有可记。"], tabs: ["丰富的记录类型", "自由定义记录"], captions: ["吃喝、健康、护理，一起记。", "字段、选项、单位，按你的习惯来。"], types: ["饮水", "进食", "体重", "护理", "用药", "自定义"] },
     care: { label: "照护计划", title: ["记得每件事。", "也记得陪伴。"], intro: "一次安排，日复一日的用心。", weekdays: ["一", "二", "三", "四", "五", "六", "日"], rows: ["梳毛", "刷牙", "营养补充"], repeat: "每天", done: "已完成", pending: "待照护" },
     supplies: { label: "用品管理", title: ["它的小仓库。", "心里有数。"], intro: "库存、临期、采购，一眼看清。", tags: ["库存", "临期", "采购"] },
@@ -11,8 +12,9 @@ export const homeContent = {
     closing: "好好记录，好好陪伴。", download: "App Store 下载", platforms: "适用于 iPhone 和 iPad", demo: "画面使用示例数据；部分配图为功能示意。", medical: "用于宠物照护记录，不能替代兽医诊断。", data: "数据管理", skip: "跳至正文", screenshot: "Petter Days 实际 App 画面", pet: "乔治",
   },
   "zh-Hant": {
+    showcase: {"tabs": ["日常紀錄", "自由自訂", "用品管理"], "hello": ["用心記錄，", "用心陪伴。"], "devices": ["每個小日常。", "都有適合的位置。"], "label": "選擇 App 畫面", "nav": "功能章節", "diary": "貓和狗一起寫日記"},
     title: "毛孩日常，用心記下", description: "用 Petter Days 記下毛孩日常，自訂紀錄類型、安排照護、管理用品，輕碰 NFC 快速紀錄。",
-    nav: ["特色", "NFC", "支援"], hero: ["牠的每一天。", "都值得用心記下。"], intro: "從一口水，到一份陪伴。", explore: "看看它能做什麼", devices: "在 iPhone 和 iPad 上，照顧好每個小日常。",
+    nav: ["特色", "NFC", "支援"], hero: ["牠們的每一天。", "都值得用心記下。"], intro: "從一口水，到一份陪伴。", explore: "看看牠的小日常", devices: "在 iPhone 和 iPad 上，照顧好每個小日常。",
     records: { label: "日常紀錄", title: ["小小日常。", "大有可記。"], tabs: ["豐富的紀錄類型", "自由自訂紀錄"], captions: ["飲食、健康、日常照護，一起記。", "欄位、選項、單位，照你的習慣來。"], types: ["飲水", "進食", "體重", "照護", "用藥", "自訂"] },
     care: { label: "照護計畫", title: ["記得每件事。", "也記得陪伴。"], intro: "一次安排，每一天的用心。", weekdays: ["一", "二", "三", "四", "五", "六", "日"], rows: ["梳毛", "刷牙", "營養補充"], repeat: "每天", done: "已完成", pending: "待照護" },
     supplies: { label: "用品管理", title: ["牠的小倉庫。", "心裡有數。"], intro: "庫存、到期日、採購，一眼看清。", tags: ["庫存", "即將到期", "採購"] },
@@ -21,6 +23,7 @@ export const homeContent = {
     closing: "用心記錄，用心陪伴。", download: "在 App Store 下載", platforms: "適用於 iPhone 和 iPad", demo: "畫面使用示例資料；部分配圖為功能示意。", medical: "用於寵物照護紀錄，不能取代獸醫診斷。", data: "資料管理", skip: "跳至正文", screenshot: "Petter Days 實際 App 畫面", pet: "乔治",
   },
   "en": {
+    showcase: {"tabs": ["Daily care", "Your way", "Supplies"], "hello": ["Good records.", "Better days."], "devices": ["Little moments.", "Room for them all."], "label": "Choose an app screen", "nav": "Explore features", "diary": "A cat and dog keeping a journal together"},
     title: "Pet care journal for iPhone and iPad", description: "Keep each pet’s water, meals, weight, medication and grooming records in Petter Days. Create custom records, plan care and manage supplies, with offline records and NFC shortcuts.",
     nav: ["Features", "NFC", "Support"], hero: ["Their little days.", "Worth remembering."], intro: "Every sip. Every moment. Every bit of care.", explore: "Take a closer look", devices: "A little care, on iPhone and iPad.",
     records: { label: "Everyday records", title: ["Little moments.", "Lots to record."], tabs: ["More ways to record", "Make it your own"], captions: ["Meals, health, grooming. All together.", "Your fields. Your options. Your way."], types: ["Water", "Meals", "Weight", "Grooming", "Medication", "Custom"] },
@@ -31,6 +34,7 @@ export const homeContent = {
     closing: "Good records. Better days together.", download: "Download on the App Store", platforms: "For iPhone and iPad", demo: "Screens show sample data. Some visuals illustrate features.", medical: "A pet care journal. Not a substitute for veterinary diagnosis.", data: "Data choices", skip: "Skip to content", screenshot: "Actual Petter Days app screen", pet: "乔治",
   },
   "ja": {
+    showcase: {"tabs": ["日々の記録", "カスタマイズ", "用品管理"], "hello": ["日々を記録。", "いつも一緒に。"], "devices": ["小さな日常に。", "ぴったりの画面で。"], "label": "App の画面を選ぶ", "nav": "機能のご紹介", "diary": "一緒に日記を書く猫と犬"},
     title: "ペットとの毎日を、やさしく記録", description: "Petter Days でペットの日常を記録。項目のカスタマイズ、ケアの予定、用品の管理、NFC でのすばやい記録をひとつに。",
     nav: ["特長", "NFC", "サポート"], hero: ["いつもの毎日を。", "大切な記録に。"], intro: "ひと口の水も、一緒に過ごす時間も。", explore: "できることを見る", devices: "iPhone と iPad で、毎日の小さなケアを。",
     records: { label: "日々の記録", title: ["小さな日常。", "記録はたっぷり。"], tabs: ["いろいろな記録", "自分らしくカスタマイズ"], captions: ["食事も、健康も、お手入れも。", "項目、選択肢、単位を、いつものやり方に。"], types: ["水分", "食事", "体重", "お手入れ", "投薬", "カスタム"] },
@@ -41,6 +45,7 @@ export const homeContent = {
     closing: "記録とともに、もっといい毎日へ。", download: "App Store でダウンロード", platforms: "iPhone と iPad に対応", demo: "画面はサンプルデータです。一部の図は機能イメージです。", medical: "ペットケアの記録ツールです。獣医師の診断に代わるものではありません。", data: "データ管理", skip: "本文へ移動", screenshot: "Petter Days の実際の App 画面", pet: "乔治",
   },
   "ko": {
+    showcase: {"tabs": ["일상 기록", "내 방식대로", "용품 관리"], "hello": ["다정한 기록.", "함께하는 하루."], "devices": ["작은 일상도.", "알맞은 화면에서."], "label": "앱 화면 선택", "nav": "주요 기능 살펴보기", "diary": "함께 일기를 쓰는 고양이와 강아지"},
     title: "반려동물의 하루를 다정하게 기록", description: "Petter Days로 반려동물의 일상을 기록하세요. 기록 항목을 내 방식대로 만들고, 돌봄과 용품을 관리하고, NFC로 빠르게 기록할 수 있어요.",
     nav: ["주요 기능", "NFC", "지원"], hero: ["소중한 하루하루.", "다정하게 기록해요."], intro: "물 한 모금부터, 함께한 순간까지.", explore: "어떤 기능이 있나요?", devices: "iPhone과 iPad에서 이어지는 작은 돌봄.",
     records: { label: "일상 기록", title: ["작은 일상에도.", "기록할 건 많죠."], tabs: ["다양한 기록 종류", "내 방식대로 기록"], captions: ["식사, 건강, 털 관리까지 한곳에.", "항목, 선택지, 단위를 원하는 대로."], types: ["수분", "식사", "체중", "털 관리", "투약", "사용자 지정"] },

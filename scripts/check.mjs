@@ -10,6 +10,14 @@ import { guidePages, guideLocales } from "./guides.mjs";
 
 const root = new URL("../dist/", import.meta.url);
 const rootPath = fileURLToPath(root);
+// Verify that published characters are the approved, unmodified IP exports.
+const ipAssets = JSON.parse(await readFile(new URL("../ip-assets.json", import.meta.url), "utf8")).assets;
+for (const id of ["cat-sitting-v2", "dog-sitting", "diary"]) {
+  const asset = ipAssets[id];
+  assert.equal(asset.url, `/assets/home/ip/${id}.png`);
+  const bytes = await readFile(new URL(asset.url.slice(1), root));
+  assert.equal(createHash("sha256").update(bytes).digest("hex"), asset.sha256, `${id} differs from the approved IP source`);
+}
 if (!/^[0-9]+$/.test(product.appStoreAppleID) || !/^[0-9a-f]{64}$/.test(product.iconSourceSHA256)) throw new Error("Invalid product identity");
 for (const key of ["icon", "favicon", "touchIcon"]) {
   if (!product[key]?.startsWith("/assets/brand/") || !product[key].includes(product.iconSourceSHA256.slice(0, 12))) throw new Error(`Invalid fingerprinted ${key}`);
@@ -83,9 +91,12 @@ for (const file of files) {
     if (/\bPro\b|\bfree\b|subscription|免费|免費|订阅|訂閱|無料|購読|무료|구독/i.test(html)) throw new Error(`${file} still contains plan marketing`);
     if (/上架准备中|上架準備中|Getting ready for the App Store|公開準備中|출시 준비 중/i.test(html)) throw new Error(`${file} still contains prelaunch copy`);
     if (html.split(`class="store-button" href="${appStoreURL}"`).length - 1 !== 2) throw new Error(`${file} needs working store destinations in the hero and closing`);
-    for (const id of ["features", "nfc", "record-panel-0", "record-panel-1"]) {
+    for (const id of ["features", "care", "supplies", "nfc", "devices-title", "hero-panel-0", "hero-panel-1", "hero-panel-2", "record-panel-0", "record-panel-1"]) {
       if (!html.includes(`id="${id}"`)) throw new Error(`${file} misses feature ${id}`);
     }
+    const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
+    assert.equal(new Set(ids).size, ids.length, `${file} contains duplicate IDs`);
+    for (const asset of Object.values(ipAssets)) assert.ok(html.includes(`src="${asset.url}"`), `${file} misses companion artwork`);
     for (const match of html.matchAll(/(?:src|href)="(\/assets\/[^"]+)"/g)) {
       await readFile(new URL(match[1].slice(1), root));
     }

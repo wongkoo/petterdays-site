@@ -1,13 +1,15 @@
-// One local interaction: a keyboard-accessible pair of screenshot tabs.
-const tablist = document.querySelector('.record-tabs');
-if (tablist) {
+// Independent, keyboard-accessible screenshot selectors; no runtime dependencies.
+for (const tablist of document.querySelectorAll('[data-screenshot-tabs]')) {
   const tabs = [...tablist.querySelectorAll('[role="tab"]')];
   function select(tab) {
     for (const item of tabs) {
       const active = item === tab;
       item.setAttribute('aria-selected', String(active));
       item.tabIndex = active ? 0 : -1;
-      document.getElementById(item.getAttribute('aria-controls')).hidden = !active;
+      const panelID = item.getAttribute('aria-controls');
+      document.getElementById(panelID).hidden = !active;
+      const caption = document.querySelector(`[data-caption-for="${panelID}"]`);
+      if (caption) caption.hidden = !active;
     }
   }
   for (const tab of tabs) {

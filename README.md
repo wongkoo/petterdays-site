@@ -4,6 +4,8 @@
 
 ## 本地开发
 
+官网使用猫狗角色时先读 [IP 使用规范](../design-assets/IP_GUIDE.md)。在仓库根目录运行 `python3 design-assets/scripts/ip_assets.py resolve --scene companion --channel website` 获取主用原稿；按内容选择 `diary`、`care-plan` 等场景。正式引用前将选定素材复制或导出到 `static/` 并保留来源 ID；不直接引用历史归档、本机路径或仓库外文件。此取用流程不自动发布官网。
+
 另一台电脑拉取 NAS 的 App 仓库后，在 `website/` 修改即可。需要 Node.js 22 和 npm；当前没有外部 npm 依赖，无需 `npm install`。
 
 在 `website/` 运行：
@@ -17,6 +19,10 @@ npm run preview
 构建产物在 `dist/`，预览默认使用 `http://localhost:4173`（预览命令还需要 Python 3）。提交源码和资源到 NAS；`dist/`、依赖、凭据和旧站 `.git` 不入库。
 
 首页以实际 App 画面和功能示意介绍记录、自定义类型、照护、用品与 NFC；不展示套餐和价格。五语首页文案在 `scripts/home-content.mjs`，结构在 `scripts/home-render.mjs`，样式在 `static/assets/home.css`。法律内容保留在 `scripts/build.mjs`，支持文案在 `scripts/support-content.mjs`；发布检查在 `scripts/check.mjs`。首页仅使用第一方脚本切换记录画面，支持鼠标、键盘方向键和辅助功能。
+
+首页采用已确认的猫狗 IP 方案：双角色陪伴首屏、三种 App 画面切换、功能章节导航、记录与自定义、照护与用品、NFC、独立 iPad 展示、数据与备份，最后以猫狗写日记收尾。手机端保留双角色、完整导航和语言切换；照护与用品纵向排列，主要按钮点按区域至少 44px。截图沿用现有官网素材，未表示重新采集当前 App 版本。
+
+`static/assets/home/ip/` 的三张 PNG 是素材库原稿的逐字节副本，来源 ID、仓库路径与 SHA-256 记录在 `ip-assets.json`。更新时先用 `ip_assets.py resolve` 选稿，再复制、更新回执；`npm run check` 核对发布资源哈希。不要直接重绘或仅替换图片而遗漏来源记录。
 
 保留 `static/.well-known/apple-app-site-association`、`_headers`、`_redirects`、链接回退页面和 NFC 解析脚本；它们支持现有 `/1/*`、`/2/*` App 打开链接。协议变更需同步 App 的外部链接规范。
 

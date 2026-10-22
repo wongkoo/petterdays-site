@@ -1,4 +1,4 @@
-import { product, appStoreURL } from "./product.mjs";
+import { appStoreURL } from "./product.mjs";
 
 export const escape = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
 const lines = (text) => text.map((line) => `<span>${escape(line)}</span>`).join("");
@@ -29,22 +29,40 @@ export function productHome(locale, h) {
   const careRows = ["care", "tooth", "pill"].map((name, i) => `<div class="care-row"><span class="care-row-icon icon-${name}">${icon(name)}</span><div><strong>${escape(h.care.rows[i])}</strong><span>${escape(h.care.repeat)} · ${["10:00", "19:00", "20:00"][i]}</span></div><span class="care-state ${i === 0 ? "is-done" : ""}">${i === 0 ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>' : '<span class="empty-check" aria-hidden="true"></span>'}<span class="sr-only">${escape(i === 0 ? h.care.done : h.care.pending)}</span></span></div>`).join("");
   const careDays = h.care.weekdays.map((day, i) => `<div class="${i === 2 ? "today" : ""}"><span>${escape(day)}</span><strong>${12 + i}</strong>${i === 2 ? '<span class="day-dot" aria-hidden="true"></span>' : ""}</div>`).join("");
   const ownership = ["offline", "lock", "backup"].map((name, i) => `<li>${icon(name)}<span>${escape(h.ownership.items[i])}</span></li>`).join("");
+  const heroTabs = h.showcase.tabs.map((text, i) => `<button type="button" role="tab" id="hero-tab-${i}" aria-controls="hero-panel-${i}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${escape(text)}</button>`).join("");
+  const heroPanels = ["01-today", "03-custom-record", "04-warehouse"].map((name, i) => `<div id="hero-panel-${i}" role="tabpanel" aria-labelledby="hero-tab-${i}" ${i === 0 ? "" : "hidden"} tabindex="0"><img src="${screenPath(locale, name)}" width="660" height="1434" alt="${escape(screenshot + h.showcase.tabs[i])}" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"></div>`).join("");
+  const heroCaptions = [h.records.captions[0], h.records.captions[1], h.supplies.intro].map((caption, i) => `<span data-caption-for="hero-panel-${i}" ${i === 0 ? "" : "hidden"}>${escape(caption)}</span>`).join("");
   return `
-    <section class="product-hero" aria-labelledby="hero-title">
-      <p class="product-kicker">Petter Days</p><h1 id="hero-title">${lines(h.hero)}</h1><p class="product-intro">${escape(h.intro)}</p>
+    <section class="ip-hero" aria-labelledby="hero-title">
+      <p class="ip-eyebrow">BETTER DAYS, TOGETHER.</p>
+      <h1 id="hero-title">${lines(h.hero)}</h1><p class="ip-intro">${escape(h.intro)}</p>
       <div class="hero-actions">${download}<a class="explore-link" href="#features">${escape(h.explore)} <span aria-hidden="true">↓</span></a></div>
-      <div class="hero-devices"><div class="hero-halo" aria-hidden="true"></div><div class="device tablet"><img src="${screenPath(locale, "ipad-today")}" width="900" height="1200" alt="${escape(screenshot + "iPad")}" loading="lazy" decoding="async"></div>${phone(locale, "01-today", screenshot + "iPhone", "hero-phone", true)}</div>
-      <p class="device-caption">${escape(h.devices)}</p>
+      <p class="ip-availability">${escape(h.platforms)}</p>
+      <div class="ip-stage">
+        <div class="ip-ground" aria-hidden="true"></div><div class="ip-sun" aria-hidden="true"></div>
+        <div class="ip-hello" aria-hidden="true">${lines(h.showcase.hello)}<svg viewBox="0 0 36 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 3c17 0 28 15 23 30m-8-7 8 8 5-9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <svg class="ip-spark" viewBox="0 0 40 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"><path d="m10 15 2-9m12 15 6-7M26 33l10-1"/></svg>
+        <img class="ip-cat" src="/assets/home/ip/cat-sitting-v2.png" alt="" data-asset-id="cat-sitting-v2" width="1400" height="1677">
+        <div class="ip-phone"><div class="ip-screen">${heroPanels}</div></div>
+        <img class="ip-dog" src="/assets/home/ip/dog-sitting.png" alt="" data-asset-id="dog-sitting" width="1400" height="1568">
+        <svg class="ip-plant" viewBox="0 0 36 60" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M19 55c1-16-2-30-9-41m9 27c2-12 7-19 13-24"/><path d="M10 14C1 8 2 23 14 29M32 17c6-7 2-13-3-8-4 4-4 9-4 16" fill="currentColor" stroke="none"/></svg><span class="ip-pebble" aria-hidden="true"></span>
+      </div>
     </section>
+    <section class="ip-showcase" aria-label="${escape(h.showcase.label)}">
+      <div class="ip-tabs" role="tablist" data-screenshot-tabs aria-label="${escape(h.showcase.label)}">${heroTabs}</div>
+      <p class="ip-caption" aria-live="polite">${heroCaptions}</p>
+    </section>
+    <nav class="story-nav" aria-label="${escape(h.showcase.nav)}"><a href="#features">${escape(h.records.label)}</a><a href="#care">${escape(h.care.label)}</a><a href="#supplies">${escape(h.supplies.label)}</a><a href="#nfc">NFC</a></nav>
     <section class="records-section product-section" id="features" aria-labelledby="records-title">
-      <div class="records-copy"><p class="product-kicker">${escape(h.records.label)}</p><h2 id="records-title">${lines(h.records.title)}</h2><div class="record-tabs" role="tablist" aria-label="${escape(h.records.label)}">${tabs}</div><div class="type-cloud" aria-hidden="true">${types}</div></div>
+      <div class="records-copy"><p class="product-kicker">${escape(h.records.label)}</p><h2 id="records-title">${lines(h.records.title)}</h2><div class="record-tabs" role="tablist" data-screenshot-tabs aria-label="${escape(h.records.label)}">${tabs}</div><div class="type-cloud" aria-hidden="true">${types}</div></div>
       <div class="record-stage">${panels}</div>
     </section>
     <div class="life-grid product-section">
-      <section class="life-card care-card" aria-labelledby="care-title"><div class="card-heading"><p class="product-kicker">${escape(h.care.label)}</p><h2 id="care-title">${lines(h.care.title)}</h2><p>${escape(h.care.intro)}</p></div><div class="care-illustration" role="img" aria-label="${escape(h.nfc.illustration + ' · ' + h.care.label)}"><div class="care-week">${careDays}</div><div class="care-tasks">${careRows}</div></div><small class="illustration-note">${escape(h.nfc.illustration)}</small></section>
-      <section class="life-card supplies-card" aria-labelledby="supplies-title"><div class="card-heading"><p class="product-kicker">${escape(h.supplies.label)}</p><h2 id="supplies-title">${lines(h.supplies.title)}</h2><p>${escape(h.supplies.intro)}</p></div><div class="supplies-visual">${phone(locale, "04-warehouse", screenshot + h.supplies.label)}<div class="supply-labels" aria-hidden="true">${h.supplies.tags.map((tag) => `<span>${escape(tag)}</span>`).join("")}</div></div></section>
+      <section id="care" class="life-card care-card" aria-labelledby="care-title"><div class="card-heading"><p class="product-kicker">${escape(h.care.label)}</p><h2 id="care-title">${lines(h.care.title)}</h2><p>${escape(h.care.intro)}</p></div><div class="care-illustration" role="img" aria-label="${escape(h.nfc.illustration + ' · ' + h.care.label)}"><div class="care-week">${careDays}</div><div class="care-tasks">${careRows}</div></div><small class="illustration-note">${escape(h.nfc.illustration)}</small></section>
+      <section id="supplies" class="life-card supplies-card" aria-labelledby="supplies-title"><div class="card-heading"><p class="product-kicker">${escape(h.supplies.label)}</p><h2 id="supplies-title">${lines(h.supplies.title)}</h2><p>${escape(h.supplies.intro)}</p></div><div class="supplies-visual">${phone(locale, "04-warehouse", screenshot + h.supplies.label)}<div class="supply-labels" aria-hidden="true">${h.supplies.tags.map((tag) => `<span>${escape(tag)}</span>`).join("")}</div></div></section>
     </div>
     <section class="nfc-section product-section" id="nfc" aria-labelledby="nfc-title"><div class="nfc-copy"><p class="product-kicker">${escape(h.nfc.label)}</p><h2 id="nfc-title">${lines(h.nfc.title)}</h2><p>${escape(h.nfc.intro)}</p><small>${escape(h.nfc.note)}</small></div><figure class="nfc-art"><img src="/assets/home/${locale}/nfc.svg" width="1320" height="1550" alt="${escape(h.nfc.illustration + ' · ' + h.nfc.label)}" loading="lazy" decoding="async"><figcaption>${escape(h.nfc.illustration)}</figcaption></figure></section>
+    <section class="devices-story product-section" aria-labelledby="devices-title"><div><p class="product-kicker">iPhone &amp; iPad</p><h2 id="devices-title">${lines(h.showcase.devices)}</h2><p>${escape(h.devices)}</p></div><figure><img src="${screenPath(locale, "ipad-today")}" alt="${escape(screenshot + "iPad")}" width="900" height="1200" loading="lazy" decoding="async"><figcaption>${escape(screenshot + "iPad")}</figcaption></figure></section>
     <section class="ownership-section product-section" aria-labelledby="ownership-title"><h2 id="ownership-title">${lines(h.ownership.title)}</h2><ul>${ownership}</ul></section>
-    <section class="product-closing"><img src="${product.icon}" width="88" height="88" alt="" loading="lazy"><h2>${escape(h.closing)}</h2><p>${escape(h.platforms)}</p>${download}</section>`;
+    <section class="product-closing"><img class="closing-characters" src="/assets/home/ip/diary.png" data-asset-id="diary" width="1400" height="860" alt="${escape(h.showcase.diary)}" loading="lazy" decoding="async"><h2>${escape(h.closing)}</h2><p>${escape(h.platforms)}</p>${download}</section>`;
 }
