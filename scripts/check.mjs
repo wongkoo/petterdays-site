@@ -8,6 +8,8 @@ import assert from "node:assert/strict";
 import { product, appStoreURL } from "./product.mjs";
 import { guideContent, guidePages, guideLocales } from "./guides.mjs";
 import { homeContent } from "./home-content.mjs";
+import { storyContent } from "./story-content.mjs";
+import { guideVisualContent } from "./guide-visual-content.mjs";
 
 // Product navigation must never silently fall back to another language.
 assert.deepEqual([...guideLocales].sort(), Object.keys(homeContent).sort());
@@ -31,6 +33,12 @@ for (const id of ["cat-sitting-v2", "dog-sitting", "diary"]) {
   const bytes = await readFile(new URL(asset.url.slice(1), root));
   assert.equal(createHash("sha256").update(bytes).digest("hex"), asset.sha256, `${id} differs from the approved IP source`);
 }
+const guideAssets = JSON.parse(await readFile(new URL("../guide-assets.json", import.meta.url), "utf8"));
+for (const [id, asset] of Object.entries(guideAssets.assets)) {
+  const bytes = await readFile(new URL(asset.url.slice(1), root));
+  assert.equal(createHash("sha256").update(bytes).digest("hex"), asset.sha256, `${id} differs from the reviewed guide artwork`);
+}
+assert.equal(guideAssets.jointSignature, "George & Biscuit");
 if (!/^[0-9]+$/.test(product.appStoreAppleID) || !/^[0-9a-f]{64}$/.test(product.iconSourceSHA256)) throw new Error("Invalid product identity");
 for (const key of ["icon", "favicon", "touchIcon"]) {
   if (!product[key]?.startsWith("/assets/brand/") || !product[key].includes(product.iconSourceSHA256.slice(0, 12))) throw new Error(`Invalid fingerprinted ${key}`);
@@ -92,6 +100,7 @@ for (const file of files) {
   }
   if (homeFiles.has(file) || file.includes("/guide/")) assert.equal(dataBlocks.length, 1, `${file} needs structured product facts`);
   if (/google-analytics|googletagmanager|segment\.com|mixpanel|facebook\.net/i.test(html)) throw new Error(`${file} contains tracking reference`);
+  for (const [, src] of html.matchAll(/src="(\/assets\/[^"]+)"/g)) await readFile(new URL(src.slice(1), root));
   if (/\{\{APP_(?:ICON|STORE)_|\{\{(?:FAVICON|TOUCH_ICON)_|(?:src|href)="\/app-icon\.png"/.test(html)) throw new Error(`${file} contains an unresolved or obsolete brand reference`);
   for (const match of html.matchAll(/(?:src|href)="(\/assets\/brand\/[^"]+)"/g)) {
     if (!Object.hasOwn(product.assets, match[1])) throw new Error(`${file} references an older icon ${match[1]}`);
@@ -146,6 +155,17 @@ for (const locale of guideLocales) {
       assert.ok(menu.includes(`href="/${targetPrefix}${page}/?lang=${targetLocale}"`), `${locale}/${page} cannot switch to ${targetLocale}`);
     }
     const main = html.match(/<main id="content">(.*?)<\/main>/s)[1];
+    if (page === "guide") {
+      assert.ok(guideVisualContent[locale]);
+      assert.equal(guideVisualContent[locale].sections.length, 6);
+      for (const asset of Object.values(guideAssets.assets)) assert.ok(main.includes(`src="${asset.url}"`), `${locale} overview misses artwork`);
+      for (const screen of ["02-record-types", "03-custom-record", "04-warehouse"]) assert.ok(main.includes(`/assets/home/${locale}/${screen}.png`), `${locale} overview misses its localized screen`);
+    }
+    if (page === "guide/our-story") {
+      assert.ok(main.includes("George &amp; Biscuit"), `${locale} story misses the approved signature`);
+      assert.ok(main.includes(storyContent[locale].disclosure), `${locale} story must identify fictional mascot scenes`);
+      for (const id of ["cat", "dog"]) assert.ok(main.includes(`src="${guideAssets.assets[id].url}"`), `${locale} story misses ${id} work scene`);
+    }
     for (const [, href] of main.matchAll(/href="(\/[^"#?]*)"/g)) {
       assert.ok(href.startsWith(`/${prefix}`), `${locale}/${page} links outside its language: ${href}`);
       if (locale === "zh-Hans") assert.ok(!/^\/(en|zh-Hant|ja|ko)\//.test(href), `Chinese guide links outside its language: ${href}`);

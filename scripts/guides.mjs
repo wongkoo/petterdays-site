@@ -1,7 +1,8 @@
 import { guideTranslations } from "./guide-translations.mjs";
+import { storyContent } from "./story-content.mjs";
 
 // Public product facts and practical examples; no private pet data or invented results.
-export const guideUpdatedDate = "2026-10-22";
+export const guideUpdatedDate = "2026-10-23";
 export const guideContent = {
   ...guideTranslations,
   "zh-Hans": {
@@ -370,5 +371,8 @@ export const guideContent = {
   }
 };
 
+for (const [locale, story] of Object.entries(storyContent)) {
+  guideContent[locale].pages["guide/our-story"] = story.page;
+}
 export const guidePages = Object.keys(guideContent.en.pages);
 export const guideLocales = ["zh-Hans", "zh-Hant", "en", "ja", "ko"];

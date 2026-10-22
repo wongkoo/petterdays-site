@@ -1,0 +1,32 @@
+{
+  "status": "reviewed",
+  "created": "2026-10-23",
+  "purpose": "website developer story work scenes",
+  "tool": "built-in image_gen",
+  "prompts": "prompts.json",
+  "identityReview": "New work scenes based on original PNG references; base identities and existing assets are unchanged. Registered as a separate developer-story scene after identity and layout review.",
+  "sourceManifest": "design-assets/references/developer-story-20261023/manifest.json",
+  "assets": {
+    "cat": {
+      "url": "/assets/guide/cat-at-work.webp",
+      "sha256": "9f51f0bed03bf704e08dc902635fccc118bdf03952e33dac0b1e51cdb78a40c4",
+      "source": "design-assets/assets/03-scenes/cat-at-work.png"
+    },
+    "dog": {
+      "url": "/assets/guide/dog-at-work.webp",
+      "sha256": "421dbe86f662134097e84e228ff36ba0f7e4bb906f6f2b22ae215399fb47b7d5",
+      "source": "design-assets/assets/03-scenes/dog-at-work.png"
+    },
+    "care-plan": {
+      "url": "/assets/guide/care-plan.svg",
+      "sha256": "da846961f5713232c5fc0303a43f3dabb7c936adf71f004f12dc3d8457a71ddc",
+      "source": "design-assets/assets/03-scenes/care-plan.svg",
+      "status": "approved-existing"
+    }
+  },
+  "characters": {
+    "cat": "乔治 · George",
+    "dog": "饼干 · Biscuit"
+  },
+  "jointSignature": "George & Biscuit"
+}

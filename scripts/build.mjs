@@ -6,6 +6,8 @@ import { productHome, escape } from "./home-render.mjs";
 import { product as productIdentity, appStoreURL } from "./product.mjs";
 import { guideContent, guidePages, guideLocales, guideUpdatedDate } from "./guides.mjs";
 import { supportContent } from "./support-content.mjs";
+import { productGuide, developerStory } from "./guide-render.mjs";
+import { storyContent } from "./story-content.mjs";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const out = join(root, "dist");
@@ -490,7 +492,7 @@ function footer(locale, product = false) {
   const c = locales[locale];
   const h = homeContent[locale];
   const note = product ? `${escape(h.demo)}<br>${escape(h.medical)}` : `${c.common.medical}<br>${c.common.source}`;
-  const guideLink = guideContent[locale] ? `<a href="${pathFor(locale, "guide")}">${guideContent[locale].label}</a>` : "";
+  const guideLink = guideContent[locale] ? `<a href="${pathFor(locale, "guide")}">${guideContent[locale].label}</a><a href="${pathFor(locale, "guide/our-story")}">${escape(storyContent[locale].label)}</a>` : "";
   return `<footer class="site-footer"><div class="footer-inner"><div><a class="brand" href="${pathFor(locale, "home")}"><img class="brand-icon" src="${productIdentity.icon}" alt=""><span>Petter Days</span></a><p class="footer-note">${note}<br>© 2026 ZhenHui Wang</p></div><nav class="footer-links" aria-label="${c.nav.support}">${guideLink}<a href="${pathFor(locale, "privacy")}">${c.nav.privacy}</a><a href="${pathFor(locale, "choices")}">${h.data}</a><a href="${pathFor(locale, "terms")}">${c.nav.terms}</a><a href="${pathFor(locale, "support")}">${c.nav.support}</a></nav></div></footer>`;
 }
 
@@ -540,11 +542,15 @@ function support(locale) {
 function guidePage(locale, page) {
   const copy = guideContent[locale];
   const data = copy.pages[page];
+  if (page === "guide" || page === "guide/our-story") {
+    const content = page === "guide" ? productGuide(locale, copy, homeContent[locale], pathFor) : developerStory(locale, pathFor);
+    return document(locale, page, data.searchTitle, data.intro, content).replace('</head>', '<link rel="stylesheet" href="/assets/guide.css"></head>');
+  }
   const list = (items, tag) => items ? `<${tag}>${items.map((item) => `<li>${escape(item)}</li>`).join("")}</${tag}>` : "";
   const sections = data.sections.map((s) => `<section id="${s.id}"><h2>${escape(s.title)}</h2>${(s.paragraphs || []).map((p) => `<p>${escape(p)}</p>`).join("")}${list(s.steps, "ol")}${list(s.bullets, "ul")}${s.link ? `<p><a href="${pathFor(locale, s.link[1])}">${escape(s.link[0])} →</a></p>` : ""}${s.pathLink ? `<p><a href="${s.pathLink[1]}">${escape(s.pathLink[0])} →</a></p>` : ""}</section>`).join("");
   const faq = data.faq ? `<section id="faq"><h2>${escape(copy.faq)}</h2>${data.faq.map(([q, a]) => `<details class="guide-faq"><summary>${escape(q)}</summary><p>${escape(a)}</p></details>`).join("")}</section>` : "";
   const overview = page === "guide";
-  const related = guidePages.filter((key) => key !== page).map((key) => `<a class="support-card" href="${pathFor(locale, key)}"><strong>${escape(key === "guide" ? copy.label : key === "guide/nfc" ? copy.relatedNFC : copy.relatedRecords)} →</strong></a>`).join("");
+  const related = guidePages.filter((key) => key !== page).map((key) => `<a class="support-card" href="${pathFor(locale, key)}"><strong>${escape(key === "guide" ? copy.label : key === "guide/nfc" ? copy.relatedNFC : key === "guide/our-story" ? storyContent[locale].label : copy.relatedRecords)} →</strong></a>`).join("");
   const toc = overview ? "" : `<nav class="guide-toc" aria-label="${copy.contents}">${data.sections.map((s) => `<a href="#${s.id}">${escape(s.title)}</a>`).join("")}${data.faq ? `<a href="#faq">${escape(copy.faqShort)}</a>` : ""}</nav>`;
   const heading = locale === "zh-Hans" ? data.title.split("，").map((part, i, parts) => `<span>${escape(part)}${i < parts.length - 1 ? "，" : ""}</span>`).join("") : escape(data.title);
   const facts = data.facts ? `<ul class="product-facts">${data.facts.map((fact) => `<li>${escape(fact)}</li>`).join("")}</ul>` : `<div class="meta"><span>${copy.updated} <time datetime="${guideUpdatedDate}">${guideUpdatedDate}</time></span></div>`;
