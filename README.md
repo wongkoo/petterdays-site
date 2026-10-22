@@ -38,6 +38,8 @@ npm run preview
 
 Google Search Console 使用 `static/google044d9f950647aca5.html` 验证 URL 前缀属性；文件由站长平台提供，发布后仍需保留。检查程序单独核对其内容，不将验证文件加入页面数量或 sitemap。
 
+Bing Webmaster Tools 使用平台生成的 `static/BingSiteAuth.xml` 单独验证，不需要授予 Bing 访问 Google Search Console 的权限；检查程序核对该文件内容。
+
 只修改文字时，在 build 后运行 `.local/website-asset-tools/bin/python website/scripts/prepare-assets.py --fonts-only`（从 App 仓库根目录），再重新 build/check，即可更新字体而不重导出截图。
 
 ## 更换画面和更新字体

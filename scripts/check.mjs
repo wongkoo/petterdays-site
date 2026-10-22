@@ -41,6 +41,7 @@ async function htmlFiles(dir) {
 // Search Console serves this exact ownership proof as a plain verification file.
 const verificationFile = "google044d9f950647aca5.html";
 assert.equal((await readFile(new URL(verificationFile, root), "utf8")).trim(), `google-site-verification: ${verificationFile}`);
+assert.equal((await readFile(new URL("BingSiteAuth.xml", root), "utf8")).replace(/\s+/g, ""), '<?xmlversion="1.0"?><users><user>8CEE0ECD144F66DCF1F89365EA2CD96F</user></users>');
 const files = (await htmlFiles(rootPath)).filter((file) => file !== join(rootPath, verificationFile));
 const homeFiles = new Set(["index.html", "zh-Hant/index.html", "en/index.html", "ja/index.html", "ko/index.html"].map((path) => join(rootPath, path)));
 const expectedHTMLCount = 27 + guidePages.length * guideLocales.length;
