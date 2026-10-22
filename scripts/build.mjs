@@ -469,17 +469,15 @@ function pageLocales(page) {
 
 function header(locale, page) {
   const c = locales[locale];
-  const productLabels = { "zh-Hans": "产品介绍", "zh-Hant": "產品介紹（英文）", en: "Product", ja: "製品紹介（英語）", ko: "제품 소개 (영어)" };
-  const productLocale = guideContent[locale] ? locale : "en";
   const labels = locale === "zh-Hans"
     ? { home: "初次见面", product: "探索功能", support: "需要帮忙？" }
-    : { home: c.nav.home, product: productLabels[locale], support: c.nav.support };
+    : { home: c.nav.home, product: guideContent[locale].label, support: c.nav.support };
   const items = [
     { key: "home", label: labels.home, href: pathFor(locale, "home") },
-    { key: "guide", label: labels.product, href: pathFor(productLocale, "guide") },
+    { key: "guide", label: labels.product, href: pathFor(locale, "guide") },
     { key: "support", label: labels.support, href: pathFor(locale, "support") },
   ];
-  const links = items.map(({ key, label, href }) => `<a href="${href}"${page === key ? ' aria-current="page"' : key === "guide" && guidePages.includes(page) ? ' aria-current="location"' : ""}${key === "guide" && productLocale !== locale ? ' hreflang="en"' : ""}>${label}</a>`).join("");
+  const links = items.map(({ key, label, href }) => `<a href="${href}"${page === key ? ' aria-current="page"' : key === "guide" && guidePages.includes(page) ? ' aria-current="location"' : ""}>${label}</a>`).join("");
   return `<a class="skip-link" href="#content">${homeContent[locale].skip}</a>
   <header class="site-header"><nav class="nav site-nav" aria-label="${c.nav.home}">
     <a class="brand" href="${pathFor(locale, "home")}"><img class="brand-icon" src="${productIdentity.icon}" alt=""><span>Petter Days</span></a>
@@ -544,13 +542,13 @@ function guidePage(locale, page) {
   const data = copy.pages[page];
   const list = (items, tag) => items ? `<${tag}>${items.map((item) => `<li>${escape(item)}</li>`).join("")}</${tag}>` : "";
   const sections = data.sections.map((s) => `<section id="${s.id}"><h2>${escape(s.title)}</h2>${(s.paragraphs || []).map((p) => `<p>${escape(p)}</p>`).join("")}${list(s.steps, "ol")}${list(s.bullets, "ul")}${s.link ? `<p><a href="${pathFor(locale, s.link[1])}">${escape(s.link[0])} →</a></p>` : ""}${s.pathLink ? `<p><a href="${s.pathLink[1]}">${escape(s.pathLink[0])} →</a></p>` : ""}</section>`).join("");
-  const faq = data.faq ? `<section id="faq"><h2>${locale === "en" ? "Frequently asked questions" : "常见问题"}</h2>${data.faq.map(([q, a]) => `<details class="guide-faq"><summary>${escape(q)}</summary><p>${escape(a)}</p></details>`).join("")}</section>` : "";
+  const faq = data.faq ? `<section id="faq"><h2>${escape(copy.faq)}</h2>${data.faq.map(([q, a]) => `<details class="guide-faq"><summary>${escape(q)}</summary><p>${escape(a)}</p></details>`).join("")}</section>` : "";
   const overview = page === "guide";
-  const related = guidePages.filter((key) => key !== page).map((key) => `<a class="support-card" href="${pathFor(locale, key)}"><strong>${escape(key === "guide" ? copy.label : key === "guide/nfc" ? (locale === "en" ? "Set up an NFC shortcut" : "设置 NFC 快捷入口") : (locale === "en" ? "Start a care journal" : "记下第一份照护日常"))} →</strong></a>`).join("");
-  const toc = overview ? "" : `<nav class="guide-toc" aria-label="${copy.contents}">${data.sections.map((s) => `<a href="#${s.id}">${escape(s.title)}</a>`).join("")}${data.faq ? `<a href="#faq">${locale === "en" ? "FAQ" : "常见问题"}</a>` : ""}</nav>`;
+  const related = guidePages.filter((key) => key !== page).map((key) => `<a class="support-card" href="${pathFor(locale, key)}"><strong>${escape(key === "guide" ? copy.label : key === "guide/nfc" ? copy.relatedNFC : copy.relatedRecords)} →</strong></a>`).join("");
+  const toc = overview ? "" : `<nav class="guide-toc" aria-label="${copy.contents}">${data.sections.map((s) => `<a href="#${s.id}">${escape(s.title)}</a>`).join("")}${data.faq ? `<a href="#faq">${escape(copy.faqShort)}</a>` : ""}</nav>`;
   const heading = locale === "zh-Hans" ? data.title.split("，").map((part, i, parts) => `<span>${escape(part)}${i < parts.length - 1 ? "，" : ""}</span>`).join("") : escape(data.title);
   const facts = data.facts ? `<ul class="product-facts">${data.facts.map((fact) => `<li>${escape(fact)}</li>`).join("")}</ul>` : `<div class="meta"><span>${copy.updated} <time datetime="${guideUpdatedDate}">${guideUpdatedDate}</time></span></div>`;
-  const content = `<header class="legal-hero guide-hero"><p class="eyebrow"><a href="${pathFor(locale, "guide")}">${overview ? (locale === "en" ? "Explore features" : "探索功能") : copy.label}</a></p><h1>${heading}</h1><p>${escape(data.intro)}</p>${facts}${toc}</header><article class="article guide-article${overview ? ' feature-overview' : ''}">${overview ? `<div class="feature-grid">${sections}</div>` : sections}${faq}<section class="related-guides"><h2>${overview ? (locale === "en" ? "Put it into practice" : "动手试试看") : copy.more}</h2><div class="support-grid">${related}</div></section></article>`;
+  const content = `<header class="legal-hero guide-hero"><p class="eyebrow"><a href="${pathFor(locale, "guide")}">${escape(overview ? copy.explore : copy.label)}</a></p><h1>${heading}</h1><p>${escape(data.intro)}</p>${facts}${toc}</header><article class="article guide-article${overview ? ' feature-overview' : ''}">${overview ? `<div class="feature-grid">${sections}</div>` : sections}${faq}<section class="related-guides"><h2>${escape(overview ? copy.practice : copy.more)}</h2><div class="support-grid">${related}</div></section></article>`;
   return document(locale, page, data.searchTitle, data.intro, content);
 }
 

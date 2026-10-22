@@ -6,7 +6,20 @@ import { runInNewContext } from "node:vm";
 import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 import { product, appStoreURL } from "./product.mjs";
-import { guidePages, guideLocales } from "./guides.mjs";
+import { guideContent, guidePages, guideLocales } from "./guides.mjs";
+import { homeContent } from "./home-content.mjs";
+
+// Product navigation must never silently fall back to another language.
+assert.deepEqual([...guideLocales].sort(), Object.keys(homeContent).sort());
+assert.deepEqual(Object.keys(guideContent).sort(), [...guideLocales].sort());
+for (const locale of guideLocales) {
+  const copy = guideContent[locale];
+  assert.deepEqual(Object.keys(copy.pages).sort(), [...guidePages].sort(), `${locale} is missing a guide`);
+  for (const key of ["label", "explore", "practice", "more", "contents", "updated", "relatedRecords", "relatedNFC", "faq", "faqShort"]) {
+    assert.ok(copy[key]?.trim(), `${locale} is missing guide UI copy: ${key}`);
+  }
+  for (const page of guidePages) assert.deepEqual(copy.pages[page].sections.map((s) => s.id), guideContent.en.pages[page].sections.map((s) => s.id), `${locale}/${page} is missing sections`);
+}
 
 const root = new URL("../dist/", import.meta.url);
 const rootPath = fileURLToPath(root);
@@ -123,9 +136,24 @@ for (const url of indexedURLs) {
 }
 for (const locale of guideLocales) {
   const prefix = locale === "zh-Hans" ? "" : `${locale}/`;
-  for (const page of guidePages) assert.ok(indexedURLs.includes(`${siteOrigin}/${prefix}${page}/`));
+  for (const page of guidePages) {
+    assert.ok(indexedURLs.includes(`${siteOrigin}/${prefix}${page}/`));
+    const html = await readFile(new URL(`${prefix}${page}/index.html`, root), "utf8");
+    assert.ok(html.includes(`<html lang="${locale}">`));
+    const menu = html.match(/<div class="lang-menu">(.*?)<\/div>/s)[1];
+    for (const targetLocale of guideLocales) {
+      const targetPrefix = targetLocale === "zh-Hans" ? "" : `${targetLocale}/`;
+      assert.ok(menu.includes(`href="/${targetPrefix}${page}/?lang=${targetLocale}"`), `${locale}/${page} cannot switch to ${targetLocale}`);
+    }
+    const main = html.match(/<main id="content">(.*?)<\/main>/s)[1];
+    for (const [, href] of main.matchAll(/href="(\/[^"#?]*)"/g)) {
+      assert.ok(href.startsWith(`/${prefix}`), `${locale}/${page} links outside its language: ${href}`);
+      if (locale === "zh-Hans") assert.ok(!/^\/(en|zh-Hant|ja|ko)\//.test(href), `Chinese guide links outside its language: ${href}`);
+    }
+  }
   const home = await readFile(new URL(`${prefix}index.html`, root), "utf8");
-  assert.ok(home.includes(`href="/${prefix}guide/"`), "Guides must be discoverable from the homepage");
+  const navigation = home.match(/<div class="nav-links site-tabs">(.*?)<\/div>/s)[1];
+  assert.ok(navigation.includes(`href="/${prefix}guide/"`), `${locale} product navigation must stay in its language`);
 }
 for (const suffix of ["sc", "tc", "j", "k"]) await readFile(new URL(`assets/fonts/rounded-${suffix}.woff2`, root));
 await readFile(new URL("assets/fonts/OFL.txt", root));

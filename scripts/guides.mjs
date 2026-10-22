@@ -1,8 +1,13 @@
+import { guideTranslations } from "./guide-translations.mjs";
+
 // Public product facts and practical examples; no private pet data or invented results.
 export const guideUpdatedDate = "2026-10-22";
 export const guideContent = {
+  ...guideTranslations,
   "zh-Hans": {
     "label": "产品介绍",
+    explore: "探索功能", practice: "动手试试看", faq: "常见问题", faqShort: "常见问题",
+    relatedRecords: "记下第一份照护日常", relatedNFC: "设置 NFC 快捷入口",
     "updated": "更新于",
     "contents": "本页内容",
     "more": "继续了解",
@@ -183,6 +188,8 @@ export const guideContent = {
   },
   "en": {
     "label": "Product",
+    explore: "Explore features", practice: "Put it into practice", faq: "Frequently asked questions", faqShort: "FAQ",
+    relatedRecords: "Start a care journal", relatedNFC: "Set up an NFC shortcut",
     "updated": "Updated",
     "contents": "On this page",
     "more": "Keep exploring",
@@ -364,4 +371,4 @@ export const guideContent = {
 };
 
 export const guidePages = Object.keys(guideContent.en.pages);
-export const guideLocales = Object.keys(guideContent);
+export const guideLocales = ["zh-Hans", "zh-Hant", "en", "ja", "ko"];
