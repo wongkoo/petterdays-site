@@ -4,7 +4,9 @@ import { fileURLToPath } from "node:url";
 import { TextDecoder } from "node:util";
 import { runInNewContext } from "node:vm";
 import { createHash } from "node:crypto";
+import assert from "node:assert/strict";
 import { product, appStoreURL } from "./product.mjs";
+import { guidePages, guideLocales } from "./guides.mjs";
 
 const root = new URL("../dist/", import.meta.url);
 const rootPath = fileURLToPath(root);
@@ -36,9 +38,13 @@ async function htmlFiles(dir) {
   return result;
 }
 
-const files = await htmlFiles(rootPath);
+// Search Console serves this exact ownership proof as a plain verification file.
+const verificationFile = "google044d9f950647aca5.html";
+assert.equal((await readFile(new URL(verificationFile, root), "utf8")).trim(), `google-site-verification: ${verificationFile}`);
+const files = (await htmlFiles(rootPath)).filter((file) => file !== join(rootPath, verificationFile));
 const homeFiles = new Set(["index.html", "zh-Hant/index.html", "en/index.html", "ja/index.html", "ko/index.html"].map((path) => join(rootPath, path)));
-if (files.length !== 27) throw new Error(`Expected 27 HTML files, found ${files.length}`);
+const expectedHTMLCount = 27 + guidePages.length * guideLocales.length;
+if (files.length !== expectedHTMLCount) throw new Error(`Expected ${expectedHTMLCount} HTML files, found ${files.length}`);
 for (const file of files) {
   const html = await readFile(file, "utf8");
   for (const token of ["<title>", 'name="description"', 'rel="canonical"', 'href="/assets/styles.css"', "Petter Days"]) {
@@ -49,7 +55,20 @@ for (const file of files) {
     ? ["/assets/language.js", "/assets/nfc-wire.js"]
     : homeFiles.has(file) ? ["/assets/language.js", "/assets/home.js"] : ["/assets/language.js"];
   if (JSON.stringify(scripts) !== JSON.stringify(expectedScripts)) throw new Error(`${file} contains an unexpected script`);
-  if (/<script\b(?![^>]*src="\/assets\/(?:language|nfc-wire|home)\.js")[^>]*>/i.test(html)) throw new Error(`${file} contains inline or third-party script`);
+  const dataBlocks = [...html.matchAll(/<script type="application\/ld\+json">([^<]*)<\/script>/g)];
+  const executableHTML = html.replace(/<script type="application\/ld\+json">[^<]*<\/script>/g, "");
+  if (/<script\b(?![^>]*src="\/assets\/(?:language|nfc-wire|home)\.js")[^>]*>/i.test(executableHTML)) throw new Error(`${file} contains inline or third-party executable script`);
+  for (const [, json] of dataBlocks) {
+    const data = JSON.parse(json);
+    assert.equal(data["@context"], "https://schema.org");
+    const app = data["@graph"].find((node) => node["@type"] === "MobileApplication");
+    assert.equal(app.name, "Petter Days");
+    assert.equal(app.downloadUrl, appStoreURL);
+    assert.ok(!app.aggregateRating && !app.review && !app.offers, "Do not invent reviews, ratings or prices");
+    const page = data["@graph"].find((node) => node["@type"] === "WebPage");
+    assert.equal(page.url, html.match(/rel="canonical" href="([^"]+)"/)[1]);
+  }
+  if (homeFiles.has(file) || file.includes("/guide/")) assert.equal(dataBlocks.length, 1, `${file} needs structured product facts`);
   if (/google-analytics|googletagmanager|segment\.com|mixpanel|facebook\.net/i.test(html)) throw new Error(`${file} contains tracking reference`);
   if (/\{\{APP_(?:ICON|STORE)_|\{\{(?:FAVICON|TOUCH_ICON)_|(?:src|href)="\/app-icon\.png"/.test(html)) throw new Error(`${file} contains an unresolved or obsolete brand reference`);
   for (const match of html.matchAll(/(?:src|href)="(\/assets\/brand\/[^"]+)"/g)) {
@@ -70,6 +89,31 @@ for (const file of files) {
       await readFile(new URL(match[1].slice(1), root));
     }
   }
+}
+
+// Crawl the generated link graph, including alternate languages and sitemap URLs.
+// This catches missing guide routes, accidental locale fallbacks and orphan pages.
+const siteOrigin = "https://petterdays.wongkoo.group";
+const sitemap = await readFile(new URL("sitemap.xml", root), "utf8");
+const indexedURLs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+assert.equal(new Set(indexedURLs).size, expectedHTMLCount - 2);
+for (const url of indexedURLs) {
+  const path = new URL(url).pathname;
+  const html = await readFile(new URL(`${path.slice(1)}index.html`, root), "utf8");
+  assert.ok(!/name="robots"[^>]*content="[^"]*noindex/.test(html), `${path} unexpectedly excluded`);
+  for (const [, href] of html.matchAll(/href="([^"]+)"/g)) {
+    const target = new URL(href.replaceAll("&amp;", "&"), url);
+    if (target.origin !== siteOrigin) continue;
+    const localPath = target.pathname.slice(1) + (target.pathname.endsWith("/") ? "index.html" : "");
+    await readFile(new URL(localPath, root));
+    if (target.hash && target.pathname === path) assert.ok(html.includes(`id="${decodeURIComponent(target.hash.slice(1))}"`), `${path} has broken anchor ${target.hash}`);
+  }
+}
+for (const locale of guideLocales) {
+  const prefix = locale === "zh-Hans" ? "" : `${locale}/`;
+  for (const page of guidePages) assert.ok(indexedURLs.includes(`${siteOrigin}/${prefix}${page}/`));
+  const home = await readFile(new URL(`${prefix}index.html`, root), "utf8");
+  assert.ok(home.includes(`href="/${prefix}guide/"`), "Guides must be discoverable from the homepage");
 }
 for (const suffix of ["sc", "tc", "j", "k"]) await readFile(new URL(`assets/fonts/rounded-${suffix}.woff2`, root));
 await readFile(new URL("assets/fonts/OFL.txt", root));
@@ -115,6 +159,21 @@ for (const [language, destination] of [["zh-CN", undefined], ["zh-TW", "/zh-Hant
   if (redirectedTo !== destination) throw new Error(`Language ${language} routed to ${redirectedTo}, expected ${destination}`);
 }
 
+for (const [language, savedLanguage, destination] of [["en-US", null, "/en/"], ["en-US", "ja", "/ja/"]]) {
+  let redirectedTo;
+  const suffix = "?ref=shared%20link#nfc";
+  runInNewContext(languageScript, {
+    URL,
+    navigator: { language, languages: [language] },
+    window: {
+      location: { href: `https://petterdays.wongkoo.group/${suffix}`, pathname: "/", replace: (path) => { redirectedTo = path; } },
+      localStorage: { getItem: () => savedLanguage, setItem: () => {} },
+      history: { replaceState: () => {} },
+    },
+  });
+  assert.equal(redirectedTo, `${destination}${suffix}`, "Language routing must preserve shared-link parameters and section anchors");
+}
+
 const wireScript = await readFile(new URL("assets/nfc-wire.js", root), "utf8");
 if (/\b(?:fetch|XMLHttpRequest|sendBeacon|WebSocket|localStorage|sessionStorage)\b/.test(wireScript)) {
   throw new Error("NFC fallback decoder must remain local-only and stateless");
@@ -130,5 +189,93 @@ const corrupted = `${vector.slice(0, 20)}A${vector.slice(21)}`;
 let acceptedCorruption = false;
 try { wireContext.PetterDaysNFCWire.decodeToken(corrupted); acceptedCorruption = true; } catch (_) {}
 if (acceptedCorruption) throw new Error("NFC fallback decoder accepted a corrupted checksum");
+
+const countVectors = [
+  ["UEQBAwEgZbsrH_gryrWurvwBEwEBAwUBAwYBAwgIAAAAAAAAAAOWzW4n", 3],
+  ["UEQBAwEgZbsrH_gryrWurvwBEwEBAwUBAwYBAwgIf_________8Ymboy", "9223372036854775807"],
+];
+for (const [token, count] of countVectors) {
+  const fields = wireContext.PetterDaysNFCWire.decodeToken(token).fields;
+  assert.equal(fields.find((field) => field.key === "urineClumpCount")?.value, count);
+}
+for (const token of [
+  "UEQBAwEgZbsrH_gryrWurvwBEwEBAwUBAwYBAwgIAAAAAAAAAAAPxD-d",
+  "UEQBAwEgZbsrH_gryrWurvwBEgEBAwUBAwYBAwgHAAAAAAAAAMVuS5s",
+  "UEQBAwEgZbsrH_gryrWurvwBFAEBAwUBAwYBAwgJAAAAAAAAAAAA2pYpLQ",
+  "UEQBAwEgZbsrH_gryrWurvwBCwEBAwUBAwYBAwgABNKJhQ",
+  "UEQBAwEgZbsrH_gryrWurvwBEwEBAwUBAwYBAwgIgAAAAAAAAABc_7pH",
+  "UEQBAwIgZbsrH_gryrWurvwBEwEBAwUBAwYBAwgIAAAAAAAAAAP7S519",
+  "UEQBAwEgZbsrH_gryrWurvwBHQEBAwUBAwYBAwgIAAAAAAAAAAMICAAAAAAAAAADNyPcbg",
+]) {
+  assert.throws(() => wireContext.PetterDaysNFCWire.decodeToken(token), /Invalid NFC payload/);
+}
+
+function renderNFCFallback(token, rewritten, language = "zh-CN") {
+  function element() {
+    const children = new Map();
+    let textContent = "";
+    return {
+      get textContent() { return textContent; },
+      set textContent(value) { textContent = String(value); },
+      hidden: true, open: false, appended: [],
+      querySelector(selector) {
+        if (!children.has(selector)) children.set(selector, element());
+        return children.get(selector);
+      },
+      append(...nodes) { this.appended.push(...nodes); },
+    };
+  }
+  const elements = new Map();
+  const document = {
+    readyState: "complete", documentElement: {}, createElement: element,
+    getElementById(id) {
+      if (!elements.has(id)) elements.set(id, element());
+      return elements.get(id);
+    },
+  };
+  let replacement;
+  runInNewContext(wireScript, {
+    atob, TextDecoder, URL, document,
+    navigator: { language, languages: [language] },
+    location: new URL(rewritten ? `https://p.wongkoo.group/link/?route=e/${token}` : `https://p.wongkoo.group/2/e/${token}`),
+    history: { replaceState: (_state, _title, path) => { replacement = path; } },
+  });
+  const details = document.getElementById("nfc-details");
+  return {
+    labels: details.querySelector("dl").appended.filter((_node, index) => index % 2 === 0).map((node) => node.textContent),
+    values: details.querySelector("dl").appended.filter((_node, index) => index % 2 === 1).map((node) => node.textContent),
+    summaryHidden: document.getElementById("nfc-summary").hidden,
+    detailsHidden: details.hidden, detailsOpen: details.open, replacement,
+  };
+}
+
+// Fixed Wire V1 fixtures: vaccine text collides with enum/prototype names;
+// a toilet option alias is literally "normal", while urine color is built-in.
+const renderingFixtures = [
+  ["UEQBAAwgZbsrH_gBLAEFb3RoZXIDAm5vBAtjb25zdHJ1Y3RvcgUNPGI-Q2xpbmljPC9iPggDeWVz9-ZicQ",
+    ["other", "no", "constructor", "<b>Clinic</b>", "yes"]],
+  ["UEQBAAEgZbsrH_gBCwEBAwIBAQcDeWVzcAcBbm9ybWFsl5O50w",
+    ["normal", "正常", "未知", "未知", "未观察", "未观察", "yes"]],
+];
+renderingFixtures.push(
+  ["UEQBAwEgZbsrH_gryrWurvwBEwEBAwUBAwYBAwgIAAAAAAAAAAOWzW4n", ["中等", "未知", "未知", "未知", "未知", "未知", "3"]],
+  ["UEQBAwEgZbsrH_gryrWurvwBEwEBAwUBAwYBAwgIf_________8Ymboy", ["中等", "未知", "未知", "未知", "未知", "未知", "9223372036854775807"]],
+);
+for (const [token, expectedValues] of renderingFixtures) {
+  for (const rewritten of [false, true]) {
+    const rendered = renderNFCFallback(token, rewritten);
+    assert.deepEqual(rendered.values, expectedValues, "NFC details must preserve user text and translate only built-in options");
+    assert.equal(rendered.summaryHidden, false);
+    assert.equal(rendered.detailsHidden, false);
+    assert.equal(rendered.detailsOpen, false, "Health details must remain collapsed until requested");
+    assert.equal(rendered.replacement, "/link/", "Decoded payload must leave the address bar");
+  }
+}
+
+for (const [language, label] of [["zh-CN", "尿团数"], ["zh-TW", "尿團數"], ["en", "Urine Clumps"], ["ja", "おしっこの塊の数"], ["ko", "소변 덩어리 수"]]) {
+  const rendered = renderNFCFallback("UEQBAwEgZbsrH_gryrWurvwBEwEBAwUBAwYBAwgIAAAAAAAAAAOWzW4n", false, language);
+  assert.equal(rendered.labels.at(-1), label);
+  assert.equal(rendered.values.at(-1), "3");
+}
 
 console.log(`Validated ${files.length} HTML files: localized pages, NFC fixed vector, local-only scripts, no known trackers.`);

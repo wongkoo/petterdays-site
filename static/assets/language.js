@@ -36,5 +36,5 @@
   }
 
   const destination = routes[preferredLanguage];
-  if (destination && destination !== url.pathname) window.location.replace(destination);
+  if (destination && destination !== url.pathname) window.location.replace(`${destination}${url.search}${url.hash}`);
 })();

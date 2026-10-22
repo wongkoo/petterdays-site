@@ -16,13 +16,29 @@ npm run preview
 
 构建产物在 `dist/`，预览默认使用 `http://localhost:4173`（预览命令还需要 Python 3）。提交源码和资源到 NAS；`dist/`、依赖、凭据和旧站 `.git` 不入库。
 
-首页以实际 App 画面和功能示意介绍记录、自定义类型、照护、用品与 NFC；不展示套餐和价格。五语首页文案在 `scripts/home-content.mjs`，结构在 `scripts/home-render.mjs`，样式在 `static/assets/home.css`。法律和支持内容保留在 `scripts/build.mjs`；发布检查在 `scripts/check.mjs`。首页仅使用第一方脚本切换记录画面，支持鼠标、键盘方向键和辅助功能。
+首页以实际 App 画面和功能示意介绍记录、自定义类型、照护、用品与 NFC；不展示套餐和价格。五语首页文案在 `scripts/home-content.mjs`，结构在 `scripts/home-render.mjs`，样式在 `static/assets/home.css`。法律内容保留在 `scripts/build.mjs`，支持文案在 `scripts/support-content.mjs`；发布检查在 `scripts/check.mjs`。首页仅使用第一方脚本切换记录画面，支持鼠标、键盘方向键和辅助功能。
 
 保留 `static/.well-known/apple-app-site-association`、`_headers`、`_redirects`、链接回退页面和 NFC 解析脚本；它们支持现有 `/1/*`、`/2/*` App 打开链接。协议变更需同步 App 的外部链接规范。
 
 首页首屏、页尾下载区和 NFC 链接回退页直接打开 App Store。商店地址由 `product.json` 中的 Apple ID 拼接，来源是 `AppStore/metadata.json`；网站不自行判断或宣称苹果的审核状态。
 
 图标使用 `project.yml` 指定的正式 AppIcon，不能从旧官网或备用图标复制。`scripts/prepare-brand.py` 导出网站图标、32px favicon 和 180px Apple Touch Icon，并为文件名加入源图摘要，避免旧缓存。页眉、页尾、分享卡片和链接回退页统一引用这些资源。根路径 `app-icon.png` 保留为兼容入口，内容也同步为当前图标。
+
+## 产品指南与搜索识别
+
+中英文产品介绍位于 `/guide/` 和 `/en/guide/`，用六张短卡片说明能力，附日常记录与 NFC 教程入口；不重复展示长目录或故障 FAQ。文案源为 `scripts/guides.mjs`，只有实际存在的语言版本才生成 alternate 链接。支持页内容集中在 `scripts/support-content.mjs`：四个按需展开的问题，加一个邮件入口；不重复产品介绍、法律导航和公开报障提醒。构建时自动加入 sitemap，更新正文时同步维护指南的更新日期。
+
+顶部导航对应首页、产品介绍和支持三个独立页面，简体中文预览文案为「初次见面 / 探索功能 / 需要帮忙？」；在手机端完整显示并标识当前位置。页内锚点只放在正文和目录里；隐私与条款保留在页尾。首页维持简短的特色展示，不新增长篇指南介绍区。产品详情暂有中英文，其他语言的产品入口明确标注为英文内容。
+
+所有正式页面共用 `styles.css` 的浅色画布和导航尺寸、字体、图标，不在 `home.css` 单独覆盖导航。预留滚动条空间并预加载当前语言字体，减少页面切换时的水平位移和字体重排。
+
+首页和指南包含静态 JSON-LD，关联网站、应用、开发者与 App Store。它仅提供产品事实，不添加未经证实的评分、评论、价格或医疗效果。JSON-LD 是不可执行的数据块，原有严格 CSP 不变。检查程序验证 JSON、品牌身份、站内链接、目录锚点和站点地图。
+
+`robots.txt` 已允许抓取；无需重复列出每个爬虫。Cloudflare 实际访问权限、Google/Bing 站点验证、提交 sitemap 和索引状态属于部署后的独立步骤，源码检查不代表已收录。当前不添加分析脚本，也不凭空生成验证令牌。
+
+Google Search Console 使用 `static/google044d9f950647aca5.html` 验证 URL 前缀属性；文件由站长平台提供，发布后仍需保留。检查程序单独核对其内容，不将验证文件加入页面数量或 sitemap。
+
+只修改文字时，在 build 后运行 `.local/website-asset-tools/bin/python website/scripts/prepare-assets.py --fonts-only`（从 App 仓库根目录），再重新 build/check，即可更新字体而不重导出截图。
 
 ## 更换画面和更新字体
 

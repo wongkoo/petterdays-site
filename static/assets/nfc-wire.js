@@ -22,6 +22,10 @@
     1: "urineAmount", 2: "urineColor", 3: "stoolConsistency", 4: "status",
     5: "doseUnit", 6: "route", 7: "severity", 8: "visitType",
   });
+  const ENUM_FIELD_KEYS = new Set([
+    "urineAmount", "urineColor", "stoolAmount", "stoolConsistency", "visibleBlood", "straining",
+    "status", "doseUnit", "route", "severity", "visitType", "procedureKind",
+  ]);
 
   function fail() { throw new Error("Invalid NFC payload"); }
   function base64URL(token) {
@@ -98,6 +102,13 @@
     if (state.offset !== value.length || !Number.isSafeInteger(result)) fail();
     return result;
   }
+  function positiveInteger64(map, tag) {
+    const bytes = map.get(tag);
+    if (bytes.length !== 8) fail();
+    const value = new DataView(bytes.buffer, bytes.byteOffset, 8).getBigUint64(0, false);
+    if (value === 0n || value > 0x7fffffffffffffffn) fail();
+    return value <= BigInt(Number.MAX_SAFE_INTEGER) ? Number(value) : value.toString();
+  }
   function dateValue(map, tag) {
     const value = map.get(tag);
     if (!value) return undefined;
@@ -118,6 +129,10 @@
       add(result, "visibleBlood", byteValue(map, 5, ENUMS.observation, "notObserved"));
       add(result, "straining", byteValue(map, 6, ENUMS.observation, "notObserved"));
       add(result, "note", stringValue(map, 7, false));
+      if (map.has(8)) {
+        if (!["urination", "toiletBoth"].includes(record)) fail();
+        add(result, "urineClumpCount", positiveInteger64(map, 8));
+      }
     } else if (record === "weight") {
       add(result, "kilograms", doubleValue(map, 1, true)); add(result, "note", stringValue(map, 2, false));
     } else if (record === "medication") {
@@ -201,11 +216,11 @@
     ko: { urination: "배뇨", defecation: "배변", toiletBoth: "배뇨·배변", toiletAttempted: "배변 시도", walk: "산책", weight: "체중", medication: "투약", respiratory: "안정 시 호흡", heartRate: "심박수", symptom: "증상", clinicalVisit: "진료", vaccination: "예방접종", medicalProcedure: "의료 처치" },
   };
   const FIELD_LABELS = {
-    "zh-Hans": { urineAmount: "尿量", urineColor: "尿液颜色", stoolAmount: "便量", stoolConsistency: "便便状态", visibleBlood: "可见血", straining: "费力", kilograms: "体重（千克）", medicationName: "药物", status: "状态", doseValue: "剂量", doseUnit: "单位", route: "途径", prescribedBy: "开具者", symptomName: "症状", severity: "程度", bodyArea: "部位", visitType: "就诊类型", reason: "原因", clinicName: "医院", veterinarianName: "兽医", assessment: "评估", carePlan: "方案", vaccineName: "疫苗", doseNumber: "剂次", manufacturer: "生产商", lotNumber: "批号", nextRecommendedDate: "下次建议日期", procedureKind: "操作类型", procedureName: "操作名称", outcome: "结果", ratePerMinute: "每分钟次数", context: "状态", note: "备注" },
-    "zh-Hant": { urineAmount: "尿量", urineColor: "尿液顏色", stoolAmount: "便量", stoolConsistency: "便便狀態", visibleBlood: "可見血", straining: "費力", kilograms: "體重（公斤）", medicationName: "藥物", status: "狀態", doseValue: "劑量", doseUnit: "單位", route: "途徑", prescribedBy: "開立者", symptomName: "症狀", severity: "程度", bodyArea: "部位", visitType: "就診類型", reason: "原因", clinicName: "醫院", veterinarianName: "獸醫", assessment: "評估", carePlan: "方案", vaccineName: "疫苗", doseNumber: "劑次", manufacturer: "生產商", lotNumber: "批號", nextRecommendedDate: "下次建議日期", procedureKind: "處置類型", procedureName: "處置名稱", outcome: "結果", ratePerMinute: "每分鐘次數", context: "狀態", note: "備註" },
-    en: { urineAmount: "Urine amount", urineColor: "Urine color", stoolAmount: "Stool amount", stoolConsistency: "Stool consistency", visibleBlood: "Visible blood", straining: "Straining", kilograms: "Kilograms", medicationName: "Medication", status: "Status", doseValue: "Dose", doseUnit: "Unit", route: "Route", prescribedBy: "Prescribed by", symptomName: "Symptom", severity: "Severity", bodyArea: "Body area", visitType: "Visit type", reason: "Reason", clinicName: "Clinic", veterinarianName: "Veterinarian", assessment: "Assessment", carePlan: "Care plan", vaccineName: "Vaccine", doseNumber: "Dose number", manufacturer: "Manufacturer", lotNumber: "Lot number", nextRecommendedDate: "Next date", procedureKind: "Procedure", procedureName: "Procedure name", outcome: "Outcome", ratePerMinute: "Rate per minute", context: "Context", note: "Note" },
-    ja: { urineAmount: "尿量", urineColor: "尿の色", stoolAmount: "便量", stoolConsistency: "便の状態", visibleBlood: "目に見える血", straining: "いきみ", kilograms: "体重（kg）", medicationName: "薬", status: "状態", doseValue: "用量", doseUnit: "単位", route: "投与経路", prescribedBy: "処方者", symptomName: "症状", severity: "程度", bodyArea: "部位", visitType: "診察種別", reason: "理由", clinicName: "病院", veterinarianName: "獣医師", assessment: "評価", carePlan: "計画", vaccineName: "ワクチン", doseNumber: "接種回数", manufacturer: "製造元", lotNumber: "ロット", nextRecommendedDate: "次回推奨日", procedureKind: "処置種別", procedureName: "処置名", outcome: "結果", ratePerMinute: "1分あたり", context: "状況", note: "メモ" },
-    ko: { urineAmount: "소변 양", urineColor: "소변 색", stoolAmount: "대변 양", stoolConsistency: "대변 상태", visibleBlood: "육안 혈액", straining: "힘줌", kilograms: "체중(kg)", medicationName: "약", status: "상태", doseValue: "용량", doseUnit: "단위", route: "투여 경로", prescribedBy: "처방자", symptomName: "증상", severity: "정도", bodyArea: "부위", visitType: "진료 유형", reason: "이유", clinicName: "병원", veterinarianName: "수의사", assessment: "평가", carePlan: "계획", vaccineName: "백신", doseNumber: "접종 차수", manufacturer: "제조사", lotNumber: "로트", nextRecommendedDate: "다음 권장일", procedureKind: "처치 유형", procedureName: "처치명", outcome: "결과", ratePerMinute: "분당 횟수", context: "상황", note: "메모" },
+    "zh-Hans": { urineClumpCount: "尿团数", urineAmount: "尿量", urineColor: "尿液颜色", stoolAmount: "便量", stoolConsistency: "便便状态", visibleBlood: "可见血", straining: "费力", kilograms: "体重（千克）", medicationName: "药物", status: "状态", doseValue: "剂量", doseUnit: "单位", route: "途径", prescribedBy: "开具者", symptomName: "症状", severity: "程度", bodyArea: "部位", visitType: "就诊类型", reason: "原因", clinicName: "医院", veterinarianName: "兽医", assessment: "评估", carePlan: "方案", vaccineName: "疫苗", doseNumber: "剂次", manufacturer: "生产商", lotNumber: "批号", nextRecommendedDate: "下次建议日期", procedureKind: "操作类型", procedureName: "操作名称", outcome: "结果", ratePerMinute: "每分钟次数", context: "状态", note: "备注" },
+    "zh-Hant": { urineClumpCount: "尿團數", urineAmount: "尿量", urineColor: "尿液顏色", stoolAmount: "便量", stoolConsistency: "便便狀態", visibleBlood: "可見血", straining: "費力", kilograms: "體重（公斤）", medicationName: "藥物", status: "狀態", doseValue: "劑量", doseUnit: "單位", route: "途徑", prescribedBy: "開立者", symptomName: "症狀", severity: "程度", bodyArea: "部位", visitType: "就診類型", reason: "原因", clinicName: "醫院", veterinarianName: "獸醫", assessment: "評估", carePlan: "方案", vaccineName: "疫苗", doseNumber: "劑次", manufacturer: "生產商", lotNumber: "批號", nextRecommendedDate: "下次建議日期", procedureKind: "處置類型", procedureName: "處置名稱", outcome: "結果", ratePerMinute: "每分鐘次數", context: "狀態", note: "備註" },
+    en: { urineClumpCount: "Urine Clumps", urineAmount: "Urine amount", urineColor: "Urine color", stoolAmount: "Stool amount", stoolConsistency: "Stool consistency", visibleBlood: "Visible blood", straining: "Straining", kilograms: "Kilograms", medicationName: "Medication", status: "Status", doseValue: "Dose", doseUnit: "Unit", route: "Route", prescribedBy: "Prescribed by", symptomName: "Symptom", severity: "Severity", bodyArea: "Body area", visitType: "Visit type", reason: "Reason", clinicName: "Clinic", veterinarianName: "Veterinarian", assessment: "Assessment", carePlan: "Care plan", vaccineName: "Vaccine", doseNumber: "Dose number", manufacturer: "Manufacturer", lotNumber: "Lot number", nextRecommendedDate: "Next date", procedureKind: "Procedure", procedureName: "Procedure name", outcome: "Outcome", ratePerMinute: "Rate per minute", context: "Context", note: "Note" },
+    ja: { urineClumpCount: "おしっこの塊の数", urineAmount: "尿量", urineColor: "尿の色", stoolAmount: "便量", stoolConsistency: "便の状態", visibleBlood: "目に見える血", straining: "いきみ", kilograms: "体重（kg）", medicationName: "薬", status: "状態", doseValue: "用量", doseUnit: "単位", route: "投与経路", prescribedBy: "処方者", symptomName: "症状", severity: "程度", bodyArea: "部位", visitType: "診察種別", reason: "理由", clinicName: "病院", veterinarianName: "獣医師", assessment: "評価", carePlan: "計画", vaccineName: "ワクチン", doseNumber: "接種回数", manufacturer: "製造元", lotNumber: "ロット", nextRecommendedDate: "次回推奨日", procedureKind: "処置種別", procedureName: "処置名", outcome: "結果", ratePerMinute: "1分あたり", context: "状況", note: "メモ" },
+    ko: { urineClumpCount: "소변 덩어리 수", urineAmount: "소변 양", urineColor: "소변 색", stoolAmount: "대변 양", stoolConsistency: "대변 상태", visibleBlood: "육안 혈액", straining: "힘줌", kilograms: "체중(kg)", medicationName: "약", status: "상태", doseValue: "용량", doseUnit: "단위", route: "투여 경로", prescribedBy: "처방자", symptomName: "증상", severity: "정도", bodyArea: "부위", visitType: "진료 유형", reason: "이유", clinicName: "병원", veterinarianName: "수의사", assessment: "평가", carePlan: "계획", vaccineName: "백신", doseNumber: "접종 차수", manufacturer: "제조사", lotNumber: "로트", nextRecommendedDate: "다음 권장일", procedureKind: "처치 유형", procedureName: "처치명", outcome: "결과", ratePerMinute: "분당 횟수", context: "상황", note: "메모" },
   };
   const VALUE_LABELS = {
     "zh-Hans": { unknown: "未知", trace: "微量", small: "少", medium: "中等", large: "多", usualForPet: "和平时相近", normal: "正常", clear: "透明", yellow: "黄色", dark: "深色", pink: "粉色", red: "红色", brown: "棕色", other: "其他", dry: "干硬", formed: "成形", soft: "偏软", diarrhea: "腹泻", unclassified: "未分类", notObserved: "未观察", yes: "是", no: "否", administered: "已使用", partial: "部分使用", skipped: "跳过", refused: "拒绝", milligram: "毫克", gram: "克", milliliter: "毫升", tablet: "片", capsule: "粒", drop: "滴", puff: "喷", application: "次", oral: "口服", topical: "外用", injection: "注射", inhaled: "吸入", ocular: "眼部", otic: "耳部", mild: "轻度", moderate: "中度", severe: "重度", urgent: "紧急", wellness: "健康检查", illness: "疾病就诊", emergency: "急诊", followUp: "复诊", hospitalization: "住院", procedure: "操作", sterilization: "绝育", surgery: "手术", dental: "口腔", microchip: "芯片" },
@@ -258,7 +273,8 @@
       for (const field of decoded.fields) {
         const term = root.document.createElement("dt"), value = root.document.createElement("dd");
         term.textContent = FIELD_LABELS[language][field.key] || field.key;
-        value.textContent = VALUE_LABELS[language][field.value] || String(field.value);
+        value.textContent = ENUM_FIELD_KEYS.has(field.key) && !field.customAlias
+          ? VALUE_LABELS[language][field.value] : String(field.value);
         list.append(term, value);
       }
     }

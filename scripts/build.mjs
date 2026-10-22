@@ -4,13 +4,15 @@ import { fileURLToPath } from "node:url";
 import { homeContent } from "./home-content.mjs";
 import { productHome, escape } from "./home-render.mjs";
 import { product as productIdentity, appStoreURL } from "./product.mjs";
+import { guideContent, guidePages, guideLocales, guideUpdatedDate } from "./guides.mjs";
+import { supportContent } from "./support-content.mjs";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const out = join(root, "dist");
 const origin = "https://petterdays.wongkoo.group";
 const effectiveDate = "2026-08-19";
 const updatedDate = "2026-10-05";
-const homeUpdatedDate = "2026-10-05";
+const homeUpdatedDate = guideUpdatedDate;
 const issueURL = "https://github.com/wongkoo/petterdays-site/issues/new/choose";
 const supportEmail = "petterdays.app@gmail.com";
 const supportURL = `mailto:${supportEmail}`;
@@ -127,18 +129,7 @@ const locales = {
         ["8. 联系", [`条款或支持问题请使用 <a href="${supportURL}">${supportEmail}</a>。请勿在公开问题中提交私人健康资料或备份文件。`]],
       ],
     },
-    support: {
-      eyebrow: "支持",
-      title: "先保住资料，再解决问题。",
-      intro: "遇到同步、备份或资料库问题时，不要反复卸载 App。先创建备份并记录提示信息，再按下面的入口处理。",
-      cards: [["邮件联系", supportEmail, supportURL], ["管理资料", "查看备份、恢复、导出、删除与共享说明", "/privacy/choices/"], ["隐私政策", "了解本地处理、iCloud 与权限", "/privacy/"], ["使用条款", "了解服务、订阅与责任边界", "/terms/"]],
-      sections: [
-        ["常见处理顺序", ["1. 不要删除 App，也不要清理资料库文件。", "2. 若 App 仍可打开，进入“档案 → 数据与备份 → 导入与导出”创建完整备份。", "3. 记录 App 版本、iOS 版本、出现问题的时间和完整提示。", "4. 通过支持渠道提交不含私人数据的说明。"]],
-        ["订阅与购买", ["购买和恢复由 Apple App Store 处理。请先确认设备登录了购买时使用的 Apple Account，再在 App 中选择“恢复购买”。价格和当前权益以 App Store 与 App 内显示为准。"]],
-        ["iCloud 同步与共享", ["确认已订阅 Petter Days Pro、已在 App 中明确启用 iCloud 同步、系统已登录 iCloud、iCloud Drive 可用且空间充足。不要通过卸载重装来强制同步。家庭共享指 CKShare 共同照护，不表示订阅权益由 App Store 家庭共享。"]],
-        ["公开渠道隐私提醒", [`一般问题可在 <a href="${issueURL}">GitHub Issues</a> 公开提交。请勿发布宠物病历、备份、照片、联系方式、Apple Account 信息、支付信息或精确位置；隐私问题请使用上方邮箱联系。`]],
-      ],
-    },
+
   },
   "zh-Hant": {
     prefix: "/zh-Hant",
@@ -216,7 +207,7 @@ const locales = {
     },
     choices: { eyebrow: "私隱選擇與資料管理", title: "檢視、帶走、還原或刪除資料。", intro: "這些核心能力不受訂閱限制。不可逆操作前請先建立並驗證完整備份。", sections: [["備份與獸醫資料包", ["在「檔案 → 資料與備份 → 匯入與匯出」匯出完整備份，或按寵物產生含趨勢圖、明細表和所選附件的獸醫資料包。"]], ["完整備份與還原", ["可建立包含完整記錄、修訂、刪除狀態與附件的 .petterdaysbackup。檔案包含私人資料，請只儲存在你掌控的位置。免費用戶也可完整還原超過兩隻寵物的備份；超出兩隻的寵物保持可檢視和匯出但唯讀。"]], ["刪除與共享", ["一般刪除可在最近刪除中還原；永久刪除整個家庭資料是獨立高風險操作。CKShare 成員可按權限退出或被移除，取消訂閱不等於自動刪除分享關係。"]], ["需要協助", [`使用 <a href="${supportURL}">${supportEmail}</a>，但不要公開私人資料或備份。`]]]},
     terms: { eyebrow: "使用條款", title: "清楚的邊界，安心的記錄。", intro: "使用 Petter Days 即表示同意以下條款。", sections: [["服務與醫療邊界", ["Petter Days 提供寵物記錄、提醒、趨勢、附件、備份、手動靜息呼吸記錄、庫存及可選 iCloud 家庭協作。它不是醫療器械，不診斷、預防或治療疾病，也不取代獸醫。"]], ["用戶責任", ["用戶應確保內容與共享合法適當，並妥善保管裝置、Apple Account 及備份檔案。"]], ["訂閱", ["Petter Days Pro 經 Apple App Store 自動續訂；價格、取消、退款及稅項以 Apple 購買頁面和條款為準。每位共享參與者需各自訂閱。"]], ["資料與可用性", ["裝置、儲存空間、網絡、iCloud、誤操作等可能影響資料。請定期建立並驗證備份；我們不作永不遺失或永久保管承諾。"]], ["聯絡", [`條款或支援問題請使用 <a href="${supportURL}">${supportEmail}</a>，不要公開私人健康資料。`]]]},
-    support: { eyebrow: "支援", title: "先保住資料，再解決問題。", intro: "遇到同步、備份或資料庫問題時不要反覆卸載。先建立備份並記錄完整提示。", cards: [["電郵聯絡", supportEmail, supportURL], ["管理資料", "備份、還原、匯出、刪除與共享", "/zh-Hant/privacy/choices/"], ["私隱政策", "本機處理、iCloud 與權限", "/zh-Hant/privacy/"], ["使用條款", "服務、訂閱與責任邊界", "/zh-Hant/terms/"]], sections: [["處理順序", ["不要刪除 App。若仍可開啟，先在「檔案 → 資料與備份 → 匯入與匯出」建立完整備份，記錄 App/iOS 版本、時間和提示，再提交不含私人資料的說明。"]], ["訂閱與 iCloud", ["確認登入購買時的 Apple Account，使用恢復購買；確認已訂閱 Petter Days Pro、明確啟用 iCloud 同步、iCloud Drive 可用且空間充足。不要用卸載重裝強制同步。"]], ["私隱提醒", [`一般問題可在 <a href="${issueURL}">GitHub Issues</a> 公開提交。請勿發佈病歷、備份、照片、聯絡方式、支付資料或精確位置；私隱問題請使用上方電郵聯絡。`]]]},
+
   },
   en: {
     prefix: "/en",
@@ -294,7 +285,7 @@ const locales = {
     },
     choices: { eyebrow: "Privacy Choices & Data Management", title: "View, carry, restore, or delete your data.", intro: "These core data tools are not subscription-gated. Before an irreversible action, create and test a complete backup.", sections: [["Backup and veterinary brief", ["Export a complete backup from Profile → Data & Backups → Import & Export, or create a per-pet veterinary brief with trend charts, detail tables, and selected attachments."]], ["Complete backup", ["Create a .petterdaysbackup containing complete records, revisions, deletion status, and attachments. It contains private information, so save it only to a location you control."]], ["Restore", ["Restore validates the package and its relationships. Free users can restore backups with more than two pets without losing data: up to two remain editable and the rest remain visible and exportable in read-only mode until subscribed."]], ["Delete and recover", ["Ordinary deletion goes to Recently Deleted and can be restored during its retention period. Permanently deleting a household is a separate high-risk action that removes it from the current library after confirmation."]], ["iCloud and sharing", ["Sync begins only after subscription and explicit enablement. Sharing management shows members and permissions. Expiring a subscription pauses new cloud operations; it does not claim to remove cloud data or CKShare participation automatically."]], ["Get help", [`Email <a href="${supportURL}">${supportEmail}</a> with the App version and a description of the issue. Do not post backups, medical records, or precise locations.`]]]},
     terms: { eyebrow: "Terms of Use", title: "Clear boundaries for dependable records.", intro: "By using Petter Days, you agree to these terms. If you do not agree, stop using the App.", sections: [["1. Service", ["Petter Days provides pet-care records, reminders, trends, attachments, backups, observation tools, inventory, and optional iCloud collaboration. Features may change with future versions."]], ["2. Not medical care", ["Petter Days is not a medical device and does not diagnose, prevent, monitor, or treat disease. It does not replace a veterinarian. Seek professional help for urgent, persistent, or concerning symptoms."]], ["3. Your responsibilities", ["You are responsible for the legality and accuracy of content, attachments, recipients, and permissions, and for protecting your device, Apple Account, and backup files. Do not upload or share another person’s private data without authority."]], ["4. Subscription", ["Petter Days Pro is an auto-renewable subscription sold through Apple App Store. Price, term, trial, renewal, cancellation, refund, and taxes follow the purchase screen and Apple’s terms. Each shared participant needs a separate subscription."]], ["5. Data and availability", ["A device failure, storage limits, network or iCloud state, user action, or events outside reasonable control may affect data. Keep and test complete backups. We do not promise that data can never be lost or will be stored forever."]], ["6. Acceptable use and changes", ["Do not use Petter Days to violate rights or law, distribute malware, bypass subscription or permission controls, or interfere with service. We may update the App and these terms for security, compliance, compatibility, or product improvements."]], ["7. Contact", [`Email <a href="${supportURL}">${supportEmail}</a> for terms or support questions. Never post private health data or backups publicly.`]]]},
-    support: { eyebrow: "Support", title: "Protect the data first. Then solve the problem.", intro: "For a sync, backup, or library problem, do not repeatedly uninstall the App. Create a backup when possible and record the full message first.", cards: [["Email support", supportEmail, supportURL], ["Manage data", "Backup, restore, export, delete, and sharing", "/en/privacy/choices/"], ["Privacy Policy", "On-device processing, iCloud, and permissions", "/en/privacy/"], ["Terms of Use", "Service, subscriptions, and responsibilities", "/en/terms/"]], sections: [["Recommended order", ["Do not delete the App. If it still opens, create a complete backup in Profile → Data & Backups → Import & Export. Note the App version, iOS version, time, and full message, then send a description with no private data."]], ["Purchase and iCloud", ["Sign in with the Apple Account used for purchase and choose Restore Purchases. Confirm an active Petter Days Pro subscription, explicit iCloud sync enablement, available iCloud Drive, and enough storage. Do not uninstall to force synchronization."]], ["Public-channel warning", [`You can report general issues publicly on <a href="${issueURL}">GitHub Issues</a>. Do not post medical records, backups, photos, contact information, Apple Account details, payment data, or precise locations. Use the email above for privacy questions.`]]]},
+
   },
   ja: {
     prefix: "/ja",
@@ -372,7 +363,7 @@ const locales = {
     },
     choices: { eyebrow: "プライバシー設定とデータ管理", title: "表示、持ち出し、復元、削除。", intro: "これらの基本機能は購読に依存しません。不可逆操作の前に完全バックアップを作成し、確認してください。", sections: [["バックアップと獣医向け資料", ["「プロフィール → データとバックアップ → 読み込みと書き出し」から完全バックアップを書き出すか、傾向グラフ、明細表、選択した添付を含む獣医向け資料を作成します。"]], ["バックアップと復元", ["完全な記録、変更履歴、削除状態、添付ファイルを含む .petterdaysbackup を作成できます。個人情報を含むため、自分で管理できる場所にのみ保存してください。無料版でも3匹以上を失わず復元でき、2匹を超える分は購読まで閲覧・書き出し可能な読み取り専用になります。"]], ["削除と共有", ["通常の削除は「最近削除した項目」から復元可能です。世帯全体の完全削除は別の高リスク操作です。購読終了は CKShare 関係の自動削除を意味しません。"]], ["サポート", [`<a href="${supportURL}">${supportEmail}</a> を利用し、公開ページに個人データやバックアップを投稿しないでください。`]]]},
     terms: { eyebrow: "利用規約", title: "明確な境界で、安心して記録。", intro: "Petter Days の利用により、本規約に同意したものとみなされます。", sections: [["サービスと医療上の境界", ["Petter Days は記録、通知、傾向、添付、バックアップ、観察補助、在庫、任意の iCloud 連携を提供します。医療機器ではなく、診断・予防・治療を行いません。"]], ["利用者の責任", ["内容と共有の適法性、端末、Apple Account、バックアップファイルの管理は利用者の責任です。"]], ["購読", ["Petter Days Pro は Apple App Store の自動更新購読です。価格、期間、解約、返金、税は Apple の購入画面と規約に従います。各共有参加者に個別購読が必要です。"]], ["データと可用性", ["端末故障、容量、ネットワーク、iCloud、誤操作などでデータが影響を受ける場合があります。完全バックアップを定期的に作成・検証してください。永久保存や絶対に失われないことを保証しません。"]], ["連絡", [`<a href="${supportURL}">${supportEmail}</a> を利用し、個人の健康情報を公開しないでください。`]]]},
-    support: { eyebrow: "サポート", title: "まずデータを守り、その後で解決します。", intro: "同期、バックアップ、ライブラリの問題で App を何度も削除しないでください。可能なら「プロフィール → データとバックアップ → 読み込みと書き出し」で先にバックアップを作成します。", cards: [["メールで問い合わせ", supportEmail, supportURL], ["データ管理", "バックアップ、復元、書き出し、削除、共有", "/ja/privacy/choices/"], ["プライバシー", "端末処理、iCloud、権限", "/ja/privacy/"], ["利用規約", "サービス、購読、責任", "/ja/terms/"]], sections: [["推奨手順", ["App を削除せず、開ける場合は「プロフィール → データとバックアップ → 読み込みと書き出し」で完全バックアップを作成します。App/iOS バージョン、時刻、完全なメッセージを記録し、個人情報を除いて報告してください。"]], ["購読と iCloud", ["購入時の Apple Account を確認して購入を復元します。Petter Days Pro の有効な購読、iCloud 同期の明示的な有効化、iCloud Drive、空き容量を確認し、再インストールで同期を強制しないでください。"]], ["公開窓口の注意", [`一般的な不具合は <a href="${issueURL}">GitHub Issues</a> でも報告できます。公開されるため、診療記録、バックアップ、写真、連絡先、支払情報、正確な位置情報は投稿しないでください。プライバシーに関するお問い合わせは上記のメールをご利用ください。`]]]},
+
   },
   ko: {
     prefix: "/ko",
@@ -450,7 +441,7 @@ const locales = {
     },
     choices: { eyebrow: "개인정보 선택 및 데이터 관리", title: "보고, 가져가고, 복원하거나 삭제하세요.", intro: "이 핵심 기능은 구독과 무관합니다. 되돌릴 수 없는 작업 전에 전체 백업을 만들고 검증하세요.", sections: [["백업과 수의사용 자료", ["「프로필 → 데이터 및 백업 → 가져오기 및 내보내기」에서 전체 백업을 내보내거나 추세 차트, 상세 표와 선택한 첨부파일이 있는 수의사용 자료를 만듭니다."]], ["백업과 복원", ["전체 기록, 수정 기록, 삭제 상태와 첨부 파일이 포함된 .petterdaysbackup을 만들 수 있습니다. 개인 정보가 포함되므로 직접 관리하는 위치에만 저장하세요. 무료 사용자도 세 마리 이상이 포함된 백업을 모두 복원할 수 있으며 두 마리를 넘는 데이터는 구독 전까지 보기와 내보내기가 가능한 읽기 전용입니다."]], ["삭제와 공유", ["일반 삭제는 최근 삭제에서 복원할 수 있습니다. 가정 전체 영구 삭제는 별도의 고위험 작업입니다. 구독 종료가 CKShare 관계를 자동 삭제한다는 뜻은 아닙니다."]], ["도움말", [`<a href="${supportURL}">${supportEmail}</a>을 사용하되 공개 페이지에 개인정보나 백업을 올리지 마세요.`]]]},
     terms: { eyebrow: "이용 약관", title: "명확한 경계로 안심할 수 있는 기록.", intro: "Petter Days를 사용하면 이 약관에 동의하는 것입니다.", sections: [["서비스와 의료 한계", ["Petter Days는 기록, 알림, 추세, 첨부파일, 백업, 관찰 도구, 재고와 선택적 iCloud 협업을 제공합니다. 의료기기가 아니며 질병을 진단·예방·치료하지 않습니다."]], ["사용자 책임", ["콘텐츠와 공유의 적법성, 기기, Apple Account, 백업 파일 보호는 사용자의 책임입니다."]], ["구독", ["Petter Days Pro는 Apple App Store 자동 갱신 구독입니다. 가격, 기간, 취소, 환불과 세금은 Apple 구매 화면과 약관을 따릅니다. 각 공유 참여자에게 별도 구독이 필요합니다."]], ["데이터와 가용성", ["기기 고장, 저장 용량, 네트워크, iCloud, 오작동이 데이터에 영향을 줄 수 있습니다. 전체 백업을 정기적으로 만들고 검증하세요. 영구 보관이나 절대 손실되지 않음을 보장하지 않습니다."]], ["문의", [`<a href="${supportURL}">${supportEmail}</a>을 이용하고 비공개 건강 정보를 공개하지 마세요.`]]]},
-    support: { eyebrow: "지원", title: "먼저 데이터를 보호한 뒤 문제를 해결하세요.", intro: "동기화, 백업 또는 자료 문제로 App을 반복 삭제하지 마세요. 가능하면 먼저 백업을 만들고 전체 메시지를 기록하세요.", cards: [["이메일 문의", supportEmail, supportURL], ["데이터 관리", "백업, 복원, 내보내기, 삭제와 공유", "/ko/privacy/choices/"], ["개인정보", "기기 내 처리, iCloud와 권한", "/ko/privacy/"], ["이용 약관", "서비스, 구독과 책임", "/ko/terms/"]], sections: [["권장 순서", ["App을 삭제하지 마세요. 열 수 있다면 「프로필 → 데이터 및 백업 → 가져오기 및 내보내기」에서 전체 백업을 만들고 App/iOS 버전, 시간, 전체 오류를 기록한 다음 개인정보 없이 신고하세요."]], ["구독과 iCloud", ["구매에 사용한 Apple Account를 확인하고 구매 복원을 선택하세요. Petter Days Pro 구독이 유효한지, iCloud 동기화를 명시적으로 켰는지, iCloud Drive와 저장 공간이 충분한지 확인하고 재설치로 동기화를 강제하지 마세요."]], ["공개 채널 주의", [`일반적인 문제는 <a href="${issueURL}">GitHub Issues</a>에 공개적으로 신고할 수 있습니다. 진료 기록, 백업, 사진, 연락처, 결제 정보 또는 정확한 위치는 게시하지 마세요. 개인정보 관련 문의는 위 이메일을 이용해 주세요.`]]]},
+
   },
 };
 
@@ -469,20 +460,31 @@ function absolutePath(locale, page) {
 }
 
 function langLinks(page, current) {
-  return Object.entries(locales).map(([code, value]) => `<a href="${pathFor(code, page)}?lang=${code}" hreflang="${code}"${code === current ? ' aria-current="page"' : ""}>${value.language}</a>`).join("");
+  return pageLocales(page).map((code) => `<a href="${pathFor(code, page)}?lang=${code}" hreflang="${code}"${code === current ? ' aria-current="page"' : ""}>${locales[code].language}</a>`).join("");
 }
 
-function header(locale, page, product = false) {
+function pageLocales(page) {
+  return guidePages.includes(page) ? guideLocales : Object.keys(locales);
+}
+
+function header(locale, page) {
   const c = locales[locale];
-  const links = product
-    ? `<a href="#features">${homeContent[locale].nav[0]}</a><a href="#nfc">${homeContent[locale].nav[1]}</a><a href="${pathFor(locale, "support")}">${homeContent[locale].nav[2]}</a>`
-    : `<a href="${pathFor(locale, "privacy")}">${c.nav.privacy}</a><a href="${pathFor(locale, "terms")}">${c.nav.terms}</a><a href="${pathFor(locale, "support")}">${c.nav.support}</a>`;
+  const productLabels = { "zh-Hans": "产品介绍", "zh-Hant": "產品介紹（英文）", en: "Product", ja: "製品紹介（英語）", ko: "제품 소개 (영어)" };
+  const productLocale = guideContent[locale] ? locale : "en";
+  const labels = locale === "zh-Hans"
+    ? { home: "初次见面", product: "探索功能", support: "需要帮忙？" }
+    : { home: c.nav.home, product: productLabels[locale], support: c.nav.support };
+  const items = [
+    { key: "home", label: labels.home, href: pathFor(locale, "home") },
+    { key: "guide", label: labels.product, href: pathFor(productLocale, "guide") },
+    { key: "support", label: labels.support, href: pathFor(locale, "support") },
+  ];
+  const links = items.map(({ key, label, href }) => `<a href="${href}"${page === key ? ' aria-current="page"' : key === "guide" && guidePages.includes(page) ? ' aria-current="location"' : ""}${key === "guide" && productLocale !== locale ? ' hreflang="en"' : ""}>${label}</a>`).join("");
   return `<a class="skip-link" href="#content">${homeContent[locale].skip}</a>
-  <header class="site-header"><nav class="nav" aria-label="${c.nav.home}">
+  <header class="site-header"><nav class="nav site-nav" aria-label="${c.nav.home}">
     <a class="brand" href="${pathFor(locale, "home")}"><img class="brand-icon" src="${productIdentity.icon}" alt=""><span>Petter Days</span></a>
-    <div class="nav-links">${links}
-      <details class="lang"><summary>${c.nav.language} ▾</summary><div class="lang-menu">${langLinks(page, locale)}</div></details>
-    </div>
+    <div class="nav-links site-tabs">${links}</div>
+    <details class="lang"><summary>${c.nav.language} ▾</summary><div class="lang-menu">${langLinks(page, locale)}</div></details>
   </nav></header>`;
 }
 
@@ -490,14 +492,31 @@ function footer(locale, product = false) {
   const c = locales[locale];
   const h = homeContent[locale];
   const note = product ? `${escape(h.demo)}<br>${escape(h.medical)}` : `${c.common.medical}<br>${c.common.source}`;
-  return `<footer class="site-footer"><div class="footer-inner"><div><a class="brand" href="${pathFor(locale, "home")}"><img class="brand-icon" src="${productIdentity.icon}" alt=""><span>Petter Days</span></a><p class="footer-note">${note}<br>© 2026 ZhenHui Wang</p></div><nav class="footer-links" aria-label="${c.nav.support}"><a href="${pathFor(locale, "privacy")}">${c.nav.privacy}</a><a href="${pathFor(locale, "choices")}">${h.data}</a><a href="${pathFor(locale, "terms")}">${c.nav.terms}</a><a href="${pathFor(locale, "support")}">${c.nav.support}</a></nav></div></footer>`;
+  const guideLink = guideContent[locale] ? `<a href="${pathFor(locale, "guide")}">${guideContent[locale].label}</a>` : "";
+  return `<footer class="site-footer"><div class="footer-inner"><div><a class="brand" href="${pathFor(locale, "home")}"><img class="brand-icon" src="${productIdentity.icon}" alt=""><span>Petter Days</span></a><p class="footer-note">${note}<br>© 2026 ZhenHui Wang</p></div><nav class="footer-links" aria-label="${c.nav.support}">${guideLink}<a href="${pathFor(locale, "privacy")}">${c.nav.privacy}</a><a href="${pathFor(locale, "choices")}">${h.data}</a><a href="${pathFor(locale, "terms")}">${c.nav.terms}</a><a href="${pathFor(locale, "support")}">${c.nav.support}</a></nav></div></footer>`;
+}
+
+// Inert JSON data blocks only; the existing strict script CSP stays unchanged.
+function structuredData(locale, page, title, description) {
+  const canonical = absolutePath(locale, page);
+  const appID = `${origin}/#app`;
+  const graph = [
+    { "@type": "WebSite", "@id": `${origin}/#website`, url: `${origin}/`, name: "Petter Days", inLanguage: Object.keys(locales) },
+    { "@type": "Person", "@id": `${origin}/#developer`, name: "ZhenHui Wang" },
+    { "@type": "MobileApplication", "@id": appID, name: "Petter Days", url: absolutePath(locale, "home"), description: homeContent[locale].description, image: `${origin}${productIdentity.icon}`, applicationCategory: "LifestyleApplication", operatingSystem: "iOS 18.0 or later; iPadOS 18.0 or later", downloadUrl: appStoreURL, sameAs: [appStoreURL], author: { "@id": `${origin}/#developer` }, inLanguage: Object.keys(locales) },
+    { "@type": "WebPage", "@id": `${canonical}#webpage`, url: canonical, name: `${title} · Petter Days`, description, inLanguage: locale, isPartOf: { "@id": `${origin}/#website` }, about: { "@id": appID } },
+  ];
+  const json = JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replaceAll("<", "\\u003c");
+  return `<script type="application/ld+json">${json}</script>`;
 }
 
 function document(locale, page, title, description, content, product = false) {
   const c = locales[locale];
   const canonical = absolutePath(locale, page);
-  const alternates = Object.keys(locales).map((code) => `<link rel="alternate" hreflang="${code}" href="${absolutePath(code, page)}">`).join("");
-  return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">${product ? '<meta name="theme-color" content="#FFFDFA">' : '<meta name="theme-color" content="#F3EFE7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)">'}<title>${escape(title)} · Petter Days</title><meta name="description" content="${escape(description)}"><meta name="apple-itunes-app" content="app-id=${productIdentity.appStoreAppleID}"><meta property="og:title" content="${escape(title)} · Petter Days"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${canonical}"><meta property="og:type" content="website"><meta property="og:image" content="${origin}${productIdentity.icon}"><meta name="twitter:card" content="summary"><link rel="canonical" href="${canonical}">${alternates}<link rel="alternate" hreflang="x-default" href="${absolutePath("zh-Hans", page)}"><link rel="icon" type="image/png" sizes="32x32" href="${productIdentity.favicon}"><link rel="apple-touch-icon" sizes="180x180" href="${productIdentity.touchIcon}"><script src="/assets/language.js"></script><link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/assets/rounded.css">${product ? '<link rel="stylesheet" href="/assets/home.css"><script src="/assets/home.js" defer></script>' : ''}</head><body${product ? ' class="product-page"' : ''}>${header(locale, page, product)}<main id="content">${content}</main>${footer(locale, product)}</body></html>`;
+  const alternates = pageLocales(page).map((code) => `<link rel="alternate" hreflang="${code}" href="${absolutePath(code, page)}">`).join("");
+  const fontSuffix = { "zh-Hans": "sc", en: "sc", "zh-Hant": "tc", ja: "j", ko: "k" }[locale];
+  const schema = page === "home" && product || guidePages.includes(page) ? structuredData(locale, page, title, description) : "";
+  return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#FFFDFA"><title>${escape(title)} · Petter Days</title><meta name="description" content="${escape(description)}"><meta name="apple-itunes-app" content="app-id=${productIdentity.appStoreAppleID}"><meta property="og:title" content="${escape(title)} · Petter Days"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${canonical}"><meta property="og:type" content="website"><meta property="og:image" content="${origin}${productIdentity.icon}"><meta name="twitter:card" content="summary">${schema}<link rel="canonical" href="${canonical}">${alternates}<link rel="alternate" hreflang="x-default" href="${absolutePath("zh-Hans", page)}"><link rel="icon" type="image/png" sizes="32x32" href="${productIdentity.favicon}"><link rel="apple-touch-icon" sizes="180x180" href="${productIdentity.touchIcon}"><link rel="preload" href="/assets/fonts/rounded-${fontSuffix}.woff2" as="font" type="font/woff2" crossorigin><script src="/assets/language.js"></script><link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/assets/rounded.css">${product ? '<link rel="stylesheet" href="/assets/home.css"><script src="/assets/home.js" defer></script>' : ''}</head><body class="site-page${product ? ' product-page' : ''}">${header(locale, page, product)}<main id="content">${content}</main>${footer(locale, product)}</body></html>`;
 }
 
 function home(locale) {
@@ -514,12 +533,25 @@ function legalPage(locale, page) {
 }
 
 function support(locale) {
-  const c = locales[locale];
-  const s = c.support;
-  const cards = s.cards.map(([title, text, href]) => `<a class="support-card" href="${href}"><strong>${title}</strong><span>${text}</span></a>`).join("");
-  const sections = s.sections.map(([title, paragraphs]) => `<section><h2>${title}</h2>${paragraphs.map((p) => `<p>${p}</p>`).join("")}</section>`).join("");
-  const content = `<header class="legal-hero"><p class="eyebrow">${s.eyebrow}</p><h1>${s.title}</h1><p>${s.intro}</p><div class="support-grid">${cards}</div></header><article class="article">${sections}</article>`;
+  const s = supportContent[locale];
+  const questions = s.questions.map(({ title, answer, link }) => `<details class="guide-faq"><summary>${escape(title)}</summary><p>${escape(answer)}</p>${link ? `<p><a href="${link[1]}">${escape(link[0])} →</a></p>` : ""}</details>`).join("");
+  const content = `<header class="legal-hero support-hero"><p class="eyebrow">${s.eyebrow}</p><h1>${escape(s.title)}</h1><p>${escape(s.intro)}</p></header><article class="article support-article">${questions}<section class="support-contact"><h2>${escape(s.contact)}</h2><a class="contact-email" href="${supportURL}">${supportEmail} ↗</a><p>${escape(s.contactNote)}</p></section></article>`;
   return document(locale, "support", s.eyebrow, s.intro, content);
+}
+
+function guidePage(locale, page) {
+  const copy = guideContent[locale];
+  const data = copy.pages[page];
+  const list = (items, tag) => items ? `<${tag}>${items.map((item) => `<li>${escape(item)}</li>`).join("")}</${tag}>` : "";
+  const sections = data.sections.map((s) => `<section id="${s.id}"><h2>${escape(s.title)}</h2>${(s.paragraphs || []).map((p) => `<p>${escape(p)}</p>`).join("")}${list(s.steps, "ol")}${list(s.bullets, "ul")}${s.link ? `<p><a href="${pathFor(locale, s.link[1])}">${escape(s.link[0])} →</a></p>` : ""}${s.pathLink ? `<p><a href="${s.pathLink[1]}">${escape(s.pathLink[0])} →</a></p>` : ""}</section>`).join("");
+  const faq = data.faq ? `<section id="faq"><h2>${locale === "en" ? "Frequently asked questions" : "常见问题"}</h2>${data.faq.map(([q, a]) => `<details class="guide-faq"><summary>${escape(q)}</summary><p>${escape(a)}</p></details>`).join("")}</section>` : "";
+  const overview = page === "guide";
+  const related = guidePages.filter((key) => key !== page).map((key) => `<a class="support-card" href="${pathFor(locale, key)}"><strong>${escape(key === "guide" ? copy.label : key === "guide/nfc" ? (locale === "en" ? "Set up an NFC shortcut" : "设置 NFC 快捷入口") : (locale === "en" ? "Start a care journal" : "记下第一份照护日常"))} →</strong></a>`).join("");
+  const toc = overview ? "" : `<nav class="guide-toc" aria-label="${copy.contents}">${data.sections.map((s) => `<a href="#${s.id}">${escape(s.title)}</a>`).join("")}${data.faq ? `<a href="#faq">${locale === "en" ? "FAQ" : "常见问题"}</a>` : ""}</nav>`;
+  const heading = locale === "zh-Hans" ? data.title.split("，").map((part, i, parts) => `<span>${escape(part)}${i < parts.length - 1 ? "，" : ""}</span>`).join("") : escape(data.title);
+  const facts = data.facts ? `<ul class="product-facts">${data.facts.map((fact) => `<li>${escape(fact)}</li>`).join("")}</ul>` : `<div class="meta"><span>${copy.updated} <time datetime="${guideUpdatedDate}">${guideUpdatedDate}</time></span></div>`;
+  const content = `<header class="legal-hero guide-hero"><p class="eyebrow"><a href="${pathFor(locale, "guide")}">${overview ? (locale === "en" ? "Explore features" : "探索功能") : copy.label}</a></p><h1>${heading}</h1><p>${escape(data.intro)}</p>${facts}${toc}</header><article class="article guide-article${overview ? ' feature-overview' : ''}">${overview ? `<div class="feature-grid">${sections}</div>` : sections}${faq}<section class="related-guides"><h2>${overview ? (locale === "en" ? "Put it into practice" : "动手试试看") : copy.more}</h2><div class="support-grid">${related}</div></section></article>`;
+  return document(locale, page, data.searchTitle, data.intro, content);
 }
 
 function outputFile(locale, page) {
@@ -540,12 +572,12 @@ await rm(join(out, "styles.css"));
 
 const urls = [];
 for (const locale of Object.keys(locales)) {
-  for (const page of pages) {
-    const html = page === "home" ? home(locale) : page === "support" ? support(locale) : legalPage(locale, page);
+  for (const page of [...pages, ...(guideContent[locale] ? guidePages : [])]) {
+    const html = page === "home" ? home(locale) : page === "support" ? support(locale) : guidePages.includes(page) ? guidePage(locale, page) : legalPage(locale, page);
     const file = outputFile(locale, page);
     await mkdir(dirname(file), { recursive: true });
     await writeFile(file, html);
-    urls.push({ location: absolutePath(locale, page), modified: page === "home" ? homeUpdatedDate : updatedDate });
+    urls.push({ location: absolutePath(locale, page), modified: page === "home" ? homeUpdatedDate : guidePages.includes(page) || page === "support" ? guideUpdatedDate : updatedDate });
   }
 }
 
@@ -556,5 +588,5 @@ const notFound = document("zh-Hans", "home", "页面不存在", "找不到这个
 await writeFile(join(out, "404.html"), notFound);
 
 const generated = await readFile(join(out, "index.html"), "utf8");
-if (!generated.includes('class="product-page"') || !generated.includes('id="features"')) throw new Error("Home generation failed");
+if (!generated.includes('class="site-page product-page"') || !generated.includes('id="features"')) throw new Error("Home generation failed");
 console.log(`Built ${urls.length} localized pages in ${out}`);

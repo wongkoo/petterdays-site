@@ -1,17 +1,5 @@
-/* Light, generous product canvases. Legal pages keep their reading styles. */
+/* Homepage storytelling; shared colors and navigation live in styles.css. */
 .product-page {
-  color-scheme: light;
-  --canvas: #fffdfa;
-  --card: #fff;
-  --raised: #fff;
-  --nested: #f4f0e8;
-  --ink: #342d27;
-  --secondary: #756a5f;
-  --separator: #e8e2d8;
-  --brand: #f4ba50;
-  --brand-ink: #85561f;
-  --shadow: #44312014;
-  --max: 1240px;
   background: var(--canvas);
   font-family: var(--rounded);
   font-weight: 700;
@@ -20,10 +8,6 @@
 .product-page h1, .product-page h2, .product-page .brand, .product-kicker, .type-bubble, .care-illustration, .supply-labels { font-family: var(--rounded); font-weight: 700; }
 .product-page h1, .product-page h2 { letter-spacing: -.045em; overflow-wrap: normal; word-break: normal; text-wrap: balance; }
 .product-page :lang(ko) { word-break: keep-all; }
-.product-page .nav { min-height: 68px; }
-.product-page .brand-icon { width: 34px; height: 34px; box-shadow: none; }
-.product-page .nav-links { gap: 28px; }
-.product-page .nav-links > a { font-size: 13px; font-weight: 500; }
 .product-page main { overflow: clip; }
 .product-kicker { margin: 0 0 16px; color: var(--brand-ink); font-size: 17px; line-height: 1.4; letter-spacing: .005em; }
 .product-hero { position: relative; padding: 60px 24px 84px; text-align: center; }
@@ -142,13 +126,6 @@
   .supply-labels span { padding: 10px 15px; }
 }
 @media (max-width: 720px) {
-  .product-page .nav { min-height: 62px; padding: 0 18px; gap: 12px; }
-  .product-page .brand { font-size: 16px; gap: 8px; }
-  .product-page .brand-icon { width: 30px; height: 30px; }
-  .product-page .nav-links { gap: 3px; }
-  .product-page .nav-links > a { display: none; }
-  .product-page .nav-links > a[href="#nfc"] { display: block; margin-right: 10px; font-size: 12px; }
-  .product-page .lang summary { font-size: 12px; padding: 8px; }
   .product-hero { padding: 49px 20px 59px; }
   .product-hero .product-kicker { font-size: 18px; margin-bottom: 20px; }
   .product-hero h1 { font-size: clamp(32px, 9.3vw, 51px); line-height: 1.25; letter-spacing: -.05em; }

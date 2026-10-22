@@ -19,13 +19,24 @@ class PageText(HTMLParser):
     def __init__(self):
         super().__init__()
         self.parts = []
+        self.in_data_block = False
+
+    def handle_starttag(self, tag, attrs):
+        if tag in {"script", "style"}:
+            self.in_data_block = True
+
+    def handle_endtag(self, tag):
+        if tag in {"script", "style"}:
+            self.in_data_block = False
 
     def handle_data(self, value):
-        self.parts.append(value)
+        if not self.in_data_block:
+            self.parts.append(value)
 
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--app-root", type=Path, default=Path(__file__).resolve().parents[2])
+parser.add_argument("--fonts-only", action="store_true", help="Update text coverage without rewriting approved screenshots")
 args = parser.parse_args()
 app = args.app_root
 site = app / "website"
@@ -37,6 +48,8 @@ nfc_template = (app / "AppStore/artwork/nfc-quick-record.svg").read_text()
 # The SVG is the already approved NFC composition; only its labels are localized.
 water = {"zh-Hans": "饮水", "zh-Hant": "飲水", "en": "Water", "ja": "水分", "ko": "수분"}
 for locale, store_locale, prefix, face, suffix in locales:
+    if args.fonts_only:
+        continue
     dest = assets / "home" / locale
     dest.mkdir(parents=True, exist_ok=True)
     for name in ["01-today", "02-record-types", "03-custom-record", "04-warehouse", "ipad-today"]:
@@ -61,6 +74,9 @@ collection = app / "PetterDaysApp/Resources/Fonts/PetterDaysRounded-Bold.ttc"
 texts = {"sc": [], "tc": [], "j": [], "k": []}
 for locale, store_locale, prefix, face, suffix in locales:
     pages = [site / "dist" / prefix / p for p in ["index.html", "privacy/index.html", "privacy/choices/index.html", "terms/index.html", "support/index.html"]]
+    guide_dir = site / "dist" / prefix / "guide"
+    if guide_dir.exists():
+        pages.extend(guide_dir.rglob("*.html"))
     for page in pages:
         reader = PageText()
         reader.feed(page.read_text())
@@ -101,4 +117,4 @@ for face, suffix, family_suffix in [(0, "sc", "SC"), (1, "tc", "TC"), (2, "j", "
     font.save(path)
     print(f"{path.relative_to(site)}: {path.stat().st_size:,} bytes")
 shutil.copyfile(app / "PetterDaysApp/Resources/Fonts/ResourceHanRounded-OFL.txt", font_dir / "OFL.txt")
-print("Refreshed 25 PNG screens, 5 localized NFC illustrations and 4 licensed rounded font subsets.")
+print("Refreshed 4 licensed rounded font subsets." if args.fonts_only else "Refreshed 25 PNG screens, 5 localized NFC illustrations and 4 licensed rounded font subsets.")

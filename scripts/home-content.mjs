@@ -1,7 +1,7 @@
 // Product storytelling is kept separate from the legal and support disclosures.
 export const homeContent = {
   "zh-Hans": {
-    title: "宠物日常，认真记录", description: "用 Petter Days 记录宠物日常，自由定义记录类型，安排照护、管理用品，轻碰 NFC 快速记录。",
+    title: "宠物照护记录 App，认真记好每一天", description: "Petter Days 是 iPhone 和 iPad 上的多宠物照护记录 App：记录饮水、饮食、体重、用药与护理，自定义记录，安排照护计划、管理用品，支持离线记录与 NFC 快捷入口。",
     nav: ["特色", "NFC", "支持"], hero: ["它的每一天。", "都值得好好记。"], intro: "从一口水，到一份陪伴。", explore: "看看它能做什么", devices: "在 iPhone 和 iPad 上，照顾好每个小日常。",
     records: { label: "日常记录", title: ["小小日常。", "大有可记。"], tabs: ["丰富的记录类型", "自由定义记录"], captions: ["吃喝、健康、护理，一起记。", "字段、选项、单位，按你的习惯来。"], types: ["饮水", "进食", "体重", "护理", "用药", "自定义"] },
     care: { label: "照护计划", title: ["记得每件事。", "也记得陪伴。"], intro: "一次安排，日复一日的用心。", weekdays: ["一", "二", "三", "四", "五", "六", "日"], rows: ["梳毛", "刷牙", "营养补充"], repeat: "每天", done: "已完成", pending: "待照护" },
@@ -21,7 +21,7 @@ export const homeContent = {
     closing: "用心記錄，用心陪伴。", download: "在 App Store 下載", platforms: "適用於 iPhone 和 iPad", demo: "畫面使用示例資料；部分配圖為功能示意。", medical: "用於寵物照護紀錄，不能取代獸醫診斷。", data: "資料管理", skip: "跳至正文", screenshot: "Petter Days 實際 App 畫面", pet: "乔治",
   },
   "en": {
-    title: "A little care, every day", description: "Record your pet’s days with Petter Days. Make records your own, plan care, keep supplies in order, and open a record with an NFC tap.",
+    title: "Pet care journal for iPhone and iPad", description: "Keep each pet’s water, meals, weight, medication and grooming records in Petter Days. Create custom records, plan care and manage supplies, with offline records and NFC shortcuts.",
     nav: ["Features", "NFC", "Support"], hero: ["Their little days.", "Worth remembering."], intro: "Every sip. Every moment. Every bit of care.", explore: "Take a closer look", devices: "A little care, on iPhone and iPad.",
     records: { label: "Everyday records", title: ["Little moments.", "Lots to record."], tabs: ["More ways to record", "Make it your own"], captions: ["Meals, health, grooming. All together.", "Your fields. Your options. Your way."], types: ["Water", "Meals", "Weight", "Grooming", "Medication", "Custom"] },
     care: { label: "Care plans", title: ["Remember the care.", "Enjoy the company."], intro: "Set the routine. Keep the love going.", weekdays: ["M", "T", "W", "T", "F", "S", "S"], rows: ["Brush coat", "Brush teeth", "Supplement"], repeat: "Daily", done: "Done", pending: "Up next" },
