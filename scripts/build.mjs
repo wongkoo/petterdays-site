@@ -13,7 +13,7 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const out = join(root, "dist");
 const origin = "https://petterdays.wongkoo.group";
 const effectiveDate = "2026-08-19";
-const updatedDate = "2026-10-22";
+const updatedDate = "2026-10-23";
 const homeUpdatedDate = "2026-10-22";
 const issueURL = "https://github.com/wongkoo/petterdays-site/issues/new/choose";
 const supportEmail = "petterdays.app@gmail.com";
@@ -30,7 +30,6 @@ const locales = {
       effective: `生效日期：${effectiveDate}`,
       updated: `更新日期：${updatedDate}`,
       medical: "Petter Days 是宠物照护记录与辅助观察工具，不提供医疗诊断，也不能替代专业兽医意见。",
-      source: "本网站不使用 Cookie、分析、广告或追踪脚本。",
       openApp: "打开 Petter Days",
       learn: "了解隐私设计",
     },
@@ -91,7 +90,7 @@ const locales = {
           "7. 开发者收集与网站",
           [
             "当前 App 不含开发者账号系统、AI 服务、第三方分析、广告 SDK 或跨 App/网站追踪。Apple 按其自身政策处理 StoreKit、CloudKit、MapKit 地图等系统服务数据。你主动导出、分享或在浏览器打开链接时，接收方或网站服务可接触你交付的内容。",
-            "本网站不使用 Cookie、分析、广告、在线表单或第三方字体服务。第一方脚本根据浏览器语言选择首页，仅在你主动切换语言时将偏好保存在浏览器本地。NFC 网页处理方式见上一节。"
+            "本网站的公开内容页面使用 Cloudflare Web Analytics，统计访问量、页面浏览、访问来源及页面加载性能。该服务不使用 Cookie，也不跨网站追踪个人。NFC 链接回退页和错误页不运行访问统计。网站不提供广告、在线表单或第三方字体服务。第一方脚本根据浏览器语言选择首页，仅在你主动切换语言时将偏好保存在浏览器本地。NFC 网页处理方式见上一节。"
           ]
         ],
         [
@@ -137,7 +136,7 @@ const locales = {
     prefix: "/zh-Hant",
     language: "繁體中文",
     nav: { home: "首頁", privacy: "私隱", terms: "條款", support: "支援", language: "語言" },
-    common: { product: "Petter Days", owner: "發佈者：ZhenHui Wang", effective: `生效日期：${effectiveDate}`, updated: `更新日期：${updatedDate}`, medical: "Petter Days 是寵物照護記錄與輔助觀察工具，不提供醫療診斷，也不能取代專業獸醫意見。", source: "本網站不使用 Cookie、分析、廣告或追蹤腳本。", openApp: "開啟 Petter Days", learn: "了解私隱設計" },
+    common: { product: "Petter Days", owner: "發佈者：ZhenHui Wang", effective: `生效日期：${effectiveDate}`, updated: `更新日期：${updatedDate}`, medical: "Petter Days 是寵物照護記錄與輔助觀察工具，不提供醫療診斷，也不能取代專業獸醫意見。", openApp: "開啟 Petter Days", learn: "了解私隱設計" },
     privacy: {
       "eyebrow": "私隱政策",
       "title": "你的記錄，首先屬於你。",
@@ -195,7 +194,7 @@ const locales = {
           "7. 開發者收集與網站",
           [
             "目前 App 不包含開發者帳戶系統、AI 服務、第三方分析、廣告 SDK 或跨 App／網站追蹤。Apple 依自身政策處理 StoreKit、CloudKit、MapKit 地圖等系統服務資料。當你主動匯出、分享或在瀏覽器開啟連結時，接收者或網站服務可接觸你交付的內容。",
-            "本網站不使用 Cookie、分析、廣告、線上表單或第三方字型服務。第一方腳本按瀏覽器語言選擇首頁，只有當你主動切換語言時，才將偏好儲存在瀏覽器本機。NFC 網頁的處理方式見上一節。"
+            "本網站的公開內容頁面使用 Cloudflare Web Analytics，統計造訪次數、頁面瀏覽、流量來源及頁面載入效能。此服務不使用 Cookie，也不跨網站追蹤個人。NFC 連結備援頁面和錯誤頁面不執行流量統計。網站不提供廣告、線上表單或第三方字型服務。第一方腳本按瀏覽器語言選擇首頁，只有當你主動切換語言時，才將偏好儲存在瀏覽器本機。NFC 網頁的處理方式見上一節。"
           ]
         ],
         [
@@ -215,7 +214,7 @@ const locales = {
     prefix: "/en",
     language: "English",
     nav: { home: "Home", privacy: "Privacy", terms: "Terms", support: "Support", language: "Language" },
-    common: { product: "Petter Days", owner: "Publisher: ZhenHui Wang", effective: `Effective: ${effectiveDate}`, updated: `Updated: ${updatedDate}`, medical: "Petter Days is a pet-care record and observation tool. It does not provide a medical diagnosis or replace professional veterinary advice.", source: "This website uses no cookies, analytics, advertising, or tracking scripts.", openApp: "Open Petter Days", learn: "How privacy works" },
+    common: { product: "Petter Days", owner: "Publisher: ZhenHui Wang", effective: `Effective: ${effectiveDate}`, updated: `Updated: ${updatedDate}`, medical: "Petter Days is a pet-care record and observation tool. It does not provide a medical diagnosis or replace professional veterinary advice.", openApp: "Open Petter Days", learn: "How privacy works" },
     privacy: {
       "eyebrow": "Privacy Policy",
       "title": "Your records belong to you first.",
@@ -273,7 +272,7 @@ const locales = {
           "7. Developer collection and the website",
           [
             "The current App has no developer account system, AI service, third-party analytics, advertising SDK, or cross-app/site tracking. Apple processes StoreKit, CloudKit, MapKit maps, and other system-service data under its own policies. Recipients or website services can access content you deliver when you choose to export, share, or open a link in a browser.",
-            "This website has no cookies, analytics, ads, web forms, or third-party font services. A first-party script selects the home page using your browser language and saves a language preference locally in your browser only when you explicitly change languages. NFC page handling is described above."
+            "Public content pages on this website use Cloudflare Web Analytics to measure visits, page views, traffic sources, and page loading performance. The service does not use cookies or track individuals across websites. Analytics does not run on NFC link fallback pages or error pages. This website has no ads, web forms, or third-party font services. A first-party script selects the home page using your browser language and saves a language preference locally in your browser only when you explicitly change languages. NFC page handling is described above."
           ]
         ],
         [
@@ -293,7 +292,7 @@ const locales = {
     prefix: "/ja",
     language: "日本語",
     nav: { home: "ホーム", privacy: "プライバシー", terms: "利用規約", support: "サポート", language: "言語" },
-    common: { product: "Petter Days", owner: "提供者：ZhenHui Wang", effective: `発効日：${effectiveDate}`, updated: `更新日：${updatedDate}`, medical: "Petter Days はペットケアの記録と観察を補助するツールです。医療診断を行わず、獣医師の助言に代わるものではありません。", source: "このサイトは Cookie、解析、広告、追跡スクリプトを使用しません。", openApp: "Petter Daysを開く", learn: "プライバシーについて" },
+    common: { product: "Petter Days", owner: "提供者：ZhenHui Wang", effective: `発効日：${effectiveDate}`, updated: `更新日：${updatedDate}`, medical: "Petter Days はペットケアの記録と観察を補助するツールです。医療診断を行わず、獣医師の助言に代わるものではありません。", openApp: "Petter Daysを開く", learn: "プライバシーについて" },
     privacy: {
       "eyebrow": "プライバシーポリシー",
       "title": "記録の持ち主は、まずあなたです。",
@@ -351,7 +350,7 @@ const locales = {
           "7. 開発者による収集とウェブサイト",
           [
             "現在の App には独自アカウント、AI サービス、第三者による分析、広告 SDK、App やサイトをまたぐ追跡はありません。Apple は StoreKit、CloudKit、MapKit の地図などのシステムサービスのデータを自社の方針に従って処理します。利用者が書き出し、共有、ブラウザでのリンク表示を選んだ場合、受信者やウェブサービスは渡された内容にアクセスできます。",
-            "このウェブサイトには Cookie、分析、広告、入力フォーム、第三者のフォントサービスはありません。自サイトのスクリプトがブラウザの言語に合わせてホームページを選び、利用者が言語を切り替えた場合だけ、その設定をブラウザ内に保存します。NFC ページの扱いは前項のとおりです。"
+            "このサイトの公開コンテンツページでは、Cloudflare Web Analytics を使って訪問数、ページの閲覧数、流入元、ページの読み込み速度を把握しています。このサービスは Cookie を使用せず、サイトをまたいで個人を追跡しません。NFC リンクの案内ページとエラーページではアクセス解析を行いません。広告、入力フォーム、第三者のフォントサービスは使用していません。自サイトのスクリプトがブラウザの言語に合わせてホームページを選び、利用者が言語を切り替えた場合だけ、その設定をブラウザ内に保存します。NFC ページの扱いは前項のとおりです。"
           ]
         ],
         [
@@ -371,7 +370,7 @@ const locales = {
     prefix: "/ko",
     language: "한국어",
     nav: { home: "홈", privacy: "개인정보", terms: "이용 약관", support: "지원", language: "언어" },
-    common: { product: "Petter Days", owner: "게시자: ZhenHui Wang", effective: `시행일: ${effectiveDate}`, updated: `업데이트: ${updatedDate}`, medical: "Petter Days는 반려동물 돌봄 기록과 관찰을 돕는 도구입니다. 의료 진단을 제공하거나 수의사의 조언을 대신하지 않습니다.", source: "이 웹사이트는 쿠키, 분석, 광고 또는 추적 스크립트를 사용하지 않습니다.", openApp: "Petter Days 열기", learn: "개인정보 보호 방식" },
+    common: { product: "Petter Days", owner: "게시자: ZhenHui Wang", effective: `시행일: ${effectiveDate}`, updated: `업데이트: ${updatedDate}`, medical: "Petter Days는 반려동물 돌봄 기록과 관찰을 돕는 도구입니다. 의료 진단을 제공하거나 수의사의 조언을 대신하지 않습니다.", openApp: "Petter Days 열기", learn: "개인정보 보호 방식" },
     privacy: {
       "eyebrow": "개인정보 처리방침",
       "title": "기록의 주인은 사용자입니다.",
@@ -429,7 +428,7 @@ const locales = {
           "7. 개발자 수집과 웹사이트",
           [
             "현재 App에는 자체 계정 시스템, AI 서비스, 제3자 분석, 광고 SDK 또는 앱·사이트 간 추적 기능이 없습니다. Apple은 StoreKit, CloudKit, MapKit 지도 등 시스템 서비스 데이터를 자체 정책에 따라 처리합니다. 사용자가 내보내기, 공유 또는 브라우저에서 링크 열기를 선택하면 수신자나 웹서비스가 전달받은 내용을 볼 수 있습니다.",
-            "이 웹사이트는 쿠키, 분석, 광고, 온라인 입력 양식 또는 제3자 글꼴 서비스를 사용하지 않습니다. 자체 스크립트가 브라우저 언어에 맞춰 첫 페이지를 선택하며, 사용자가 언어를 직접 바꿀 때만 그 설정을 브라우저에 저장합니다. NFC 페이지의 처리 방식은 위 항목을 참고하세요."
+            "이 웹사이트의 공개 콘텐츠 페이지에서는 Cloudflare Web Analytics로 방문 수, 페이지 조회 수, 유입 경로와 페이지 로딩 성능을 파악합니다. 이 서비스는 쿠키를 사용하거나 여러 웹사이트에 걸쳐 개인을 추적하지 않습니다. NFC 링크 안내 페이지와 오류 페이지에서는 방문 통계를 수집하지 않습니다. 광고, 온라인 입력 양식이나 제3자 글꼴 서비스도 사용하지 않습니다. 자체 스크립트가 브라우저 언어에 맞춰 첫 페이지를 선택하며, 사용자가 언어를 직접 바꿀 때만 그 설정을 브라우저에 저장합니다. NFC 페이지의 처리 방식은 위 항목을 참고하세요."
           ]
         ],
         [
@@ -492,12 +491,12 @@ function header(locale, page) {
 function footer(locale, product = false) {
   const c = locales[locale];
   const h = homeContent[locale];
-  const note = product ? `${escape(h.demo)}<br>${escape(h.medical)}` : `${c.common.medical}<br>${c.common.source}`;
+  const note = product ? `${escape(h.demo)}<br>${escape(h.medical)}` : c.common.medical;
   const guideLink = guideContent[locale] ? `<a href="${pathFor(locale, "guide")}">${guideContent[locale].label}</a><a href="${pathFor(locale, "guide/our-story")}">${escape(storyContent[locale].label)}</a>` : "";
   return `<footer class="site-footer"><div class="footer-inner"><div><a class="brand" href="${pathFor(locale, "home")}"><img class="brand-icon" src="${productIdentity.icon}" alt=""><span>Petter Days</span></a><p class="footer-note">${note}<br>© 2026 ZhenHui Wang</p></div><nav class="footer-links" aria-label="${c.nav.support}">${guideLink}<a href="${pathFor(locale, "privacy")}">${c.nav.privacy}</a><a href="${pathFor(locale, "choices")}">${h.data}</a><a href="${pathFor(locale, "terms")}">${c.nav.terms}</a><a href="${pathFor(locale, "support")}">${c.nav.support}</a></nav></div></footer>`;
 }
 
-// Inert JSON data blocks only; the existing strict script CSP stays unchanged.
+// Structured data is inert JSON; inline executable scripts remain blocked by CSP.
 function structuredData(locale, page, title, description) {
   const canonical = absolutePath(locale, page);
   const appID = `${origin}/#app`;
@@ -590,7 +589,9 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
 await writeFile(join(out, "sitemap.xml"), sitemap);
 
 const notFound = document("zh-Hans", "home", "页面不存在", "找不到这个页面。", `<header class="legal-hero"><p class="eyebrow">404</p><h1>这里没有这份记录。</h1><p>链接可能已经改变。请返回 Petter Days 首页或支持页面。</p><div class="actions"><a class="button" href="/">返回首页</a><a class="button secondary" href="/support/">获取支持</a></div></header>`);
-await writeFile(join(out, "404.html"), notFound);
+// Unknown URLs can also contain NFC payloads. Block analytics before any script loads.
+const fallbackPrivacy = `<meta http-equiv="Content-Security-Policy" content="script-src 'self'; connect-src 'none'"><meta name="referrer" content="no-referrer">`;
+await writeFile(join(out, "404.html"), notFound.replace('<meta charset="utf-8">', `<meta charset="utf-8">${fallbackPrivacy}`));
 
 const generated = await readFile(join(out, "index.html"), "utf8");
 if (!generated.includes('class="site-page product-page"') || !generated.includes('id="features"')) throw new Error("Home generation failed");

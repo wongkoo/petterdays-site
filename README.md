@@ -44,7 +44,7 @@ npm run preview
 
 首页和指南包含静态 JSON-LD，关联网站、应用、开发者与 App Store。它仅提供产品事实，不添加未经证实的评分、评论、价格或医疗效果。JSON-LD 是不可执行的数据块，原有严格 CSP 不变。检查程序验证 JSON、品牌身份、站内链接、目录锚点和站点地图。
 
-`robots.txt` 已允许抓取；无需重复列出每个爬虫。Cloudflare 实际访问权限、Google/Bing 站点验证、提交 sitemap 和索引状态属于部署后的独立步骤，源码检查不代表已收录。当前不添加分析脚本，也不凭空生成验证令牌。
+`robots.txt` 已允许抓取；无需重复列出每个爬虫。Cloudflare 实际访问权限、Google/Bing 站点验证、提交 sitemap 和索引状态属于部署后的独立步骤，源码检查不代表已收录。站点验证使用平台提供的文件，不凭空生成验证令牌。
 
 Google Search Console 使用 `static/google044d9f950647aca5.html` 验证 URL 前缀属性；文件由站长平台提供，发布后仍需保留。检查程序单独核对其内容，不将验证文件加入页面数量或 sitemap。
 
@@ -92,4 +92,8 @@ GitHub `main` 更新后，现有 Cloudflare Pages 自动运行 `npm run build` �
 
 ## 网站边界
 
-本站无统计、Cookie、表单后端、第三方字体或运行时依赖。第一方语言脚本根据浏览器语言选择初始首页，仅在用户主动切换语言时保存偏好；NFC 回退解析在本机完成，不发送额外数据请求。
+公开内容页面使用 Cloudflare Web Analytics 统计访问量、页面浏览、来源和加载性能，不使用 Cookie 或跨网站个人追踪。统计由既有 Pages 项目的 Metrics → Web Analytics 启用，在部署时自动加入脚本；不要在生成器重复加入 beacon。`_headers` 仅额外允许 Cloudflare 的脚本来源及统计连接，继续禁止内联脚本与 eval。五语隐私政策说明该处理方式，页尾不再展示旧的“无分析统计”声明。
+
+NFC 回退页和 404 页在所有脚本前设置更严格的页面 CSP（`script-src 'self'; connect-src 'none'`）及 `no-referrer`，阻止自动注入的统计脚本执行，并避免后续导航传递载荷 URL。该限制随回退 HTML 一同应用于 `/1/*`、`/2/*` 和直接 `/link/` 请求。部署验收须确认公开页可加载统计、回退页被 CSP 阻止；不能把 Functions 请求数当作静态官网访问量。
+
+本站无广告、表单后端或第三方字体。第一方语言脚本根据浏览器语言选择初始首页，仅在用户主动切换语言时保存偏好；NFC 回退解析在本机完成，不发送额外数据请求。

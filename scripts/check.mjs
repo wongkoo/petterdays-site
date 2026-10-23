@@ -188,7 +188,22 @@ const homeScript = await readFile(new URL("assets/home.js", root), "utf8");
 if (/fetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|localStorage|sessionStorage/.test(homeScript)) throw new Error("Home interaction must not collect data or make network requests");
 
 const headers = await readFile(new URL("_headers", root), "utf8");
-if (!headers.includes("script-src 'self'")) throw new Error("Strict first-party script CSP missing");
+assert.ok(headers.includes("script-src 'self' https://static.cloudflareinsights.com;"), "Public pages must allow the Cloudflare beacon");
+assert.ok(headers.includes("connect-src 'self' https://cloudflareinsights.com;"), "Public pages must allow Cloudflare analytics reporting");
+assert.ok(!headers.includes("'unsafe-inline'") && !headers.includes("'unsafe-eval'"), "Analytics must not permit inline scripts or eval");
+// Pages injects analytics after build. These pages can carry private URL payloads,
+// so their own policy must block the injected script and all reporting requests.
+for (const path of ["link/index.html", "404.html"]) {
+  const html = await readFile(new URL(path, root), "utf8");
+  const policy = `<meta http-equiv="Content-Security-Policy" content="script-src 'self'; connect-src 'none'">`;
+  assert.ok(html.includes(policy) && html.indexOf(policy) < html.indexOf("<script"), `${path} must block analytics before any script`);
+  assert.ok(html.includes('<meta name="referrer" content="no-referrer">'), `${path} must not forward private URLs as referrers`);
+}
+for (const locale of guideLocales) {
+  const prefix = locale === "zh-Hans" ? "" : `${locale}/`;
+  const html = await readFile(new URL(`${prefix}privacy/index.html`, root), "utf8");
+  assert.ok(html.includes("Cloudflare Web Analytics"), `${locale} must disclose website analytics`);
+}
 if (!headers.includes("/.well-known/apple-app-site-association\n  Content-Type: application/json")) {
   throw new Error("AASA JSON Content-Type rule missing");
 }
