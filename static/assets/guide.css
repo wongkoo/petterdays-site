@@ -1,4 +1,4 @@
-/* Feature tour and the fictional mascot story share the site's existing shell. */
+/* Feature tour and the illustrated developer story share the site's existing shell. */
 .feature-tour, .developer-story { --tour-sage: #edf0e4; --tour-peach: #faedda; --tour-blue: #eaf0f1; }
 .feature-tour :is(h1,h2), .developer-story :is(h1,h2,blockquote) { font-family: var(--rounded); font-weight: 700; text-wrap: balance; }
 .feature-tour:lang(ko), .developer-story:lang(ko) { word-break: keep-all; overflow-wrap: anywhere; }
@@ -6,12 +6,12 @@
 .feature-tour img, .developer-story img { display: block; max-width: 100%; height: auto; }
 .feature-tour section, .developer-story section { scroll-margin-top: 100px; }
 .tour-width { width: min(1120px, calc(100% - 64px)); margin-inline: auto; }
-.tour-hero > *, .tour-section > *, .tour-pair > *, .story-chapter > * { min-width: 0; }
+.tour-hero > *, .tour-section > *, .tour-pair > * { min-width: 0; }
 .tour-kicker { color: #667850; font-family: var(--rounded); font-size: 14px; font-weight: 700; letter-spacing: .04em; margin: 0 0 20px; }
 .tour-kicker > span { display: inline-block; margin-right: 9px; opacity: .65; }
 .tour-hero { display: grid; grid-template-columns: 1.08fr 1fr; align-items: center; gap: 24px; padding-block: 88px 66px; }
-.tour-hero h1, .developer-hero h1 { font-size: clamp(36px, 4.1vw, 57px); line-height: 1.28; letter-spacing: -.04em; margin: 0 0 25px; }
-.tour-hero h1 span, .developer-hero h1 span { display: block; }
+.tour-hero h1 { font-size: clamp(36px, 4.1vw, 57px); line-height: 1.28; letter-spacing: -.04em; margin: 0 0 25px; }
+.tour-hero h1 span { display: block; }
 .tour-intro { color: var(--secondary); font-size: 18px; line-height: 1.9; max-width: 43em; margin: 0; }
 .tour-actions { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; margin-top: 32px; }
 .tour-button { display: inline-flex; justify-content: center; align-items: center; gap: 18px; min-height: 48px; padding: 12px 23px; border-radius: 30px; background: #586b48; color: #fff; font-weight: 650; font-size: 15px; text-decoration: none; }
@@ -70,33 +70,6 @@
 .tour-facts { list-style: none; padding: 0; margin: 22px 0 0; font-size: 12px; line-height: 1.9; color: var(--secondary); }
 .tour-demo { font-size: 12px; color: var(--secondary); margin-top: 18px; }
 
-.developer-hero { padding-block: 32px 0; text-align: center; }
-.tour-back { display: block; text-align: left; min-height: 44px; color: var(--secondary); text-decoration: none; font-size: 14px; margin-bottom: 44px; }
-.tour-back:hover { color: var(--brand-ink); }
-.developer-hero h1 { font-size: clamp(44px, 5.2vw, 68px); }
-.developer-hero .tour-intro { max-width: 640px; margin: 0 auto; }
-.story-byline { font-family: var(--rounded); color: #876547; margin: 20px 0 0; font-size: 16px; }
-.story-disclosure { color: var(--secondary); font-size: 12px; margin: 18px auto 40px; max-width: 600px; line-height: 1.8; }
-.developer-portraits { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 950px; margin: 45px auto 0; }
-.work-photo img { width: 100%; border-radius: 6px; }
-.developer-portraits .work-photo { padding: 10px 10px 16px; background: #fffdf8; border: 1px solid #efe8dc; box-shadow: 0 12px 28px #5942290d; }
-.developer-portraits .work-photo:first-child { transform: rotate(-2deg); }
-.developer-portraits .work-photo:last-child { transform: rotate(2deg); margin-top: 28px; }
-.developer-portraits .work-photo figcaption { margin: 12px 8px 0; }
-.story-reading { width: min(700px, calc(100% - 64px)); margin-inline: auto; }
-.story-reading h2, .story-voice h2 { font-size: 30px; line-height: 1.5; margin: 0 0 24px; letter-spacing: -.025em; }
-.story-reading p:not(.tour-kicker), .story-voice > p:not(.tour-kicker) { font-size: 16px; color: var(--secondary); line-height: 2; margin: 0 0 20px; }
-.story-opening { padding-block: 90px 65px; }
-.story-chapter { display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 60px; padding-block: 55px; }
-.story-chapter .work-photo { padding: 12px 12px 18px; border-radius: 10px; background: #f4ecde; }
-.story-chapter-dog .work-photo { grid-column: 2; grid-row: 1; background: #e9eddf; }
-.story-chapter-dog .story-voice { grid-column: 1; grid-row: 1; }
-.story-signature { display: flex; gap: 15px; align-items: center; justify-content: flex-end; margin-top: 25px; font-family: var(--rounded); color: #876547; }
-.story-signature img { width: 40px; height: 48px; object-fit: contain; }
-.story-ending { padding-block: 70px; }
-.story-ending > img { max-width: 330px; margin: 40px auto 0; }
-.story-ending blockquote { margin: 30px 0 24px; font-size: 28px; line-height: 1.7; text-align: center; color: #5c714b; }
-.story-ending > .tour-link { display: flex; justify-content: center; }
 @media (max-width: 900px) {
   .tour-width { width: calc(100% - 44px); }
   .tour-hero { padding-top: 58px; }
@@ -109,12 +82,10 @@
   .tour-phone { padding: 4px; border-radius: 24px; }
   .tour-phone img { border-radius: 20px; }
   .tour-nfc > figure { padding: 24px; }
-  .story-chapter { gap: 32px; }
-  .story-voice h2 { font-size: 26px; }
 }
 @media (max-width: 650px) {
   .feature-tour section, .developer-story section { scroll-margin-top: 142px; }
-  .tour-width, .story-reading { width: calc(100% - 36px); }
+  .tour-width { width: calc(100% - 36px); }
   .tour-hero { grid-template-columns: 1fr; padding-block: 42px 30px; gap: 20px; }
   .tour-hero h1 { font-size: clamp(29px, 7.8vw, 42px); }
   .tour-kicker { font-size: 12px; margin-bottom: 16px; }
@@ -141,19 +112,55 @@
   .tour-start { padding: 40px 6px; margin-block: 55px 0; }
   .tour-start h2 { font-size: 21px; }
   .tour-guide-links { flex-direction: column; align-items: center; gap: 2px; }
-  .developer-hero { padding-top: 22px; }
-  .tour-back { margin-bottom: 28px; }
-  .developer-hero h1 { font-size: clamp(34px, 9vw, 47px); }
-  .story-disclosure { font-size: 11px; margin-block: 15px 30px; }
-  .developer-portraits { gap: 12px; margin-top: 30px; padding-inline: 4px; }
-  .developer-portraits .work-photo { padding: 5px 5px 8px; }
-  .developer-portraits .work-photo figcaption { font-size: 10px; margin: 8px 1px 0; }
-  .story-opening { padding-block: 54px 20px; }
-  .story-reading h2, .story-voice h2 { font-size: 25px; }
-  .story-reading p:not(.tour-kicker), .story-voice > p:not(.tour-kicker) { font-size: 15px; }
-  .story-chapter { grid-template-columns: 1fr; gap: 30px; padding-block: 30px; }
-  .story-chapter-dog .work-photo, .story-chapter-dog .story-voice { grid-column: auto; grid-row: auto; }
-  .story-chapter .work-photo { padding: 8px 8px 14px; }
-  .story-ending { padding-block: 42px; }
-  .story-ending blockquote { font-size: 25px; }
+}
+
+/* George & Biscuit's illustrated development diary. */
+.story-team-hero { padding-block: 76px 0; text-align: center; }
+.story-team-hero .tour-kicker { font-size: 12px; letter-spacing: .1em; }
+.story-team-hero h1 { max-width: 900px; margin: 0 auto; font-size: clamp(40px, 5.3vw, 68px); line-height: 1.24; letter-spacing: -.045em; }
+.story-team-hero h1 span { display: block; }
+.story-subtitle { font-size: 20px; color: var(--secondary); margin: 22px 0 0; }
+.story-byline { font-family: var(--rounded); font-size: 16px; color: #876547; margin: 22px 0 0; }
+.story-team .story-art { margin: 0; min-width: 0; }
+.story-art img { width: 100%; border-radius: 22px; }
+.story-team .story-art figcaption { font-size: 12px; margin: 14px 8px 0; line-height: 1.8; color: #80684c; }
+.story-team-hero > .story-art { max-width: 1000px; margin: 42px auto 0; }
+.story-scene { padding-block: 72px; border-bottom: 1px solid var(--separator); }
+.story-scene-heading h2 { font-size: clamp(26px, 3vw, 35px); line-height: 1.45; margin: 0 0 28px; letter-spacing: -.025em; }
+.story-scene-heading .tour-kicker { margin-bottom: 16px; }
+.story-prose p { font-size: 16px; line-height: 1.95; color: var(--secondary); margin: 0 0 20px; }
+.story-prose p:last-child { margin-bottom: 0; }
+.story-text-only { max-width: 660px; margin-inline: auto; }
+.story-illustrated { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 72px; align-items: start; }
+.story-illustrated > .story-scene-heading { grid-column: 1; grid-row: 1; }
+.story-illustrated > .story-prose { grid-column: 1; grid-row: 2; }
+.story-illustrated > .story-art { grid-column: 2; grid-row: 1 / span 2; position: sticky; top: 110px; }
+.story-art-left > .story-scene-heading, .story-art-left > .story-prose { grid-column: 2; }
+.story-art-left > .story-art { grid-column: 1; }
+.story-reading { width: min(700px, calc(100% - 64px)); margin-inline: auto; }
+.story-team-ending { text-align: center; padding-block: 62px 80px; }
+.story-team-ending blockquote { color: #586b48; font-size: clamp(26px, 3.5vw, 38px); line-height: 1.6; margin: 0 0 25px; }
+.story-postscript { color: var(--secondary); font-size: 15px; line-height: 1.8; }
+.story-authors { display: flex; justify-content: center; align-items: end; gap: 20px; margin-top: 34px; }
+.story-authors img { width: 55px; height: 66px; object-fit: contain; }
+.story-roles { color: var(--secondary); font-size: 12px; margin: 10px 0 28px; }
+@media (max-width: 900px) {
+  .story-illustrated { column-gap: 36px; }
+  .story-illustrated > .story-art { top: 130px; }
+}
+@media (max-width: 700px) {
+  .story-team-hero { padding-top: 45px; }
+  .story-team-hero h1 { font-size: clamp(33px, 8.6vw, 50px); }
+  .story-team-hero .tour-kicker { font-size: 10px; }
+  .story-subtitle { font-size: 17px; margin-top: 18px; }
+  .story-team-hero > .story-art { margin-top: 30px; }
+  .story-art img { border-radius: 14px; }
+  .story-team .story-art figcaption { font-size: 11px; margin-top: 10px; }
+  .story-scene { padding-block: 42px; }
+  .story-illustrated { display: flex; flex-direction: column; }
+  .story-illustrated > .story-art { position: static; width: 100%; margin-bottom: 28px; }
+  .story-scene-heading h2 { font-size: 26px; margin-bottom: 24px; }
+  .story-prose p { font-size: 16px; line-height: 1.9; margin-bottom: 18px; }
+  .story-reading { width: calc(100% - 36px); }
+  .story-team-ending { padding-block: 42px 55px; }
 }

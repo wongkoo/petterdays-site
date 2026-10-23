@@ -169,8 +169,8 @@ for (const locale of guideLocales) {
     assert.deepEqual(active, [`/${prefix}${page === "guide/our-story" ? page : "guide"}/`], `${locale}/${page} highlights the wrong navigation item`);
     if (page === "guide/our-story") {
       assert.ok(main.includes("George &amp; Biscuit"), `${locale} story misses the approved signature`);
-      assert.ok(main.includes(storyContent[locale].disclosure), `${locale} story must identify fictional mascot scenes`);
-      for (const id of ["cat", "dog"]) assert.ok(main.includes(`src="${guideAssets.assets[id].url}"`), `${locale} story misses ${id} work scene`);
+      for (const id of Object.keys(storyContent[locale].art)) assert.ok(main.includes(`data-story-art="${id}"`), `${locale} story misses ${id} illustration`);
+      assert.ok(!main.includes('class="story-disclosure"'), `${locale} story still renders the removed disclaimer`);
     }
     for (const [, href] of main.matchAll(/href="(\/[^"#?]*)"/g)) {
       assert.ok(href.startsWith(`/${prefix}`), `${locale}/${page} links outside its language: ${href}`);

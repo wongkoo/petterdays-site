@@ -7,7 +7,6 @@ const lines = (values) => values.map((value) => `<span>${escape(value)}</span>`)
 const paragraphs = (values) => values.map((value) => `<p>${escape(value)}</p>`).join("");
 const character = (id) => `<img src="/assets/home/ip/${id === "cat" ? "cat-sitting-v2" : "dog-sitting"}.png" width="1400" height="${id === "cat" ? "1677" : "1568"}" alt="" loading="lazy" decoding="async">`;
 const phone = (locale, name, alt) => `<div class="tour-phone"><img src="/assets/home/${locale}/${name}.png" width="660" height="1434" alt="${escape(alt)}" loading="lazy" decoding="async"></div>`;
-const photo = (id, copy, eager = false) => `<figure class="work-photo"><img src="/assets/guide/${id}-at-work.webp" width="1448" height="1086" alt="${escape(copy[id + "Alt"])}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"><figcaption>${escape(copy[id + "Caption"])}</figcaption></figure>`;
 const arrowLink = (href, label, extra = "") => `<a class="tour-link ${extra}" href="${href}">${escape(label)} <span aria-hidden="true">↗</span></a>`;
 const tinyIcon = (kind) => {
   const paths = {
@@ -38,13 +37,15 @@ export function productGuide(locale, copy, home, pathFor) {
 
 export function developerStory(locale, pathFor) {
   const s = storyContent[locale];
-  const [start, cat, dog, end] = s.page.sections;
-  const text = (section) => `<h2>${escape(section.title)}</h2>${paragraphs(section.paragraphs)}`;
-  return `<article class="developer-story">
-    <header class="developer-hero tour-width"><a class="tour-back" href="${pathFor(locale, "guide")}">← ${escape(s.back)}</a><p class="tour-kicker">${escape(s.eyebrow)}</p><h1>${lines(s.title)}</h1><p class="tour-intro">${escape(s.intro)}</p><p class="story-byline">George &amp; Biscuit</p><p class="story-disclosure">${escape(s.disclosure)}</p><div class="developer-portraits">${photo("cat", s, true)}${photo("dog", s)}</div></header>
-    <section class="story-opening story-reading" id="first-note"><p class="tour-kicker">01</p>${text(start)}</section>
-    <section class="story-chapter tour-width" id="cat-desk">${photo("cat", s)}<div class="story-voice"><p class="tour-kicker">02 · ${escape(s.catRole)}</p>${text(cat)}<div class="story-signature">${character("cat")}<span>— ${escape(s.cat)}</span></div></div></section>
-    <section class="story-chapter story-chapter-dog tour-width" id="dog-test">${photo("dog", s)}<div class="story-voice"><p class="tour-kicker">03 · ${escape(s.dogRole)}</p>${text(dog)}<div class="story-signature">${character("dog")}<span>— ${escape(s.dog)}</span></div></div></section>
-    <section class="story-ending story-reading" id="better-days"><p class="tour-kicker">04 · ${escape(s.together)}</p>${text(end)}<img src="/assets/home/ip/diary.png" width="1400" height="860" alt="" loading="lazy" decoding="async"><blockquote>${escape(s.quote)}</blockquote>${arrowLink(pathFor(locale, "guide"), s.back)}</section>
+  const artwork = (id, eager = false) => {
+    const [alt, caption] = s.art[id];
+    const size = id.startsWith("story-") ? 'width="1536" height="1024"' : 'width="1448" height="1086"';
+    return `<figure class="story-art" data-story-art="${id}"><img src="/assets/guide/${id}.webp" ${size} alt="${escape(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"><figcaption>${escape(caption)}</figcaption></figure>`;
+  };
+  const chapters = s.sections.map((section, index) => `<section class="story-scene ${section.art ? 'story-illustrated' : 'story-text-only'}${index % 2 ? ' story-art-left' : ''}" id="${section.id}" aria-labelledby="${section.id}-title"><header class="story-scene-heading"><p class="tour-kicker">${String(index + 1).padStart(2, "0")}</p><h2 id="${section.id}-title">${escape(section.title)}</h2></header>${section.art ? artwork(section.art) : ''}<div class="story-prose">${paragraphs(section.paragraphs)}</div></section>`).join("");
+  return `<article class="developer-story story-team">
+    <header class="story-team-hero tour-width"><p class="tour-kicker">${escape(s.eyebrow)}</p><h1>${lines(s.title)}</h1><p class="story-subtitle">${escape(s.intro)}</p><p class="story-byline">George &amp; Biscuit</p>${artwork("story-midnight-build", true)}</header>
+    <div class="story-scenes tour-width">${chapters}</div>
+    <footer class="story-team-ending story-reading"><blockquote>${escape(s.quote)}</blockquote><p class="story-postscript">${escape(s.afterword)}</p><div class="story-authors" aria-hidden="true">${character("cat")}${character("dog")}</div><p class="story-byline">George &amp; Biscuit</p><p class="story-roles">${escape(s.roles)}</p>${arrowLink(pathFor(locale, "guide"), s.back)}</footer>
   </article>`;
 }
