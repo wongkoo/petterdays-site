@@ -6,7 +6,7 @@
 .feature-tour img, .developer-story img { display: block; max-width: 100%; height: auto; }
 .feature-tour section, .developer-story section { scroll-margin-top: 100px; }
 .tour-width { width: min(1120px, calc(100% - 64px)); margin-inline: auto; }
-.tour-hero > *, .tour-section > *, .tour-pair > *, .tour-story > *, .story-chapter > * { min-width: 0; }
+.tour-hero > *, .tour-section > *, .tour-pair > *, .story-chapter > * { min-width: 0; }
 .tour-kicker { color: #667850; font-family: var(--rounded); font-size: 14px; font-weight: 700; letter-spacing: .04em; margin: 0 0 20px; }
 .tour-kicker > span { display: inline-block; margin-right: 9px; opacity: .65; }
 .tour-hero { display: grid; grid-template-columns: 1.08fr 1fr; align-items: center; gap: 24px; padding-block: 88px 66px; }
@@ -27,7 +27,7 @@
 .tour-nav a { display: flex; align-items: center; min-height: 44px; text-decoration: none; color: var(--secondary); font-size: 14px; font-weight: 650; }
 .tour-nav a:hover { color: #536744; }
 .tour-section { padding-block: 90px; display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: 72px; }
-.tour-copy h2, .tour-story h2 { font-size: clamp(26px, 3vw, 37px); line-height: 1.4; margin: 0 0 20px; letter-spacing: -.025em; }
+.tour-copy h2 { font-size: clamp(26px, 3vw, 37px); line-height: 1.4; margin: 0 0 20px; letter-spacing: -.025em; }
 .tour-copy > p:not(.tour-kicker) { font-size: 16px; line-height: 1.95; color: var(--secondary); margin: 0 0 20px; }
 .tour-copy > p.tour-aside { font-size: 14px; color: var(--secondary); }
 .tour-tags { display: flex; flex-wrap: wrap; list-style: none; gap: 8px; margin: 26px 0; padding: 0; }
@@ -64,13 +64,7 @@
 .tour-companions { display: flex; width: 100%; align-items: center; justify-content: center; gap: 30px; margin-block: auto 22px; padding-top: 16px; }
 .tour-companions img { width: 95px; max-height: 114px; object-fit: contain; }
 .tour-companions span { color: #a38e72; font-size: 24px; }
-.tour-story { margin-block: 92px; display: grid; grid-template-columns: .9fr 1.1fr; gap: 42px; align-items: center; }
-.tour-story-copy > p:not(.tour-kicker) { color: var(--secondary); font-size: 16px; line-height: 1.9; }
-.tour-story-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: center; }
-.tour-story-photos img { border: 7px solid #fffdf8; box-shadow: 0 12px 26px #59422912; border-radius: 5px; width: 100%; }
-.tour-story-photos img:first-child { transform: rotate(-4deg); }
-.tour-story-photos img:last-child { transform: rotate(4deg); margin-top: 50px; }
-.tour-start { padding: 60px 30px 65px; margin-bottom: 44px; border-top: 1px solid var(--separator); text-align: center; }
+.tour-start { padding: 60px 30px 65px; margin-block: 92px 44px; border-top: 1px solid var(--separator); text-align: center; }
 .tour-start h2 { max-width: 620px; margin: 0 auto 24px; font-size: 25px; line-height: 1.6; }
 .tour-guide-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 38px; margin-bottom: 32px; }
 .tour-facts { list-style: none; padding: 0; margin: 22px 0 0; font-size: 12px; line-height: 1.9; color: var(--secondary); }
@@ -115,7 +109,6 @@
   .tour-phone { padding: 4px; border-radius: 24px; }
   .tour-phone img { border-radius: 20px; }
   .tour-nfc > figure { padding: 24px; }
-  .tour-story { gap: 25px; }
   .story-chapter { gap: 32px; }
   .story-voice h2 { font-size: 26px; }
 }
@@ -131,7 +124,7 @@
   .tour-hero-art figcaption { font-size: 13px; }
   .tour-nav { justify-content: flex-start; gap: 0 22px; padding-block: 10px; }
   .tour-nav a { font-size: 13px; }
-  .tour-section, .tour-pair, .tour-story { grid-template-columns: 1fr; }
+  .tour-section, .tour-pair { grid-template-columns: 1fr; }
   .tour-section { padding-block: 48px; gap: 28px; }
   .tour-copy h2, .tour-panel h2 { font-size: 27px; }
   .tour-copy > p:not(.tour-kicker) { font-size: 15px; line-height: 1.9; }
@@ -145,11 +138,7 @@
   .tour-supplies .tour-phone { width: 224px; }
   .tour-nfc .tour-copy { grid-row: 1; }
   .tour-nfc > figure { max-width: 430px; margin-inline: auto; padding: 25px 38px; border-radius: 26px; }
-  .tour-story { margin-block: 55px; gap: 20px; }
-  .tour-story h2 { font-size: 28px; }
-  .tour-story-photos { gap: 12px; padding-inline: 5px; }
-  .tour-story-photos img { border-width: 5px; }
-  .tour-start { padding: 40px 6px; margin-bottom: 0; }
+  .tour-start { padding: 40px 6px; margin-block: 55px 0; }
   .tour-start h2 { font-size: 21px; }
   .tour-guide-links { flex-direction: column; align-items: center; gap: 2px; }
   .developer-hero { padding-top: 22px; }

@@ -158,9 +158,15 @@ for (const locale of guideLocales) {
     if (page === "guide") {
       assert.ok(guideVisualContent[locale]);
       assert.equal(guideVisualContent[locale].sections.length, 6);
-      for (const asset of Object.values(guideAssets.assets)) assert.ok(main.includes(`src="${asset.url}"`), `${locale} overview misses artwork`);
+      assert.ok(main.includes('data-asset-id="care-plan"'), `${locale} overview misses care artwork`);
       for (const screen of ["02-record-types", "03-custom-record", "04-warehouse"]) assert.ok(main.includes(`/assets/home/${locale}/${screen}.png`), `${locale} overview misses its localized screen`);
     }
+    if (page !== "guide/our-story") {
+      assert.ok(!main.includes("-at-work.webp") && !main.includes("guide/our-story"), `${locale}/${page} mixes the developer story into feature content`);
+    }
+    const navigation = html.match(/<div class="nav-links site-tabs">(.*?)<\/div>/s)[1];
+    const active = [...navigation.matchAll(/<a href="([^"]+)" aria-current="(?:page|location)"/g)].map((match) => match[1]);
+    assert.deepEqual(active, [`/${prefix}${page === "guide/our-story" ? page : "guide"}/`], `${locale}/${page} highlights the wrong navigation item`);
     if (page === "guide/our-story") {
       assert.ok(main.includes("George &amp; Biscuit"), `${locale} story misses the approved signature`);
       assert.ok(main.includes(storyContent[locale].disclosure), `${locale} story must identify fictional mascot scenes`);
@@ -174,6 +180,7 @@ for (const locale of guideLocales) {
   const home = await readFile(new URL(`${prefix}index.html`, root), "utf8");
   const navigation = home.match(/<div class="nav-links site-tabs">(.*?)<\/div>/s)[1];
   assert.ok(navigation.includes(`href="/${prefix}guide/"`), `${locale} product navigation must stay in its language`);
+  assert.ok(navigation.includes(`href="/${prefix}guide/our-story/"`), `${locale} story needs a top-level navigation entry`);
 }
 for (const suffix of ["sc", "tc", "j", "k"]) await readFile(new URL(`assets/fonts/rounded-${suffix}.woff2`, root));
 await readFile(new URL("assets/fonts/OFL.txt", root));

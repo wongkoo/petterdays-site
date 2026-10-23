@@ -7,7 +7,7 @@ export const guideVisualContent = {
     careAlt: "猫和狗坐在一起，认真写下照护计划", careNote: "先安排，再照护。完成之后，再留下记录。",
     nfcSteps: ["选好常用的宠物与记录类型", "配置、写入并核验标签", "轻碰进入，核对后保存"],
     dataNote: "把资料留在手里，也给重要记录多一份安心。", sharingNote: "共享前，由你决定谁能查看、谁能编辑。",
-    storyHeading: "功能背后，还有两双小爪子。", guideIntro: "想开始记录，或把入口放到手边？从这两篇指南开始。",
+    guideIntro: "想开始记录，或把入口放到手边？从这两篇指南开始。",
     recordsLink: "看看如何记好日常", nfcLink: "一步步设置 NFC", dataLink: "了解数据管理", sharingLink: "了解共享范围", illustration: "品牌场景插画",
   },
   "zh-Hant": {
@@ -18,7 +18,7 @@ export const guideVisualContent = {
     careAlt: "貓和狗坐在一起，認真寫下照護計畫", careNote: "先安排，再照護。完成後，再留下紀錄。",
     nfcSteps: ["選好常用的毛孩與紀錄類型", "設定、寫入並核驗標籤", "輕碰進入，核對後儲存"],
     dataNote: "把資料留在自己手裡，也讓重要紀錄多一份安心。", sharingNote: "共享前，由你決定誰能查看、誰能編輯。",
-    storyHeading: "功能背後，還有兩雙小爪子。", guideIntro: "想開始記錄，或把入口放到手邊？從這兩篇指南開始。",
+    guideIntro: "想開始記錄，或把入口放到手邊？從這兩篇指南開始。",
     recordsLink: "看看如何記好日常", nfcLink: "一步步設定 NFC", dataLink: "了解資料管理", sharingLink: "了解共享範圍", illustration: "品牌場景插畫",
   },
   en: {
@@ -29,7 +29,7 @@ export const guideVisualContent = {
     careAlt: "The cat and dog sit together to write a care plan", careNote: "Make a plan. Give the care. Then record what you did.",
     nfcSteps: ["Choose a pet and a familiar record type", "Set up, write and verify the tag", "Tap to open, check the details and save"],
     dataNote: "Keep your information in your hands, with a backup for the things that matter.", sharingNote: "You decide who can view and who can edit before sharing.",
-    storyHeading: "There are a few paws behind these details.", guideIntro: "Ready for your first record or a handy shortcut? Start with these two guides.",
+    guideIntro: "Ready for your first record or a handy shortcut? Start with these two guides.",
     recordsLink: "Start a care journal", nfcLink: "Set up NFC, step by step", dataLink: "Your data choices", sharingLink: "What sharing includes", illustration: "Mascot illustration",
   },
   ja: {
@@ -40,7 +40,7 @@ export const guideVisualContent = {
     careAlt: "猫と犬が一緒に座ってケアの予定を書いている", careNote: "予定を立てて、ケアをして。終わったら、記録に残す。",
     nfcSteps: ["ペットとよく使う記録を選ぶ", "タグを設定・書き込み・確認する", "かざして開き、内容を確認して保存"],
     dataNote: "データは自分の手元に。大切な記録には、バックアップという安心も。", sharingNote: "共有する前に、閲覧できる人、編集できる人を選べます。",
-    storyHeading: "小さな工夫の裏には、ふたつの肉球。", guideIntro: "最初の記録も、便利なショートカットも。まずは、こちらのガイドから。",
+    guideIntro: "最初の記録も、便利なショートカットも。まずは、こちらのガイドから。",
     recordsLink: "日々の記録を始める", nfcLink: "NFC の設定手順を見る", dataLink: "データ管理について", sharingLink: "共有される範囲について", illustration: "キャラクターイラスト",
   },
   ko: {
@@ -51,7 +51,7 @@ export const guideVisualContent = {
     careAlt: "고양이와 강아지가 나란히 앉아 돌봄 계획을 적는 모습", careNote: "계획을 세우고, 돌본 다음, 실제로 한 일을 기록해요.",
     nfcSteps: ["반려동물과 자주 쓰는 기록 종류 선택", "태그 설정, 쓰기, 확인", "태그해 열고 내용을 확인한 뒤 저장"],
     dataNote: "자료는 내 손안에, 중요한 기록은 백업으로 한 번 더 안전하게.", sharingNote: "공유하기 전에 누가 볼 수 있고 수정할 수 있는지 정하세요.",
-    storyHeading: "작은 기능 뒤에는 두 친구의 발자국이 있어요.", guideIntro: "첫 기록을 남기거나 편리한 바로가기를 만들고 싶다면, 두 가이드부터 시작해 보세요.",
+    guideIntro: "첫 기록을 남기거나 편리한 바로가기를 만들고 싶다면, 두 가이드부터 시작해 보세요.",
     recordsLink: "일상 기록 시작하기", nfcLink: "NFC 차근차근 설정하기", dataLink: "데이터 관리 알아보기", sharingLink: "공유 범위 알아보기", illustration: "캐릭터 일러스트",
   },
 };

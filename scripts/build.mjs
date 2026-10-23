@@ -13,7 +13,7 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const out = join(root, "dist");
 const origin = "https://petterdays.wongkoo.group";
 const effectiveDate = "2026-08-19";
-const updatedDate = "2026-10-05";
+const updatedDate = "2026-10-22";
 const homeUpdatedDate = "2026-10-22";
 const issueURL = "https://github.com/wongkoo/petterdays-site/issues/new/choose";
 const supportEmail = "petterdays.app@gmail.com";
@@ -49,7 +49,7 @@ const locales = {
           "2. 本机保存与家庭共享",
           [
             "免费使用时，资料保存在设备上的本地资料库，不启用 CloudKit 同步。",
-            "订阅 Petter Days Pro 并明确启用 iCloud 同步后，记录和附件通过 Apple CloudKit 保存在你自己的私人或共享 iCloud 数据库，并占用你的 iCloud 空间。开发者不建立宠物健康数据后端，也不从私人 CloudKit 读取这些资料。",
+            "Petter Days Pro 生效且本机已有资料库后，App 会自动尝试启用 iCloud 同步。从备份恢复到本机的资料库仍需手动启用。启用成功后，记录和附件通过 Apple CloudKit 保存在你自己的私人或共享 iCloud 数据库，并占用你的 iCloud 空间。开发者不建立宠物健康数据后端，也不从私人 CloudKit 读取这些资料。",
             "共享以整个家庭为范围，包含当前及以后新增的全部宠物、记录、计划、附件和用品资料。主人为成员设置只读或可编辑权限；不能只共享某一只宠物。每位共同照护者均需独立订阅 Pro。"
           ]
         ],
@@ -112,7 +112,7 @@ const locales = {
         ["创建完整备份", ["可创建包含完整记录、修订、删除状态和附件的 .petterdaysbackup。该文件包含私人资料，请保存到由你掌控的位置，并完成一次恢复演练。"]],
         ["恢复备份", ["恢复会完整检查备份结构和数据关系。免费用户也可以恢复包含超过两只宠物的备份：所有数据都会恢复，最多两只宠物可继续编辑，其余保持可查看、可导出但只读；订阅后恢复编辑。"]],
         ["删除与恢复记录", ["普通删除进入“最近删除”，可在保留期内恢复；修改、删除和恢复均保留审计信息。永久删除整个家庭资料是独立的高风险操作，确认后从当前资料库移除。"]],
-        ["iCloud 与共享", ["只有订阅 Petter Days Pro 并明确启用 iCloud 同步后才同步。可在共享管理中查看成员与权限、退出共享或由主人移除成员。关闭订阅会暂停新的同步与共享操作，不会自动删除云端资料或 CKShare 关系。"]],
+        ["iCloud 与共享", ["Petter Days Pro 生效且本机已有资料库时，App 会自动尝试启用 iCloud 同步；从备份恢复到本机的资料库需手动启用。只有启用成功后才会同步。可在共享管理中查看成员与权限、退出共享或由主人移除成员。关闭订阅会暂停新的同步与共享操作，不会自动删除云端资料或 CKShare 关系。"]],
         ["需要帮助", [`打开 <a href="${supportURL}">${supportEmail}</a> 描述问题和 App 版本。不要公开提交备份、病历、精确位置或其他私人资料；我们会说明安全的后续处理方式。`]],
       ],
     },
@@ -153,7 +153,7 @@ const locales = {
           "2. 本機儲存與家庭共享",
           [
             "免費使用時，資料儲存在裝置的本機資料庫，不會啟用 CloudKit 同步。",
-            "訂閱 Petter Days Pro 並明確啟用 iCloud 同步後，記錄及附件透過 Apple CloudKit 儲存在你自己的私人或共享 iCloud 資料庫，並佔用你的 iCloud 空間。開發者不建立寵物健康資料後端，也不從私人 CloudKit 讀取這些資料。",
+            "Petter Days Pro 生效且本機已有資料庫後，App 會自動嘗試啟用 iCloud 同步。從備份還原到此裝置的資料庫，仍須手動啟用。啟用成功後，記錄及附件透過 Apple CloudKit 儲存在你自己的私人或共享 iCloud 資料庫，並佔用你的 iCloud 空間。開發者不建立寵物健康資料後端，也不從私人 CloudKit 讀取這些資料。",
             "共享範圍是整個家庭，涵蓋目前及日後新增的所有寵物、記錄、計劃、附件和用品資料。主人可為成員設定唯讀或可編輯權限；不能只分享其中一隻寵物。每位共同照護者均須各自訂閱 Pro。"
           ]
         ],
@@ -231,7 +231,7 @@ const locales = {
           "2. On-device storage and household sharing",
           [
             "On the Free plan, data stays in the local database on your device and CloudKit sync is not enabled.",
-            "After you subscribe to Petter Days Pro and explicitly enable iCloud sync, records and attachments are stored through Apple CloudKit in your own private or shared iCloud database and use your iCloud storage. The developer does not operate a pet-health data backend or read these records from your private CloudKit database.",
+            "Once Petter Days Pro is active and a local library is available, the App automatically attempts to enable iCloud sync. After restoring a backup to this device, you need to enable sync manually. After sync is enabled, records and attachments are stored through Apple CloudKit in your own private or shared iCloud database and use your iCloud storage. The developer does not operate a pet-health data backend or read these records from your private CloudKit database.",
             "Sharing covers the entire household, including all current and future pets, records, plans, attachments, and supply data. The owner assigns view-only or editing permission to each member. Sharing cannot be restricted to one pet. Each collaborator needs their own Pro subscription."
           ]
         ],
@@ -285,7 +285,7 @@ const locales = {
         ]
       ]
     },
-    choices: { eyebrow: "Privacy Choices & Data Management", title: "View, carry, restore, or delete your data.", intro: "These core data tools are not subscription-gated. Before an irreversible action, create and test a complete backup.", sections: [["Backup and veterinary brief", ["Export a complete backup from Profile → Data & Backups → Import & Export, or create a per-pet veterinary brief with trend charts, detail tables, and selected attachments."]], ["Complete backup", ["Create a .petterdaysbackup containing complete records, revisions, deletion status, and attachments. It contains private information, so save it only to a location you control."]], ["Restore", ["Restore validates the package and its relationships. Free users can restore backups with more than two pets without losing data: up to two remain editable and the rest remain visible and exportable in read-only mode until subscribed."]], ["Delete and recover", ["Ordinary deletion goes to Recently Deleted and can be restored during its retention period. Permanently deleting a household is a separate high-risk action that removes it from the current library after confirmation."]], ["iCloud and sharing", ["Sync begins only after subscription and explicit enablement. Sharing management shows members and permissions. Expiring a subscription pauses new cloud operations; it does not claim to remove cloud data or CKShare participation automatically."]], ["Get help", [`Email <a href="${supportURL}">${supportEmail}</a> with the App version and a description of the issue. Do not post backups, medical records, or precise locations.`]]]},
+    choices: { eyebrow: "Privacy Choices & Data Management", title: "View, carry, restore, or delete your data.", intro: "These core data tools are not subscription-gated. Before an irreversible action, create and test a complete backup.", sections: [["Backup and veterinary brief", ["Export a complete backup from Profile → Data & Backups → Import & Export, or create a per-pet veterinary brief with trend charts, detail tables, and selected attachments."]], ["Complete backup", ["Create a .petterdaysbackup containing complete records, revisions, deletion status, and attachments. It contains private information, so save it only to a location you control."]], ["Restore", ["Restore validates the package and its relationships. Free users can restore backups with more than two pets without losing data: up to two remain editable and the rest remain visible and exportable in read-only mode until subscribed."]], ["Delete and recover", ["Ordinary deletion goes to Recently Deleted and can be restored during its retention period. Permanently deleting a household is a separate high-risk action that removes it from the current library after confirmation."]], ["iCloud and sharing", ["With an active Petter Days Pro subscription and an existing local library, the App automatically attempts to enable iCloud sync. After restoring a backup to this device, you need to enable sync manually. Sync starts only after enablement succeeds. Sharing management shows members and permissions. Expiring a subscription pauses new cloud operations; it does not claim to remove cloud data or CKShare participation automatically."]], ["Get help", [`Email <a href="${supportURL}">${supportEmail}</a> with the App version and a description of the issue. Do not post backups, medical records, or precise locations.`]]]},
     terms: { eyebrow: "Terms of Use", title: "Clear boundaries for dependable records.", intro: "By using Petter Days, you agree to these terms. If you do not agree, stop using the App.", sections: [["1. Service", ["Petter Days provides pet-care records, reminders, trends, attachments, backups, observation tools, inventory, and optional iCloud collaboration. Features may change with future versions."]], ["2. Not medical care", ["Petter Days is not a medical device and does not diagnose, prevent, monitor, or treat disease. It does not replace a veterinarian. Seek professional help for urgent, persistent, or concerning symptoms."]], ["3. Your responsibilities", ["You are responsible for the legality and accuracy of content, attachments, recipients, and permissions, and for protecting your device, Apple Account, and backup files. Do not upload or share another person’s private data without authority."]], ["4. Subscription", ["Petter Days Pro is an auto-renewable subscription sold through Apple App Store. Price, term, trial, renewal, cancellation, refund, and taxes follow the purchase screen and Apple’s terms. Each shared participant needs a separate subscription."]], ["5. Data and availability", ["A device failure, storage limits, network or iCloud state, user action, or events outside reasonable control may affect data. Keep and test complete backups. We do not promise that data can never be lost or will be stored forever."]], ["6. Acceptable use and changes", ["Do not use Petter Days to violate rights or law, distribute malware, bypass subscription or permission controls, or interfere with service. We may update the App and these terms for security, compliance, compatibility, or product improvements."]], ["7. Contact", [`Email <a href="${supportURL}">${supportEmail}</a> for terms or support questions. Never post private health data or backups publicly.`]]]},
 
   },
@@ -309,7 +309,7 @@ const locales = {
           "2. 端末への保存と家族との共有",
           [
             "無料版のデータは端末内のデータベースに保存され、CloudKit 同期は有効になりません。",
-            "Petter Days Pro を購読し、iCloud 同期を明示的に有効にすると、記録と添付ファイルは Apple CloudKit を通じて利用者自身の非公開または共有 iCloud データベースに保存され、そのストレージを使用します。開発者はペットの健康データ用サーバーを運営せず、個人の CloudKit からこれらの記録を読み取りません。",
+            "Petter Days Pro が有効で、端末に既存のライブラリがある場合、App は iCloud 同期の有効化を自動で試みます。バックアップからこの端末に復元した場合は、手動で同期を有効にする必要があります。有効になると、記録と添付ファイルは Apple CloudKit を通じて利用者自身の非公開または共有 iCloud データベースに保存され、そのストレージを使用します。開発者はペットの健康データ用サーバーを運営せず、個人の CloudKit からこれらの記録を読み取りません。",
             "共有対象は家庭全体です。現在のペットに加え、今後追加するすべてのペット、記録、プラン、添付ファイル、用品情報が含まれます。オーナーがメンバーごとに閲覧のみ、または編集可能の権限を設定します。特定のペットだけを共有することはできません。参加者にはそれぞれ Pro の購読が必要です。"
           ]
         ],
@@ -387,7 +387,7 @@ const locales = {
           "2. 기기 저장과 가족 공유",
           [
             "무료 버전에서는 데이터를 기기의 로컬 데이터베이스에 저장하며 CloudKit 동기화를 활성화하지 않습니다.",
-            "Petter Days Pro를 구독하고 iCloud 동기화를 직접 켜면, 기록과 첨부 파일이 Apple CloudKit을 통해 사용자의 비공개 또는 공유 iCloud 데이터베이스에 저장되며 사용자의 저장 공간을 사용합니다. 개발자는 반려동물 건강 데이터 서버를 운영하거나 개인 CloudKit에서 이러한 기록을 읽지 않습니다.",
+            "Petter Days Pro가 활성화되어 있고 기기에 기존 자료가 있으면 App이 iCloud 동기화 활성화를 자동으로 시도합니다. 백업을 이 기기로 복원한 경우에는 동기화를 직접 켜야 합니다. 동기화가 켜지면 기록과 첨부 파일이 Apple CloudKit을 통해 사용자의 비공개 또는 공유 iCloud 데이터베이스에 저장되며 사용자의 저장 공간을 사용합니다. 개발자는 반려동물 건강 데이터 서버를 운영하거나 개인 CloudKit에서 이러한 기록을 읽지 않습니다.",
             "공유 범위는 가족 자료 전체입니다. 현재 및 이후에 추가하는 모든 반려동물, 기록, 계획, 첨부 파일과 용품 정보가 포함됩니다. 소유자가 구성원별로 읽기 전용 또는 편집 권한을 지정하며, 특정 반려동물만 따로 공유할 수는 없습니다. 함께 돌보는 사람마다 각자의 Pro 구독이 필요합니다."
           ]
         ],
@@ -477,9 +477,10 @@ function header(locale, page) {
   const items = [
     { key: "home", label: labels.home, href: pathFor(locale, "home") },
     { key: "guide", label: labels.product, href: pathFor(locale, "guide") },
+    { key: "guide/our-story", label: storyContent[locale].label, href: pathFor(locale, "guide/our-story") },
     { key: "support", label: labels.support, href: pathFor(locale, "support") },
   ];
-  const links = items.map(({ key, label, href }) => `<a href="${href}"${page === key ? ' aria-current="page"' : key === "guide" && guidePages.includes(page) ? ' aria-current="location"' : ""}>${label}</a>`).join("");
+  const links = items.map(({ key, label, href }) => `<a href="${href}"${page === key ? ' aria-current="page"' : key === "guide" && guidePages.includes(page) && page !== "guide/our-story" ? ' aria-current="location"' : ""}>${escape(label)}</a>`).join("");
   return `<a class="skip-link" href="#content">${homeContent[locale].skip}</a>
   <header class="site-header"><nav class="nav site-nav" aria-label="${c.nav.home}">
     <a class="brand" href="${pathFor(locale, "home")}"><img class="brand-icon" src="${productIdentity.icon}" alt=""><span>Petter Days</span></a>
@@ -550,7 +551,7 @@ function guidePage(locale, page) {
   const sections = data.sections.map((s) => `<section id="${s.id}"><h2>${escape(s.title)}</h2>${(s.paragraphs || []).map((p) => `<p>${escape(p)}</p>`).join("")}${list(s.steps, "ol")}${list(s.bullets, "ul")}${s.link ? `<p><a href="${pathFor(locale, s.link[1])}">${escape(s.link[0])} →</a></p>` : ""}${s.pathLink ? `<p><a href="${s.pathLink[1]}">${escape(s.pathLink[0])} →</a></p>` : ""}</section>`).join("");
   const faq = data.faq ? `<section id="faq"><h2>${escape(copy.faq)}</h2>${data.faq.map(([q, a]) => `<details class="guide-faq"><summary>${escape(q)}</summary><p>${escape(a)}</p></details>`).join("")}</section>` : "";
   const overview = page === "guide";
-  const related = guidePages.filter((key) => key !== page).map((key) => `<a class="support-card" href="${pathFor(locale, key)}"><strong>${escape(key === "guide" ? copy.label : key === "guide/nfc" ? copy.relatedNFC : key === "guide/our-story" ? storyContent[locale].label : copy.relatedRecords)} →</strong></a>`).join("");
+  const related = guidePages.filter((key) => key !== page && key !== "guide/our-story").map((key) => `<a class="support-card" href="${pathFor(locale, key)}"><strong>${escape(key === "guide" ? copy.label : key === "guide/nfc" ? copy.relatedNFC : copy.relatedRecords)} →</strong></a>`).join("");
   const toc = overview ? "" : `<nav class="guide-toc" aria-label="${copy.contents}">${data.sections.map((s) => `<a href="#${s.id}">${escape(s.title)}</a>`).join("")}${data.faq ? `<a href="#faq">${escape(copy.faqShort)}</a>` : ""}</nav>`;
   const heading = locale === "zh-Hans" ? data.title.split("，").map((part, i, parts) => `<span>${escape(part)}${i < parts.length - 1 ? "，" : ""}</span>`).join("") : escape(data.title);
   const facts = data.facts ? `<ul class="product-facts">${data.facts.map((fact) => `<li>${escape(fact)}</li>`).join("")}</ul>` : `<div class="meta"><span>${copy.updated} <time datetime="${guideUpdatedDate}">${guideUpdatedDate}</time></span></div>`;
