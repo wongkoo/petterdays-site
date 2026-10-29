@@ -65,9 +65,9 @@ const locales = {
           "4. 购买、备份与删除",
           [
             "购买、续费、恢复、退款和权益验证由 Apple App Store 与 StoreKit 处理。Petter Days 不取得支付卡信息；价格和周期以购买页面为准。",
-            "你可创建包含记录、修改历史和附件的完整备份，并自行选择保存位置或接收方。备份含有私人资料，应保存在你掌控的位置。",
+            "你可创建包含记录和附件的完整备份，并自行选择保存位置或接收方。备份含有私人资料，应保存在你掌控的位置。",
             "订阅到期会暂停新的 CloudKit 读写和共享管理，不删除已下载的本地资料、云端区域或仍有效的共享关系。查看、备份、恢复和导出仍然可用。",
-            "普通记录可删除和恢复；永久删除整个家庭需要另行确认。退出共享或被移除后，CloudKit 按权限规则清理参与者的共享副本，主人的原资料不会因此删除。App 无法远程删除你已导出的备份或分享副本。"
+            "普通记录删除后可在 90 天内恢复，导入备份不会重置原删除时间；永久删除整个家庭需要另行确认。退出共享或被移除后，CloudKit 按权限规则清理参与者的共享副本，主人的原资料不会因此删除。App 无法远程删除你已导出的备份或分享副本。"
           ]
         ],
         [
@@ -108,7 +108,7 @@ const locales = {
       intro: "这些核心数据能力不受订阅限制。进行不可逆操作前，请先创建一份经过验证的完整备份。",
       sections: [
         ["备份与兽医资料包", ["在“档案 → 数据与备份 → 导入与导出”中导出完整备份；也可按宠物生成包含趋势图、明细表格和所选附件的兽医资料包。"]],
-        ["创建完整备份", ["可创建包含完整记录、修订、删除状态和附件的 .petterdaysbackup。该文件包含私人资料，请保存到由你掌控的位置，并完成一次恢复演练。"]],
+        ["创建完整备份", ["可创建包含记录、删除状态和附件的 .petterdaysbackup。该文件包含私人资料，请保存到由你掌控的位置，并完成一次恢复演练。"]],
         ["恢复备份", ["恢复会完整检查备份结构和数据关系。免费用户也可以恢复包含超过两只宠物的备份：所有数据都会恢复，最多两只宠物可继续编辑，其余保持可查看、可导出但只读；订阅后恢复编辑。"]],
         ["删除与恢复记录", ["普通删除进入“最近删除”，可在保留期内恢复；修改、删除和恢复均保留审计信息。永久删除整个家庭资料是独立的高风险操作，确认后从当前资料库移除。"]],
         ["iCloud 与共享", ["Petter Days Pro 生效且本机已有资料库时，App 会自动尝试启用 iCloud 同步；从备份恢复到本机的资料库需手动启用。只有启用成功后才会同步。可在共享管理中查看成员与权限、退出共享或由主人移除成员。关闭订阅会暂停新的同步与共享操作，不会自动删除云端资料或 CKShare 关系。"]],
@@ -169,9 +169,9 @@ const locales = {
           "4. 購買、備份與刪除",
           [
             "購買、續訂、恢復購買、退款及資格驗證由 Apple App Store 與 StoreKit 處理。Petter Days 不取得支付卡資料；價格與週期以購買頁面為準。",
-            "你可建立包含記錄、修改歷史及附件的完整備份，自行選擇儲存位置或接收者。備份含有私人資料，應儲存在你掌控的位置。",
+            "你可建立包含記錄及附件的完整備份，自行選擇儲存位置或接收者。備份含有私人資料，應儲存在你掌控的位置。",
             "訂閱到期會暫停新的 CloudKit 讀寫及共享管理，不會刪除已下載的本機資料、雲端區域或仍有效的共享關係。檢視、備份、還原及匯出仍可使用。",
-            "一般記錄可刪除及還原；永久刪除整個家庭須另行確認。退出共享或被移除後，CloudKit 依權限規則清理參與者的共享副本，不會因此刪除主人的原始資料。App 無法遠端刪除你已匯出或分享的副本。"
+            "一般紀錄刪除後可在 90 天內還原，匯入備份不會重設原刪除時間；永久刪除整個家庭須另行確認。退出共享或被移除後，CloudKit 依權限規則清理參與者的共享副本，不會因此刪除主人的原始資料。App 無法遠端刪除你已匯出或分享的副本。"
           ]
         ],
         [
@@ -206,7 +206,7 @@ const locales = {
         ]
       ]
     },
-    choices: { eyebrow: "私隱選擇與資料管理", title: "檢視、帶走、還原或刪除資料。", intro: "這些核心能力不受訂閱限制。不可逆操作前請先建立並驗證完整備份。", sections: [["備份與獸醫資料包", ["在「檔案 → 資料與備份 → 匯入與匯出」匯出完整備份，或按寵物產生含趨勢圖、明細表和所選附件的獸醫資料包。"]], ["完整備份與還原", ["可建立包含完整記錄、修訂、刪除狀態與附件的 .petterdaysbackup。檔案包含私人資料，請只儲存在你掌控的位置。免費用戶也可完整還原超過兩隻寵物的備份；超出兩隻的寵物保持可檢視和匯出但唯讀。"]], ["刪除與共享", ["一般刪除可在最近刪除中還原；永久刪除整個家庭資料是獨立高風險操作。CKShare 成員可按權限退出或被移除，取消訂閱不等於自動刪除分享關係。"]], ["需要協助", [`使用 <a href="${supportURL}">${supportEmail}</a>，但不要公開私人資料或備份。`]]]},
+    choices: { eyebrow: "私隱選擇與資料管理", title: "檢視、帶走、還原或刪除資料。", intro: "這些核心能力不受訂閱限制。不可逆操作前請先建立並驗證完整備份。", sections: [["備份與獸醫資料包", ["在「檔案 → 資料與備份 → 匯入與匯出」匯出完整備份，或按寵物產生含趨勢圖、明細表和所選附件的獸醫資料包。"]], ["完整備份與還原", ["可建立包含紀錄、刪除狀態與附件的 .petterdaysbackup。檔案包含私人資料，請只儲存在你掌控的位置。免費用戶也可完整還原超過兩隻寵物的備份；超出兩隻的寵物保持可檢視和匯出但唯讀。"]], ["刪除與共享", ["一般刪除可在最近刪除中還原；永久刪除整個家庭資料是獨立高風險操作。CKShare 成員可按權限退出或被移除，取消訂閱不等於自動刪除分享關係。"]], ["需要協助", [`使用 <a href="${supportURL}">${supportEmail}</a>，但不要公開私人資料或備份。`]]]},
     terms: { eyebrow: "使用條款", title: "清楚的邊界，安心的記錄。", intro: "使用 Petter Days 即表示同意以下條款。", sections: [["服務與醫療邊界", ["Petter Days 提供寵物記錄、提醒、趨勢、附件、備份、手動靜息呼吸記錄、庫存及可選 iCloud 家庭協作。它不是醫療器械，不診斷、預防或治療疾病，也不取代獸醫。"]], ["用戶責任", ["用戶應確保內容與共享合法適當，並妥善保管裝置、Apple Account 及備份檔案。"]], ["訂閱", ["Petter Days Pro 經 Apple App Store 自動續訂；價格、取消、退款及稅項以 Apple 購買頁面和條款為準。每位共享參與者需各自訂閱。"]], ["資料與可用性", ["裝置、儲存空間、網絡、iCloud、誤操作等可能影響資料。請定期建立並驗證備份；我們不作永不遺失或永久保管承諾。"]], ["聯絡", [`條款或支援問題請使用 <a href="${supportURL}">${supportEmail}</a>，不要公開私人健康資料。`]]]},
 
   },
@@ -247,9 +247,9 @@ const locales = {
           "4. Purchases, backups, and deletion",
           [
             "Apple App Store and StoreKit handle purchases, renewals, restoration, refunds, and entitlement checks. Petter Days does not receive payment-card details. Prices and billing periods are shown on the purchase screen.",
-            "You can create complete backups containing records, modification history, and attachments, and choose where to save them or whom to share them with. Backups contain private information; keep them somewhere you control.",
+            "You can create complete backups containing records and attachments, and choose where to save them or whom to share them with. Backups contain private information; keep them somewhere you control.",
             "When a subscription expires, new CloudKit reads, writes, and sharing management pause. Downloaded local data, cloud zones, and valid sharing relationships are not deleted. Viewing, backup, restore, and export remain available.",
-            "Individual records can be deleted and restored. Permanently deleting an entire household requires separate confirmation. When you leave a share or are removed, CloudKit cleans up the participant copy according to its access rules without deleting the owner’s source data. The App cannot remotely delete copies you have already exported or shared."
+            "Individual records can be restored within 90 days of deletion. Importing a backup does not restart the original recovery period. Permanently deleting an entire household requires separate confirmation. When you leave a share or are removed, CloudKit cleans up the participant copy according to its access rules without deleting the owner’s source data. The App cannot remotely delete copies you have already exported or shared."
           ]
         ],
         [
@@ -284,7 +284,7 @@ const locales = {
         ]
       ]
     },
-    choices: { eyebrow: "Privacy Choices & Data Management", title: "View, carry, restore, or delete your data.", intro: "These core data tools are not subscription-gated. Before an irreversible action, create and test a complete backup.", sections: [["Backup and veterinary brief", ["Export a complete backup from Profile → Data & Backups → Import & Export, or create a per-pet veterinary brief with trend charts, detail tables, and selected attachments."]], ["Complete backup", ["Create a .petterdaysbackup containing complete records, revisions, deletion status, and attachments. It contains private information, so save it only to a location you control."]], ["Restore", ["Restore validates the package and its relationships. Free users can restore backups with more than two pets without losing data: up to two remain editable and the rest remain visible and exportable in read-only mode until subscribed."]], ["Delete and recover", ["Ordinary deletion goes to Recently Deleted and can be restored during its retention period. Permanently deleting a household is a separate high-risk action that removes it from the current library after confirmation."]], ["iCloud and sharing", ["With an active Petter Days Pro subscription and an existing local library, the App automatically attempts to enable iCloud sync. After restoring a backup to this device, you need to enable sync manually. Sync starts only after enablement succeeds. Sharing management shows members and permissions. Expiring a subscription pauses new cloud operations; it does not claim to remove cloud data or CKShare participation automatically."]], ["Get help", [`Email <a href="${supportURL}">${supportEmail}</a> with the App version and a description of the issue. Do not post backups, medical records, or precise locations.`]]]},
+    choices: { eyebrow: "Privacy Choices & Data Management", title: "View, carry, restore, or delete your data.", intro: "These core data tools are not subscription-gated. Before an irreversible action, create and test a complete backup.", sections: [["Backup and veterinary brief", ["Export a complete backup from Profile → Data & Backups → Import & Export, or create a per-pet veterinary brief with trend charts, detail tables, and selected attachments."]], ["Complete backup", ["Create a .petterdaysbackup containing records, deletion status, and attachments. It contains private information, so save it only to a location you control."]], ["Restore", ["Restore validates the package and its relationships. Free users can restore backups with more than two pets without losing data: up to two remain editable and the rest remain visible and exportable in read-only mode until subscribed."]], ["Delete and recover", ["Ordinary deletion goes to Recently Deleted and can be restored during its retention period. Permanently deleting a household is a separate high-risk action that removes it from the current library after confirmation."]], ["iCloud and sharing", ["With an active Petter Days Pro subscription and an existing local library, the App automatically attempts to enable iCloud sync. After restoring a backup to this device, you need to enable sync manually. Sync starts only after enablement succeeds. Sharing management shows members and permissions. Expiring a subscription pauses new cloud operations; it does not claim to remove cloud data or CKShare participation automatically."]], ["Get help", [`Email <a href="${supportURL}">${supportEmail}</a> with the App version and a description of the issue. Do not post backups, medical records, or precise locations.`]]]},
     terms: { eyebrow: "Terms of Use", title: "Clear boundaries for dependable records.", intro: "By using Petter Days, you agree to these terms. If you do not agree, stop using the App.", sections: [["1. Service", ["Petter Days provides pet-care records, reminders, trends, attachments, backups, observation tools, inventory, and optional iCloud collaboration. Features may change with future versions."]], ["2. Not medical care", ["Petter Days is not a medical device and does not diagnose, prevent, monitor, or treat disease. It does not replace a veterinarian. Seek professional help for urgent, persistent, or concerning symptoms."]], ["3. Your responsibilities", ["You are responsible for the legality and accuracy of content, attachments, recipients, and permissions, and for protecting your device, Apple Account, and backup files. Do not upload or share another person’s private data without authority."]], ["4. Subscription", ["Petter Days Pro is an auto-renewable subscription sold through Apple App Store. Price, term, trial, renewal, cancellation, refund, and taxes follow the purchase screen and Apple’s terms. Each shared participant needs a separate subscription."]], ["5. Data and availability", ["A device failure, storage limits, network or iCloud state, user action, or events outside reasonable control may affect data. Keep and test complete backups. We do not promise that data can never be lost or will be stored forever."]], ["6. Acceptable use and changes", ["Do not use Petter Days to violate rights or law, distribute malware, bypass subscription or permission controls, or interfere with service. We may update the App and these terms for security, compliance, compatibility, or product improvements."]], ["7. Contact", [`Email <a href="${supportURL}">${supportEmail}</a> for terms or support questions. Never post private health data or backups publicly.`]]]},
 
   },
@@ -325,9 +325,9 @@ const locales = {
           "4. 購入、バックアップ、削除",
           [
             "購入、更新、購入の復元、返金、利用資格の確認は Apple App Store と StoreKit が処理します。Petter Days は支払いカード情報を取得しません。価格と期間は購入画面に表示されます。",
-            "記録、変更履歴、添付ファイルを含む完全バックアップを作成し、保存先や共有相手を選べます。個人情報を含むため、自分で管理できる場所に保管してください。",
+            "記録と添付ファイルを含む完全バックアップを作成し、保存先や共有相手を選べます。個人情報を含むため、自分で管理できる場所に保管してください。",
             "購読が終了すると、新たな CloudKit の読み書きと共有管理を一時停止します。ダウンロード済みの端末データ、クラウド領域、有効な共有関係は削除しません。閲覧、バックアップ、復元、書き出しは引き続き利用できます。",
-            "通常の記録は削除・復元できます。家庭全体の完全削除には別途確認が必要です。共有から退出した場合や削除された場合、CloudKit は権限に従って参加者側のコピーを削除しますが、オーナーの元データは削除しません。書き出し済み、または共有済みのコピーを App が遠隔で削除することはできません。"
+            "通常の記録は削除から90日以内であれば復元できます。バックアップを読み込んでも元の復元期限は延長されません。家庭全体の完全削除には別途確認が必要です。共有から退出した場合や削除された場合、CloudKit は権限に従って参加者側のコピーを削除しますが、オーナーの元データは削除しません。書き出し済み、または共有済みのコピーを App が遠隔で削除することはできません。"
           ]
         ],
         [
@@ -362,7 +362,7 @@ const locales = {
         ]
       ]
     },
-    choices: { eyebrow: "プライバシー設定とデータ管理", title: "表示、持ち出し、復元、削除。", intro: "これらの基本機能は購読に依存しません。不可逆操作の前に完全バックアップを作成し、確認してください。", sections: [["バックアップと獣医向け資料", ["「プロフィール → データとバックアップ → 読み込みと書き出し」から完全バックアップを書き出すか、傾向グラフ、明細表、選択した添付を含む獣医向け資料を作成します。"]], ["バックアップと復元", ["完全な記録、変更履歴、削除状態、添付ファイルを含む .petterdaysbackup を作成できます。個人情報を含むため、自分で管理できる場所にのみ保存してください。無料版でも3匹以上を失わず復元でき、2匹を超える分は購読まで閲覧・書き出し可能な読み取り専用になります。"]], ["削除と共有", ["通常の削除は「最近削除した項目」から復元可能です。世帯全体の完全削除は別の高リスク操作です。購読終了は CKShare 関係の自動削除を意味しません。"]], ["サポート", [`<a href="${supportURL}">${supportEmail}</a> を利用し、公開ページに個人データやバックアップを投稿しないでください。`]]]},
+    choices: { eyebrow: "プライバシー設定とデータ管理", title: "表示、持ち出し、復元、削除。", intro: "これらの基本機能は購読に依存しません。不可逆操作の前に完全バックアップを作成し、確認してください。", sections: [["バックアップと獣医向け資料", ["「プロフィール → データとバックアップ → 読み込みと書き出し」から完全バックアップを書き出すか、傾向グラフ、明細表、選択した添付を含む獣医向け資料を作成します。"]], ["バックアップと復元", ["記録、削除状態、添付ファイルを含む .petterdaysbackup を作成できます。個人情報を含むため、自分で管理できる場所にのみ保存してください。無料版でも3匹以上を失わず復元でき、2匹を超える分は購読まで閲覧・書き出し可能な読み取り専用になります。"]], ["削除と共有", ["通常の削除は「最近削除した項目」から復元可能です。世帯全体の完全削除は別の高リスク操作です。購読終了は CKShare 関係の自動削除を意味しません。"]], ["サポート", [`<a href="${supportURL}">${supportEmail}</a> を利用し、公開ページに個人データやバックアップを投稿しないでください。`]]]},
     terms: { eyebrow: "利用規約", title: "明確な境界で、安心して記録。", intro: "Petter Days の利用により、本規約に同意したものとみなされます。", sections: [["サービスと医療上の境界", ["Petter Days は記録、通知、傾向、添付、バックアップ、観察補助、在庫、任意の iCloud 連携を提供します。医療機器ではなく、診断・予防・治療を行いません。"]], ["利用者の責任", ["内容と共有の適法性、端末、Apple Account、バックアップファイルの管理は利用者の責任です。"]], ["購読", ["Petter Days Pro は Apple App Store の自動更新購読です。価格、期間、解約、返金、税は Apple の購入画面と規約に従います。各共有参加者に個別購読が必要です。"]], ["データと可用性", ["端末故障、容量、ネットワーク、iCloud、誤操作などでデータが影響を受ける場合があります。完全バックアップを定期的に作成・検証してください。永久保存や絶対に失われないことを保証しません。"]], ["連絡", [`<a href="${supportURL}">${supportEmail}</a> を利用し、個人の健康情報を公開しないでください。`]]]},
 
   },
@@ -403,9 +403,9 @@ const locales = {
           "4. 구매, 백업과 삭제",
           [
             "구매, 갱신, 구매 복원, 환불과 이용 자격 확인은 Apple App Store와 StoreKit이 처리합니다. Petter Days는 결제 카드 정보를 받지 않습니다. 가격과 결제 주기는 구매 화면에 표시됩니다.",
-            "기록, 수정 이력과 첨부 파일을 포함한 전체 백업을 만들고, 저장 위치나 공유할 상대를 직접 선택할 수 있습니다. 백업에는 개인정보가 포함되므로 직접 관리하는 위치에 보관하세요.",
+            "기록과 첨부 파일을 포함한 전체 백업을 만들고, 저장 위치나 공유할 상대를 직접 선택할 수 있습니다. 백업에는 개인정보가 포함되므로 직접 관리하는 위치에 보관하세요.",
             "구독이 만료되면 새로운 CloudKit 읽기·쓰기와 공유 관리를 일시 중지합니다. 이미 내려받은 기기 데이터, 클라우드 영역과 유효한 공유 관계는 삭제하지 않습니다. 보기, 백업, 복원과 내보내기는 계속 사용할 수 있습니다.",
-            "일반 기록은 삭제하고 복원할 수 있습니다. 가족 자료 전체를 영구 삭제하려면 별도 확인이 필요합니다. 공유에서 나가거나 제외되면 CloudKit이 권한 규칙에 따라 참여자의 공유 사본을 정리하며, 소유자의 원본은 삭제하지 않습니다. App은 이미 내보내거나 공유한 사본을 원격으로 삭제할 수 없습니다."
+            "일반 기록은 삭제 후 90일 이내에 복원할 수 있습니다. 백업을 가져와도 원래 복원 기한은 연장되지 않습니다. 가족 자료 전체를 영구 삭제하려면 별도 확인이 필요합니다. 공유에서 나가거나 제외되면 CloudKit이 권한 규칙에 따라 참여자의 공유 사본을 정리하며, 소유자의 원본은 삭제하지 않습니다. App은 이미 내보내거나 공유한 사본을 원격으로 삭제할 수 없습니다."
           ]
         ],
         [
@@ -440,7 +440,7 @@ const locales = {
         ]
       ]
     },
-    choices: { eyebrow: "개인정보 선택 및 데이터 관리", title: "보고, 가져가고, 복원하거나 삭제하세요.", intro: "이 핵심 기능은 구독과 무관합니다. 되돌릴 수 없는 작업 전에 전체 백업을 만들고 검증하세요.", sections: [["백업과 수의사용 자료", ["「프로필 → 데이터 및 백업 → 가져오기 및 내보내기」에서 전체 백업을 내보내거나 추세 차트, 상세 표와 선택한 첨부파일이 있는 수의사용 자료를 만듭니다."]], ["백업과 복원", ["전체 기록, 수정 기록, 삭제 상태와 첨부 파일이 포함된 .petterdaysbackup을 만들 수 있습니다. 개인 정보가 포함되므로 직접 관리하는 위치에만 저장하세요. 무료 사용자도 세 마리 이상이 포함된 백업을 모두 복원할 수 있으며 두 마리를 넘는 데이터는 구독 전까지 보기와 내보내기가 가능한 읽기 전용입니다."]], ["삭제와 공유", ["일반 삭제는 최근 삭제에서 복원할 수 있습니다. 가정 전체 영구 삭제는 별도의 고위험 작업입니다. 구독 종료가 CKShare 관계를 자동 삭제한다는 뜻은 아닙니다."]], ["도움말", [`<a href="${supportURL}">${supportEmail}</a>을 사용하되 공개 페이지에 개인정보나 백업을 올리지 마세요.`]]]},
+    choices: { eyebrow: "개인정보 선택 및 데이터 관리", title: "보고, 가져가고, 복원하거나 삭제하세요.", intro: "이 핵심 기능은 구독과 무관합니다. 되돌릴 수 없는 작업 전에 전체 백업을 만들고 검증하세요.", sections: [["백업과 수의사용 자료", ["「프로필 → 데이터 및 백업 → 가져오기 및 내보내기」에서 전체 백업을 내보내거나 추세 차트, 상세 표와 선택한 첨부파일이 있는 수의사용 자료를 만듭니다."]], ["백업과 복원", ["기록, 삭제 상태와 첨부 파일이 포함된 .petterdaysbackup을 만들 수 있습니다. 개인 정보가 포함되므로 직접 관리하는 위치에만 저장하세요. 무료 사용자도 세 마리 이상이 포함된 백업을 모두 복원할 수 있으며 두 마리를 넘는 데이터는 구독 전까지 보기와 내보내기가 가능한 읽기 전용입니다."]], ["삭제와 공유", ["일반 삭제는 최근 삭제에서 복원할 수 있습니다. 가정 전체 영구 삭제는 별도의 고위험 작업입니다. 구독 종료가 CKShare 관계를 자동 삭제한다는 뜻은 아닙니다."]], ["도움말", [`<a href="${supportURL}">${supportEmail}</a>을 사용하되 공개 페이지에 개인정보나 백업을 올리지 마세요.`]]]},
     terms: { eyebrow: "이용 약관", title: "명확한 경계로 안심할 수 있는 기록.", intro: "Petter Days를 사용하면 이 약관에 동의하는 것입니다.", sections: [["서비스와 의료 한계", ["Petter Days는 기록, 알림, 추세, 첨부파일, 백업, 관찰 도구, 재고와 선택적 iCloud 협업을 제공합니다. 의료기기가 아니며 질병을 진단·예방·치료하지 않습니다."]], ["사용자 책임", ["콘텐츠와 공유의 적법성, 기기, Apple Account, 백업 파일 보호는 사용자의 책임입니다."]], ["구독", ["Petter Days Pro는 Apple App Store 자동 갱신 구독입니다. 가격, 기간, 취소, 환불과 세금은 Apple 구매 화면과 약관을 따릅니다. 각 공유 참여자에게 별도 구독이 필요합니다."]], ["데이터와 가용성", ["기기 고장, 저장 용량, 네트워크, iCloud, 오작동이 데이터에 영향을 줄 수 있습니다. 전체 백업을 정기적으로 만들고 검증하세요. 영구 보관이나 절대 손실되지 않음을 보장하지 않습니다."]], ["문의", [`<a href="${supportURL}">${supportEmail}</a>을 이용하고 비공개 건강 정보를 공개하지 마세요.`]]]},
 
   },

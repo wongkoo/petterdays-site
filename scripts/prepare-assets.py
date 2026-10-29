@@ -9,6 +9,7 @@ from pathlib import Path
 import argparse
 import re
 import shutil
+import sys
 
 from fontTools import subset
 from fontTools.ttLib import TTCollection
@@ -35,16 +36,25 @@ class PageText(HTMLParser):
 
 
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument("--app-root", type=Path, default=Path(__file__).resolve().parents[2])
+parser.add_argument("--app-root", type=Path, default=Path(__file__).resolve().parents[3])
 parser.add_argument("--fonts-only", action="store_true", help="Update text coverage without rewriting approved screenshots")
+parser.add_argument("--version", help="Explicit NAS App Store package version")
+parser.add_argument("--revision", help="Explicit NAS package revision, e.g. r02")
 args = parser.parse_args()
 app = args.app_root
-site = app / "website"
+site = app / "projects/website"
 assets = site / "static/assets"
 locales = [("zh-Hans", "zh-Hans", "", 0, "sc"), ("zh-Hant", "zh-Hant", "zh-Hant", 1, "tc"),
            ("en", "en-US", "en", 0, "sc"), ("ja", "ja", "ja", 2, "j"), ("ko", "ko", "ko", 3, "k")]
-raw = app / "AppStore/raw-screenshots"
-nfc_template = (app / "AppStore/artwork/nfc-quick-record.svg").read_text()
+if not args.fonts_only:
+    if not args.version or not args.revision:
+        parser.error('Screenshot refresh requires --version and --revision; never infer latest')
+    sys.path.insert(0, str(app / 'scripts/assets'))
+    from app_store_assets import package, verify
+    source_package = package(args.version, args.revision)
+    verify(source_package)
+    raw = source_package / 'sources/raw-screenshots'
+    nfc_template = (source_package / 'sources/artwork/nfc-quick-record.svg').read_text()
 # The SVG is the already approved NFC composition; only its labels are localized.
 water = {"zh-Hans": "饮水", "zh-Hant": "飲水", "en": "Water", "ja": "水分", "ko": "수분"}
 for locale, store_locale, prefix, face, suffix in locales:
@@ -69,7 +79,7 @@ for locale, store_locale, prefix, face, suffix in locales:
 
 font_dir = assets / "fonts"
 font_dir.mkdir(exist_ok=True)
-collection = app / "PetterDaysApp/Resources/Fonts/PetterDaysRounded-Bold.ttc"
+collection = app / "projects/iOS/Sources/PetterDaysApp/Resources/Fonts/PetterDaysRounded-Bold.ttc"
 # Latin text is shared by the Simplified Chinese and English subset.
 texts = {"sc": [], "tc": [], "j": [], "k": []}
 for locale, store_locale, prefix, face, suffix in locales:
@@ -116,5 +126,5 @@ for face, suffix, family_suffix in [(0, "sc", "SC"), (1, "tc", "TC"), (2, "j", "
     path = font_dir / f"rounded-{suffix}.woff2"
     font.save(path)
     print(f"{path.relative_to(site)}: {path.stat().st_size:,} bytes")
-shutil.copyfile(app / "PetterDaysApp/Resources/Fonts/ResourceHanRounded-OFL.txt", font_dir / "OFL.txt")
+shutil.copyfile(app / "projects/iOS/Sources/PetterDaysApp/Resources/Fonts/ResourceHanRounded-OFL.txt", font_dir / "OFL.txt")
 print("Refreshed 4 licensed rounded font subsets." if args.fonts_only else "Refreshed 25 PNG screens, 5 localized NFC illustrations and 4 licensed rounded font subsets.")

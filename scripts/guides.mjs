@@ -2,7 +2,7 @@ import { guideTranslations } from "./guide-translations.mjs";
 import { storyContent } from "./story-content.mjs";
 
 // Public product facts and practical examples; no private pet data or invented results.
-export const guideUpdatedDate = "2026-10-23";
+export const guideUpdatedDate = "2026-10-26";
 export const guideContent = {
   ...guideTranslations,
   "zh-Hans": {
@@ -44,7 +44,7 @@ export const guideContent = {
             "id": "nfc",
             "title": "碰一下，打开常用记录。",
             "paragraphs": [
-              "把 NFC 快捷入口放在顺手的位置。兼容的 iPhone 读取标签后，核对内容并保存。需另备可写入的兼容标签。"
+              "把 NFC 快捷入口放在顺手的位置。填写后保存模式让你先核对再保存；直接保存模式从 NFC 标签进入 App 后，按预设内容和当下时间记录。", "需使用兼容 iPhone，并另备可写入的兼容标签。"
             ]
           },
           {
@@ -137,7 +137,7 @@ export const guideContent = {
       "guide/nfc": {
         "title": "照护到哪里，入口就在哪里。",
         "searchTitle": "iPhone NFC 宠物记录指南：标签、配置与使用",
-        "intro": "用 Petter Days 把常用记录入口放到顺手的位置。轻碰标签，打开对应入口，确认内容再保存。",
+        "intro": "用 Petter Days 把常用记录入口放到顺手的位置。可选择填写后保存，或从 NFC 标签进入 App 后，按预设内容和当下时间直接保存。",
         "sections": [
           {
             "id": "prepare",
@@ -155,20 +155,20 @@ export const guideContent = {
             "id": "setup",
             "title": "先配置，再核验，最后放到常用位置。",
             "steps": [
-              "在 App 的 NFC 功能中选择对应的宠物和记录类型，按需要设置预填内容。",
+              "在 App 的 NFC 功能中选择宠物、记录类型与保存模式；写入前核对宠物和预设内容。",
               "按照 App 提示写入标签，再使用核验功能确认内容。",
-              "先实际读取一次，确认打开的是预期记录入口，再放到日常使用的位置。",
-              "每次使用时核对宠物、时间和数值，完成 App 提示的确认与保存步骤。"
+              "先实际读取一次，在 App 中确认打开的表单或保存的记录符合预期，再放到常用位置。",
+              "填写后保存模式：每次核对宠物、时间和数值后保存。直接保存模式：按预设内容和当下时间记录，可在 App 中查看结果。"
             ],
             "paragraphs": [
-              "例如，可以在饮水用品旁放一个饮水记录入口。预填值只是事先配置的信息，应根据本次实际情况修改。"
+              "例如，可以在饮水用品旁放一个饮水记录入口。预填值不是测量值；需要每次调整时，选择填写后保存模式。使用直接保存前，先确认预设符合实际照护。"
             ]
           },
           {
             "id": "expectations",
-            "title": "轻碰是入口，照护仍由你确认。",
+            "title": "保存方式取决于模式，照护由你确认。",
             "paragraphs": [
-              "标签不会检测水量，也不会判断宠物有没有吃药。读取成功、打开 App 和成功保存记录，是三个不同的步骤。",
+              "标签不会检测水量，也不会判断宠物有没有吃药。读取成功、打开 App 和成功保存记录，是三个不同的步骤。", "直接保存需要从 NFC 标签进入 App，且 App 能在当前资料库中确定标签所选宠物、你有编辑权限。普通链接和 App 内“试一试”只打开预填表单；遛弯仅支持填写后保存模式。",
               "系统可能先显示通知，需要点击后才进入 App；实际行为取决于设备、系统状态和标签内容。没有 NFC 标签时，仍可从 App 内进入记录。"
             ]
           },
@@ -226,7 +226,7 @@ export const guideContent = {
             "id": "nfc",
             "title": "A tap to your usual record.",
             "paragraphs": [
-              "Place an NFC shortcut somewhere convenient. Read it with a compatible iPhone, check the details and save. A compatible writable tag is required separately."
+              "Place an NFC shortcut somewhere convenient. “Fill in and save” lets you review before saving. “Save directly” records the preset with the current time when you open the app from an NFC tag.", "Use a compatible iPhone and a separately obtained compatible writable tag."
             ]
           },
           {
@@ -319,7 +319,7 @@ export const guideContent = {
       "guide/nfc": {
         "title": "A shortcut, right where care happens.",
         "searchTitle": "NFC pet care records on iPhone: tags, setup and use",
-        "intro": "Put a Petter Days record shortcut within easy reach. Tap a configured tag, open the record, then check the details and save.",
+        "intro": "Put a Petter Days record shortcut within easy reach. Choose “Fill in and save”, or open the app from an NFC tag to save the preset with the current time.",
         "sections": [
           {
             "id": "prepare",
@@ -337,20 +337,20 @@ export const guideContent = {
             "id": "setup",
             "title": "Configure it, verify it, then put it to use.",
             "steps": [
-              "In the app’s NFC feature, choose the pet and record type, with optional prefilled details.",
+              "In the app’s NFC tools, choose the pet, record type and saving mode. Check the pet and preset before writing.",
               "Follow the app’s instructions to write the tag, then verify its contents.",
-              "Read the tag once to check that it opens the intended shortcut before placing it where you will use it.",
-              "Each time, check the pet, time and values, then complete the app’s confirmation and saving steps."
+              "Read the tag once and check the opened form or saved record in the app before placing it where you will use it.",
+              "“Fill in and save”: check the pet, time and values before each save. “Save directly”: record the preset with the current time, then view the result in the app."
             ],
             "paragraphs": [
-              "For example, place a water-record shortcut near drinking supplies. Prefilled values are saved settings, not measurements: adjust them to match what happened this time."
+              "For example, place a water-record shortcut near drinking supplies. Presets are not measurements. Choose “Fill in and save” if values need changing each time; before using “Save directly”, check that the preset matches the care actually given."
             ]
           },
           {
             "id": "expectations",
-            "title": "A tap opens the door. You confirm the care.",
+            "title": "Choose how to save. Confirm the care yourself.",
             "paragraphs": [
-              "A tag does not measure water or know whether medication was given. Reading a tag, opening the app and successfully saving a record are separate steps.",
+              "A tag does not measure water or know whether medication was given. Reading a tag, opening the app and successfully saving a record are separate steps.", "Direct saving requires opening the app from an NFC tag. The app must be able to identify the selected pet in your current library, and you need permission to edit. Ordinary links and the in-app “Try it” action only open a prefilled form. Walks support “Fill in and save” only.",
               "Your iPhone may show a notification that you need to tap. Behavior depends on the device, system state and tag contents. You can still open records inside the app without a tag."
             ]
           },

@@ -1,14 +1,14 @@
 # Petter Days 官网
 
-官网提供五种语言的产品介绍、隐私政策、隐私选择、使用条款和支持页。唯一开发源码在 App 仓库的 `website/`，通过 NAS Git 协作；GitHub `wongkoo/petterdays-site` 是 Cloudflare Pages 的发布镜像。
+官网提供五种语言的产品介绍、隐私政策、隐私选择、使用条款和支持页。唯一开发源码在 App 仓库的 `projects/website/`，通过 NAS Git 协作；GitHub `wongkoo/petterdays-site` 是 Cloudflare Pages 的发布镜像。
 
 ## 本地开发
 
-官网使用猫狗角色时先读 [IP 使用规范](../design-assets/IP_GUIDE.md)。在仓库根目录运行 `python3 design-assets/scripts/ip_assets.py resolve --scene companion --channel website` 获取主用原稿；按内容选择 `diary`、`care-plan` 等场景。正式引用前将选定素材复制或导出到 `static/` 并保留来源 ID；不直接引用历史归档、本机路径或仓库外文件。此取用流程不自动发布官网。
+官网使用猫狗角色时先读 [IP 使用规范](../../docs/policies/IP_GUIDE.md)。在仓库根目录运行 `python3 scripts/assets/ip_assets.py resolve --scene companion --channel website` 获取主用原稿；按内容选择 `diary`、`care-plan` 等场景。正式引用前将选定素材复制或导出到 `static/` 并保留来源 ID；不直接引用历史归档、本机路径或仓库外文件。此取用流程不自动发布官网。
 
-另一台电脑拉取 NAS 的 App 仓库后，在 `website/` 修改即可。需要 Node.js 22 和 npm；当前没有外部 npm 依赖，无需 `npm install`。
+另一台电脑拉取 NAS 的 App 仓库后，在 `projects/website/` 修改即可。需要 Node.js 22 和 npm；当前没有外部 npm 依赖，无需 `npm install`。
 
-在 `website/` 运行：
+在 `projects/website/` 运行：
 
 ```sh
 npm run build
@@ -28,7 +28,7 @@ npm run preview
 
 首页首屏、页尾下载区和 NFC 链接回退页直接打开 App Store。商店地址由 `product.json` 中的 Apple ID 拼接，来源是 `AppStore/metadata.json`；网站不自行判断或宣称苹果的审核状态。
 
-图标使用 `project.yml` 指定的正式 AppIcon，不能从旧官网或备用图标复制。`scripts/prepare-brand.py` 导出网站图标、32px favicon 和 180px Apple Touch Icon，并为文件名加入源图摘要，避免旧缓存。页眉、页尾、分享卡片和链接回退页统一引用这些资源。根路径 `app-icon.png` 保留为兼容入口，内容也同步为当前图标。
+图标使用 `projects/iOS/project.yml` 指定的正式 AppIcon，不能从旧官网或备用图标复制。`scripts/prepare-brand.py` 导出网站图标、32px favicon 和 180px Apple Touch Icon，并为文件名加入源图摘要，避免旧缓存。页眉、页尾、分享卡片和链接回退页统一引用这些资源。根路径 `app-icon.png` 保留为兼容入口，内容也同步为当前图标。
 
 ## 产品指南与搜索识别
 
@@ -50,20 +50,20 @@ Google Search Console 使用 `static/google044d9f950647aca5.html` 验证 URL 前
 
 Bing Webmaster Tools 使用平台生成的 `static/BingSiteAuth.xml` 单独验证，不需要授予 Bing 访问 Google Search Console 的权限；检查程序核对该文件内容。
 
-只修改文字时，在 build 后运行 `.local/website-asset-tools/bin/python website/scripts/prepare-assets.py --fonts-only`（从 App 仓库根目录），再重新 build/check，即可更新字体而不重导出截图。
+只修改文字时，在 build 后运行 `.local/website-asset-tools/bin/python projects/website/scripts/prepare-assets.py --fonts-only`（从 App 仓库根目录），再重新 build/check，即可更新字体而不重导出截图。
 
 ## 更换画面和更新字体
 
-首页引用 `static/assets/home/<语言>/` 中的 PNG 原生画面和 SVG 示意。原生截图来源为同一 App 仓库的 `AppStore/raw-screenshots/`，NFC 构图来源为已确认的 `AppStore/artwork/nfc-quick-record.svg`。更换源截图后，在 App 仓库根目录运行：
+首页引用 `static/assets/home/<语言>/` 中的 PNG 原生画面和 SVG 示意。原生截图和 NFC 构图来自显式指定的 NAS 商店版本包；`--fonts-only` 只读取 Git 字体与官网文本，不连接 NAS。更换源截图后，在 App 仓库根目录运行：
 
 ```sh
 python3 -m venv .local/website-asset-tools
 .local/website-asset-tools/bin/python -m pip install fonttools brotli pillow
-.local/website-asset-tools/bin/python website/scripts/prepare-brand.py
-node website/scripts/build.mjs
-.local/website-asset-tools/bin/python website/scripts/prepare-assets.py
-node website/scripts/build.mjs
-node website/scripts/check.mjs
+.local/website-asset-tools/bin/python projects/website/scripts/prepare-brand.py
+node projects/website/scripts/build.mjs
+.local/website-asset-tools/bin/python projects/website/scripts/prepare-assets.py --version <版本> --revision <修订>
+node projects/website/scripts/build.mjs
+node projects/website/scripts/check.mjs
 ```
 
 工具环境已存在时可跳过前两步。通常构建直接使用已入库的资源，不需要安装 Python 包。文案增加新字后也应运行资源准备脚本，重新生成四种地区字形的 WOFF2 子集。字体基于 App 已使用的 Resource Han Rounded，修改后的字体命名为 Petter Days Web Rounded，并随 `static/assets/fonts/OFL.txt` 保留 SIL Open Font License。字体由本站提供，不访问第三方字体服务。
@@ -78,13 +78,13 @@ NAS 推送只共享源码。需要发布时，告诉助手“同步官网到 Git
 
 ```sh
 # 查看差异并检查，不推送
-python3 scripts/sync_website_to_github.py
+python3 scripts/release/sync_website_to_github.py
 
 # 明确发布：检查通过后提交并推送 GitHub main
-python3 scripts/sync_website_to_github.py --push
+python3 scripts/release/sync_website_to_github.py --push
 ```
 
-同步入口只导出 App 已提交版本的 `website/`，不会导出 App 其他目录；官网有未提交改动时会停止。脚本在临时克隆中保留原 GitHub 历史并同步新增、修改和删除，运行 build/check 后推送。旧的 `../petterdays-site` 工作区及其未提交文件不会被覆盖，以后不再在那里开发。
+同步入口只导出 App 已提交版本的 `projects/website/`，不会导出 App 其他目录；官网有未提交改动时会停止。脚本在临时克隆中保留原 GitHub 历史并同步新增、修改和删除，运行 build/check 后推送。旧的 `../petterdays-site` 工作区及其未提交文件不会被覆盖，以后不再在那里开发。
 
 默认发布当前 `HEAD` 的官网；需要指定已审查版本时，可加 `--ref <App提交>`。以后新增 npm 依赖，需要将 `package-lock.json` 一起提交，同步脚本会在临时目录使用 `npm ci` 安装。
 

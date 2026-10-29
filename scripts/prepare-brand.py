@@ -13,21 +13,21 @@ from pathlib import Path
 from PIL import Image
 
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument("--app-root", type=Path, default=Path(__file__).resolve().parents[2])
+parser.add_argument("--app-root", type=Path, default=Path(__file__).resolve().parents[3])
 args = parser.parse_args()
 app = args.app_root
-site = app / "website"
-match = re.search(r"ASSETCATALOG_COMPILER_APPICON_NAME:\s*(\w+)", (app / "project.yml").read_text())
+site = app / "projects/website"
+match = re.search(r"ASSETCATALOG_COMPILER_APPICON_NAME:\s*(\w+)", (app / "projects/iOS/project.yml").read_text())
 if not match:
     raise RuntimeError("Cannot find the production App icon name")
-catalog = app / "PetterDaysApp/Resources/Assets.xcassets" / f"{match[1]}.appiconset"
+catalog = app / "projects/iOS/Sources/PetterDaysApp/Resources/Assets.xcassets" / f"{match[1]}.appiconset"
 entries = json.loads((catalog / "Contents.json").read_text())["images"]
 primary = [entry for entry in entries if entry.get("filename") and not entry.get("appearances")]
 if len(primary) != 1:
     raise RuntimeError("Expected one primary marketing icon; choose its source explicitly")
 source = catalog / primary[0]["filename"]
 source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
-apple_id = str(json.loads((app / "AppStore/metadata.json").read_text())["appStoreAppleID"])
+apple_id = str(json.loads((app / "projects/iOS/Configuration/ProductIdentity.json").read_text())["signingAndServices"]["appStoreAppleID"])
 if not re.fullmatch(r"[0-9]+", apple_id):
     raise RuntimeError("Invalid App Store Apple ID")
 dest = site / "static/assets/brand"

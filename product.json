@@ -1,6 +1,6 @@
 {
   "appStoreAppleID": "6802897091",
-  "iconSource": "PetterDaysApp/Resources/Assets.xcassets/AppIcon.appiconset/PetterDaysAppIcon.png",
+  "iconSource": "projects/iOS/Sources/PetterDaysApp/Resources/Assets.xcassets/AppIcon.appiconset/PetterDaysAppIcon.png",
   "iconSourceSHA256": "55140293fd2489fe894c29713e573d08203332a33daae8636aca64cb91775ea7",
   "assets": {
     "/assets/brand/app-icon-55140293fd24.png": "04c359565480b681c0ef8fc584d121ece5009aba413885fb984f6bd3e2430700",
