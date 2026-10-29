@@ -9,6 +9,7 @@ from pathlib import Path
 import argparse
 import re
 import shutil
+import subprocess
 import sys
 
 from fontTools import subset
@@ -128,3 +129,5 @@ for face, suffix, family_suffix in [(0, "sc", "SC"), (1, "tc", "TC"), (2, "j", "
     print(f"{path.relative_to(site)}: {path.stat().st_size:,} bytes")
 shutil.copyfile(app / "projects/iOS/Sources/PetterDaysApp/Resources/Fonts/ResourceHanRounded-OFL.txt", font_dir / "OFL.txt")
 print("Refreshed 4 licensed rounded font subsets." if args.fonts_only else "Refreshed 25 PNG screens, 5 localized NFC illustrations and 4 licensed rounded font subsets.")
+if not args.fonts_only:
+    subprocess.run([sys.executable, str(site / "scripts/prepare-web-images.py")], check=True)

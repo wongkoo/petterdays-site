@@ -1,4 +1,5 @@
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { optimizeAssets } from "./optimize-assets.mjs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { homeContent } from "./home-content.mjs";
@@ -593,6 +594,7 @@ const notFound = document("zh-Hans", "home", "页面不存在", "找不到这个
 const fallbackPrivacy = `<meta http-equiv="Content-Security-Policy" content="script-src 'self'; connect-src 'none'"><meta name="referrer" content="no-referrer">`;
 await writeFile(join(out, "404.html"), notFound.replace('<meta charset="utf-8">', `<meta charset="utf-8">${fallbackPrivacy}`));
 
+await optimizeAssets(out);
 const generated = await readFile(join(out, "index.html"), "utf8");
 if (!generated.includes('class="site-page product-page"') || !generated.includes('id="features"')) throw new Error("Home generation failed");
 console.log(`Built ${urls.length} localized pages in ${out}`);

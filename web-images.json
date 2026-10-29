@@ -1,0 +1,257 @@
+{
+  "encoding": "lossless WebP",
+  "assets": {
+    "/assets/home/en/01-today.png": {
+      "url": "/assets/home/en/01-today.webp",
+      "sourceSHA256": "0c2a0a0a763701dae1052207fd6d7b096609f21d748ad1cff83618fd2a9a846e",
+      "sha256": "7742409f6b93b897f0c494c588a234e2790de62bab7749553dde56dc55c4b8e7",
+      "sourceBytes": 278306,
+      "bytes": 187114,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/en/02-record-types.png": {
+      "url": "/assets/home/en/02-record-types.webp",
+      "sourceSHA256": "ddd20a3eb83841ad20f4f5207ee73350ab3b9c76038041a3910a3f4324b0d987",
+      "sha256": "ce6f6e62d184ff4d824c8539fec8fa8d862b71043956d2ec477f4a77bc525654",
+      "sourceBytes": 182875,
+      "bytes": 107688,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/en/03-custom-record.png": {
+      "url": "/assets/home/en/03-custom-record.webp",
+      "sourceSHA256": "8cb1a3ce2870985b3028bc0fca570a1d4d02667c07ad3d0e66f6acf11c74f9b6",
+      "sha256": "79055e5a6d81c8a4717e351a271895d7f06f12a86fac78ace9f1b3a9121d22dd",
+      "sourceBytes": 152219,
+      "bytes": 90166,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/en/04-warehouse.png": {
+      "url": "/assets/home/en/04-warehouse.webp",
+      "sourceSHA256": "5af713c873714e5e837c0f0af609ccfb4c68eeb9affea6c9f53ab55c497561e2",
+      "sha256": "32d8c31e6b49476e033b39f85c8becc62104c2ddc2f8998828f939cf261925da",
+      "sourceBytes": 254030,
+      "bytes": 168594,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/en/ipad-today.png": {
+      "url": "/assets/home/en/ipad-today.webp",
+      "sourceSHA256": "d397ef3ff6b8a8ff443994ec74930cb99cedbf992227b26727e233538f93a93f",
+      "sha256": "73cbd5d6fa7ff116e91d6e8b11ad200b580663a37835e273d5dd0b1396e3040e",
+      "sourceBytes": 254416,
+      "bytes": 165886,
+      "width": 900,
+      "height": 1200
+    },
+    "/assets/home/ip/cat-sitting-v2.png": {
+      "url": "/assets/home/ip/cat-sitting-v2.webp",
+      "sourceSHA256": "c1dd2f52528529a646a2bd4eadc2566816ee23092ab95199593fca22453e3193",
+      "sha256": "9b27b5f4b1a2dbd0fddedc4dd2fae24a76e0379c4c7eb77444449d5bf3c0eaf6",
+      "sourceBytes": 225566,
+      "bytes": 105376,
+      "width": 1400,
+      "height": 1677
+    },
+    "/assets/home/ip/diary.png": {
+      "url": "/assets/home/ip/diary.webp",
+      "sourceSHA256": "bf8a7ecc3233a8d539cd7982f88e71125dd57973e2d3328751051c618f7a9e7e",
+      "sha256": "838b49b83f948d90ed7ee43999a50e0d6b60006c678813543cb571c046420466",
+      "sourceBytes": 240292,
+      "bytes": 138422,
+      "width": 1400,
+      "height": 860
+    },
+    "/assets/home/ip/dog-sitting.png": {
+      "url": "/assets/home/ip/dog-sitting.webp",
+      "sourceSHA256": "25b440e3c29bce61b23d67996c7fae1ee25a48d19cdf9053bd0d606ec7c70cc4",
+      "sha256": "9321ab85ff0e98aae9ed11ff0a66dddfebf25d55904d19daac190797a9f40cb5",
+      "sourceBytes": 212040,
+      "bytes": 99804,
+      "width": 1400,
+      "height": 1568
+    },
+    "/assets/home/ja/01-today.png": {
+      "url": "/assets/home/ja/01-today.webp",
+      "sourceSHA256": "6c7f9ad9f6515aac9fbd4e3f94f502d95b1cc54b0ed6733e97bdf2f508e2034b",
+      "sha256": "496a0654e27b39a062b0280fa5d85a8dcb3f01cd1968168f875b74fad4f43398",
+      "sourceBytes": 279217,
+      "bytes": 189294,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/ja/02-record-types.png": {
+      "url": "/assets/home/ja/02-record-types.webp",
+      "sourceSHA256": "54fc76a66d7a6ff30a76ec5107ea587354349c747bcc9e859d38ded85f4275cc",
+      "sha256": "4a432a585473f58a678197b4a7c3d0f54303dd0cd652c50812e92b056f21cdad",
+      "sourceBytes": 202134,
+      "bytes": 123376,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/ja/03-custom-record.png": {
+      "url": "/assets/home/ja/03-custom-record.webp",
+      "sourceSHA256": "f318632025162fdffbbd165c8b46ce75c622c45cbfd5104d31f1d8bf1b900325",
+      "sha256": "7fb3b3a160d2ff397a4d340bf7f63fc944414a36d720172830245a9ea6fd20bd",
+      "sourceBytes": 160158,
+      "bytes": 93786,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/ja/04-warehouse.png": {
+      "url": "/assets/home/ja/04-warehouse.webp",
+      "sourceSHA256": "d566734c0855728ec1fc09623a70612b93a920ef99c52444d0cc34923b80e372",
+      "sha256": "bd612689f8a256e4ec479bbab954ddb9d5236aeb79f07acdaed3aa67ed72d7c4",
+      "sourceBytes": 285363,
+      "bytes": 182488,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/ja/ipad-today.png": {
+      "url": "/assets/home/ja/ipad-today.webp",
+      "sourceSHA256": "1bc64c614d68da00a8a8c3c8de195d6b6356a83aa78916beea02c21cb253eeae",
+      "sha256": "749314d9336e35fe200288f902bab3721895a809d367633b7b70c04b67c378dc",
+      "sourceBytes": 250022,
+      "bytes": 161722,
+      "width": 900,
+      "height": 1200
+    },
+    "/assets/home/ko/01-today.png": {
+      "url": "/assets/home/ko/01-today.webp",
+      "sourceSHA256": "f5550ae9072015bbf806e62751a01be613c89045e30b53a11387225fb34d6c92",
+      "sha256": "cc51c60763bc336cf59f4213d06ef45ed021cea404704e3b5e2649e1b9c6c048",
+      "sourceBytes": 258002,
+      "bytes": 175734,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/ko/02-record-types.png": {
+      "url": "/assets/home/ko/02-record-types.webp",
+      "sourceSHA256": "ea898177a99bec948e4538860b36e6a60b46681eb5d2016812bbfc1d8d870c74",
+      "sha256": "5b5248f0ebc4514107eb3021ee31bfcd1044ccc6a894beb522c64df387d97636",
+      "sourceBytes": 174107,
+      "bytes": 108182,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/ko/03-custom-record.png": {
+      "url": "/assets/home/ko/03-custom-record.webp",
+      "sourceSHA256": "3953232cf60f86bda959703910e50c2478591575c9610b11355482a8bc17cf33",
+      "sha256": "af7a06876fce4fd6475e1adcb194298f4a10c379c38194936eb09c0b553bd890",
+      "sourceBytes": 139047,
+      "bytes": 82750,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/ko/04-warehouse.png": {
+      "url": "/assets/home/ko/04-warehouse.webp",
+      "sourceSHA256": "bd8666bab2f055956666bc67eb27c05750b507b4454422a96e1d3bbe9a49d94d",
+      "sha256": "c9c87ccd745f55663d663ca3270de1a589cfbeddeb20a38aa2d44f64a5ae5e48",
+      "sourceBytes": 244951,
+      "bytes": 160784,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/ko/ipad-today.png": {
+      "url": "/assets/home/ko/ipad-today.webp",
+      "sourceSHA256": "d58d1e7e98a653e7a2e1e51d65b1f9de7c29e784896a02f9e5c4ca0c634cdfae",
+      "sha256": "5074c98233269679e953b58382a43b2c045037b460dc23385f0d4fd8d5574a7a",
+      "sourceBytes": 235986,
+      "bytes": 153174,
+      "width": 900,
+      "height": 1200
+    },
+    "/assets/home/zh-Hans/01-today.png": {
+      "url": "/assets/home/zh-Hans/01-today.webp",
+      "sourceSHA256": "28a3c1a10eae2825ba5508b555ae664d1b565acbda597741fb9e187b892f1892",
+      "sha256": "30adef157334638ec4bc45582ebd9e2fcfa27b0eea68921e913ea5db75d2fd66",
+      "sourceBytes": 262894,
+      "bytes": 178870,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/zh-Hans/02-record-types.png": {
+      "url": "/assets/home/zh-Hans/02-record-types.webp",
+      "sourceSHA256": "c07766101543de5bcb65ded2f235aea85ec5d992f9a2c829a0cad089af230d12",
+      "sha256": "2c1dd6687ad522ba35e49ac3e846520556482e13c3f06c0afbce325e4e839a4b",
+      "sourceBytes": 185965,
+      "bytes": 115810,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/zh-Hans/03-custom-record.png": {
+      "url": "/assets/home/zh-Hans/03-custom-record.webp",
+      "sourceSHA256": "995595bbff60d7a4373345a855625216d7bb8be7cbeea2d130ff5f695b7035cb",
+      "sha256": "8364241b2661641a95f99df5ce68f9cf355451e11f47ccb886d48be077eb6d40",
+      "sourceBytes": 145305,
+      "bytes": 84634,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/zh-Hans/04-warehouse.png": {
+      "url": "/assets/home/zh-Hans/04-warehouse.webp",
+      "sourceSHA256": "68de7313dcb6e103760b45d069254d0baec2c4948406324f88ef224906f4200e",
+      "sha256": "59930f538cb2d72aa05cb50598fd884b686f2c6ad35051e10137b8ec9719a21a",
+      "sourceBytes": 241180,
+      "bytes": 157466,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/zh-Hans/ipad-today.png": {
+      "url": "/assets/home/zh-Hans/ipad-today.webp",
+      "sourceSHA256": "2bd490fabe297dc940ff621d551c26c450c4756d449e910707b4c808801d0c7f",
+      "sha256": "5bbec3861b97396a0a1c0b01d7aa0b7bf825b87addaa011eaa9b57886cba1868",
+      "sourceBytes": 233415,
+      "bytes": 151634,
+      "width": 900,
+      "height": 1200
+    },
+    "/assets/home/zh-Hant/01-today.png": {
+      "url": "/assets/home/zh-Hant/01-today.webp",
+      "sourceSHA256": "424a90e066ba079934ef487cfc40b9fb154db246a26d784aaac47fbce494212e",
+      "sha256": "a4d62b698f188cfbfadea6a7a0b76a002727c5d73186a942bcb5c2df0113a8d6",
+      "sourceBytes": 277010,
+      "bytes": 187042,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/zh-Hant/02-record-types.png": {
+      "url": "/assets/home/zh-Hant/02-record-types.webp",
+      "sourceSHA256": "ce9263e0fcb4be6909d92f0e73f2c083f351cc73ba1f9a487820b76044c97aef",
+      "sha256": "dff309f92f88b2e585f7ae43a8295ae0e81b8df9527ff02ec19e406a88f5168a",
+      "sourceBytes": 191756,
+      "bytes": 119268,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/zh-Hant/03-custom-record.png": {
+      "url": "/assets/home/zh-Hant/03-custom-record.webp",
+      "sourceSHA256": "fc4b4aad7f672a1afbe493192fd2d28ef4b2819d35d40f1491faebb69ac22032",
+      "sha256": "4fa921e3fca7cf59e4e607957e1b8b9f43c52a01d52b842d929d2b90b6b9794e",
+      "sourceBytes": 148171,
+      "bytes": 86440,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/zh-Hant/04-warehouse.png": {
+      "url": "/assets/home/zh-Hant/04-warehouse.webp",
+      "sourceSHA256": "2e6c96abdba78d095310975c0e38802866fa853bbc38f09c191a527d8731bd3e",
+      "sha256": "26f39c96c53f6cd0c41080bbfeac63092646d31cb0bcb9d22b9ea84da5c5d59e",
+      "sourceBytes": 247510,
+      "bytes": 160336,
+      "width": 660,
+      "height": 1434
+    },
+    "/assets/home/zh-Hant/ipad-today.png": {
+      "url": "/assets/home/zh-Hant/ipad-today.webp",
+      "sourceSHA256": "a6429741370ab38c087d79b6e7da54cf85b4fc5addfd1bf11c3932586c9847cb",
+      "sha256": "0384ef997d13d34ff3f471f8760f14e09b1918196d5c2f40798ca96cc900606c",
+      "sourceBytes": 241964,
+      "bytes": 156322,
+      "width": 900,
+      "height": 1200
+    }
+  }
+}

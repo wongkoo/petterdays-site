@@ -24,6 +24,10 @@ npm run preview
 
 `static/assets/home/ip/` 的三张 PNG 是素材库原稿的逐字节副本，来源 ID、仓库路径与 SHA-256 记录在 `ip-assets.json`。更新时先用 `ip_assets.py resolve` 选稿，再复制、更新回执；`npm run check` 核对发布资源哈希。不要直接重绘或仅替换图片而遗漏来源记录。
 
+页面实际加载这些原稿和五语截图的无损 WebP 副本，保留全部尺寸、像素与透明度。`web-images.json` 记录每张源图及副本的 SHA-256 和大小；更新 PNG 后，在仓库根目录运行 `.local/website-asset-tools/bin/python projects/website/scripts/prepare-web-images.py`，逐像素验证后再 build/check。完整截图准备命令也会自动执行这一步；普通构建只读已入库的副本，无需 Python 或 NAS。
+
+构建将页面使用的图片、字体、CSS 和 JavaScript 输出到带内容摘要的 `/assets/cache/` 地址，先更新 CSS 内的字体地址再计算 CSS 摘要；HTML 的字体预加载与 CSS 引用使用相同地址。该目录采用一年浏览器缓存，文件改变即换地址；HTML、AASA、NFC 路由与旧资源地址继续沿用原缓存行为。检查程序验证实际引用、摘要、源图对应关系与缓存规则，再执行原有五语内容及安全检查。原始 PNG 和来源回执保留，避免将格式压缩误当作原稿替换。
+
 保留 `static/.well-known/apple-app-site-association`、`_headers`、`_redirects`、链接回退页面和 NFC 解析脚本；它们支持现有 `/1/*`、`/2/*` App 打开链接。协议变更需同步 App 的外部链接规范。
 
 首页首屏、页尾下载区和 NFC 链接回退页直接打开 App Store。商店地址由 `product.json` 中的 Apple ID 拼接，来源是 `AppStore/metadata.json`；网站不自行判断或宣称苹果的审核状态。

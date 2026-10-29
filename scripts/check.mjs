@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { TextDecoder } from "node:util";
 import { runInNewContext } from "node:vm";
 import { createHash } from "node:crypto";
+import { checkAssets } from "./check-assets.mjs";
 import assert from "node:assert/strict";
 import { product, appStoreURL } from "./product.mjs";
 import { guideContent, guidePages, guideLocales } from "./guides.mjs";
@@ -25,6 +26,7 @@ for (const locale of guideLocales) {
 
 const root = new URL("../dist/", import.meta.url);
 const rootPath = fileURLToPath(root);
+const readHTML = await checkAssets(root);
 // Verify that published characters are the approved, unmodified IP exports.
 const ipAssets = JSON.parse(await readFile(new URL("../ip-assets.json", import.meta.url), "utf8")).assets;
 for (const id of ["cat-sitting-v2", "dog-sitting", "diary"]) {
@@ -76,7 +78,7 @@ const homeFiles = new Set(["index.html", "zh-Hant/index.html", "en/index.html", 
 const expectedHTMLCount = 27 + guidePages.length * guideLocales.length;
 if (files.length !== expectedHTMLCount) throw new Error(`Expected ${expectedHTMLCount} HTML files, found ${files.length}`);
 for (const file of files) {
-  const html = await readFile(file, "utf8");
+  const html = await readHTML(file);
   for (const token of ["<title>", 'name="description"', 'rel="canonical"', 'href="/assets/styles.css"', "Petter Days"]) {
     if (!html.includes(token)) throw new Error(`${file} misses ${token}`);
   }
@@ -147,7 +149,7 @@ for (const locale of guideLocales) {
   const prefix = locale === "zh-Hans" ? "" : `${locale}/`;
   for (const page of guidePages) {
     assert.ok(indexedURLs.includes(`${siteOrigin}/${prefix}${page}/`));
-    const html = await readFile(new URL(`${prefix}${page}/index.html`, root), "utf8");
+    const html = await readHTML(new URL(`${prefix}${page}/index.html`, root));
     assert.ok(html.includes(`<html lang="${locale}">`));
     const menu = html.match(/<div class="lang-menu">(.*?)<\/div>/s)[1];
     for (const targetLocale of guideLocales) {
