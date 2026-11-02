@@ -12,7 +12,7 @@ import { storyContent } from "./story-content.mjs";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const out = join(root, "dist");
-const origin = "https://petterdays.wongkoo.group";
+const origin = "https://petterdays.app";
 const effectiveDate = "2026-08-19";
 const updatedDate = "2026-10-23";
 const homeUpdatedDate = "2026-10-22";

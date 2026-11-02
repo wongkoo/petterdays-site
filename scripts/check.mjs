@@ -129,7 +129,7 @@ for (const file of files) {
 
 // Crawl the generated link graph, including alternate languages and sitemap URLs.
 // This catches missing guide routes, accidental locale fallbacks and orphan pages.
-const siteOrigin = "https://petterdays.wongkoo.group";
+const siteOrigin = "https://petterdays.app";
 const sitemap = await readFile(new URL("sitemap.xml", root), "utf8");
 const indexedURLs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 assert.equal(new Set(indexedURLs).size, expectedHTMLCount - 2);
@@ -235,7 +235,7 @@ for (const [language, destination] of [["zh-CN", undefined], ["zh-TW", "/zh-Hant
     URL,
     navigator: { language, languages: [language] },
     window: {
-      location: { href: "https://petterdays.wongkoo.group/", pathname: "/", replace: (path) => { redirectedTo = path; } },
+      location: { href: "https://petterdays.app/", pathname: "/", replace: (path) => { redirectedTo = path; } },
       localStorage: { getItem: () => null, setItem: () => {} },
       history: { replaceState: () => {} },
     },
@@ -250,7 +250,7 @@ for (const [language, savedLanguage, destination] of [["en-US", null, "/en/"], [
     URL,
     navigator: { language, languages: [language] },
     window: {
-      location: { href: `https://petterdays.wongkoo.group/${suffix}`, pathname: "/", replace: (path) => { redirectedTo = path; } },
+      location: { href: `https://petterdays.app/${suffix}`, pathname: "/", replace: (path) => { redirectedTo = path; } },
       localStorage: { getItem: () => savedLanguage, setItem: () => {} },
       history: { replaceState: () => {} },
     },
