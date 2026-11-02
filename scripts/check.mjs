@@ -321,7 +321,7 @@ function renderNFCFallback(token, rewritten, language = "zh-CN") {
   runInNewContext(wireScript, {
     atob, TextDecoder, URL, document,
     navigator: { language, languages: [language] },
-    location: new URL(rewritten ? `https://p.wongkoo.group/link/?route=e/${token}` : `https://p.wongkoo.group/2/e/${token}`),
+    location: new URL(rewritten ? `https://p.petterdays.app/link/?route=e/${token}` : `https://p.petterdays.app/2/e/${token}`),
     history: { replaceState: (_state, _title, path) => { replacement = path; } },
   });
   const details = document.getElementById("nfc-details");

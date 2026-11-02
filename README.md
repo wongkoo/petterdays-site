@@ -74,7 +74,7 @@ node projects/website/scripts/check.mjs
 
 保持原生截图完整；设备外框、排版与装饰由 CSS 实现。示意图与示例数据在页面中标注，不能写成未经验证的自动测量或诊断能力。
 
-审核演示视频可以放在 `static/app-review/videos/`，由现有 Cloudflare Pages 提供 MP4 直链，地址为 `https://petterdays.wongkoo.group/app-review/videos/<文件名>.mp4`。每个文件必须小于 25 MiB；先核对压缩版的完整时长、文字清晰度和法律网页跳转，原视频保留在本地产物目录。视频不加入首页或站点地图，响应带 `noindex, nofollow`；直链仍然公开可访问，只发布已获用户授权且不含私人资料的演示。文件名标明版本和模拟器来源，不把模拟器录屏用作 NFC 实机证据。
+审核演示视频可以放在 `static/app-review/videos/`，由现有 Cloudflare Pages 提供 MP4 直链，地址为 `https://petterdays.app/app-review/videos/<文件名>.mp4`；已有旧域名视频地址继续保留。每个文件必须小于 25 MiB；先核对压缩版的完整时长、文字清晰度和法律网页跳转，原视频保留在本地产物目录。视频不加入首页或站点地图，响应带 `noindex, nofollow`；直链仍然公开可访问，只发布已获用户授权且不含私人资料的演示。文件名标明版本和模拟器来源，不把模拟器录屏用作 NFC 实机证据。
 
 ## 手动同步后自动部署
 
