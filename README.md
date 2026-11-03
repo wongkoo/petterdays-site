@@ -96,7 +96,11 @@ python3 scripts/release/sync_website_to_github.py --push
 
 默认发布当前 `HEAD` 的官网；需要指定已审查版本时，可加 `--ref <App提交>`。以后新增 npm 依赖，需要将 `package-lock.json` 一起提交，同步脚本会在临时目录使用 `npm ci` 安装。
 
-GitHub `main` 更新后，现有 Cloudflare Pages 自动运行 `npm run build` 并发布 `dist`。确认构建成功后，再核对官网、隐私链接、AASA 和 App 打开链接；GitHub 推送成功不代表线上部署已经成功。
+GitHub `main` 更新后，仅新 Cloudflare Pages 项目 `petterdays-web` 自动运行 `npm run build` 并发布 `dist`。确认构建成功后，再核对官网、隐私链接、AASA 和 App 打开链接；GitHub 推送成功不代表线上部署已经成功。
+
+2026-11-04 起，新项目绑定 `petterdays.app`、`www.petterdays.app` 和 `p.petterdays.app`，DNS 指向 `petterdays-web.pages.dev`。旧项目 `petterdays-site` 仅保留 `petterdays.wongkoo.group` 与 `p.wongkoo.group`，自动生产部署和预览部署均已关闭，保持生产部署 `b407b862-47b3-4d2c-b853-e0fc4437e3f9` / GitHub `b66d612`。以后只更新新站，不恢复旧项目自动部署，也不把旧域名重定向到新域名。新站重新启用已披露的免费 Web Analytics，NFC 与 404 仍由页面 CSP 阻止统计执行。
+
+`www` 到主域名的 301 跳转由 Cloudflare Single Redirect 实现并保留路径与查询参数。Pages `_redirects` 只支持路径规则，不能实现域名级跳转。
 
 ## 网站边界
 
