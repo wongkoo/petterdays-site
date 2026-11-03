@@ -48,6 +48,10 @@ npm run preview
 
 首页和指南包含静态 JSON-LD，关联网站、应用、开发者与 App Store。它仅提供产品事实，不添加未经证实的评分、评论、价格或医疗效果。JSON-LD 是不可执行的数据块，原有严格 CSP 不变。检查程序验证 JSON、品牌身份、站内链接、目录锚点和站点地图。
 
+全部公开页面提供静态 JSON-LD、对应语言的 canonical/hreflang 和 `index.md` 文本副本；非首页包含面包屑。`scripts/search-content.mjs` 从同一份公开 HTML 正文生成 Markdown、`llms.txt` 五语来源目录和 `llms-full.txt` 产品指南全文，避免维护另一套产品描述。角色故事不纳入产品事实全文。文本副本可抓取，但通过响应头 `noindex` 避免与 HTML 重复出现在搜索结果。NFC 载荷路径、回退页和 404 不参与索引；不向公共文本导出用户资料。
+
+新增或修改正文时维护原有内容日期；站点地图取正文日期与 `searchUpdatedDate`（最近一次重要搜索信号更新）较新者，不在每次构建时伪造更新时间。`llms.txt` 是补充发现入口，不代表搜索引擎或模型一定采用；索引、引用和排名仍由平台决定。`www.petterdays.app` 的访问永久跳转到规范域名并保留路径。
+
 `robots.txt` 已允许抓取；无需重复列出每个爬虫。Cloudflare 实际访问权限、Google/Bing 站点验证、提交 sitemap 和索引状态属于部署后的独立步骤，源码检查不代表已收录。站点验证使用平台提供的文件，不凭空生成验证令牌。
 
 Google Search Console 使用 `static/google044d9f950647aca5.html` 验证 URL 前缀属性；文件由站长平台提供，发布后仍需保留。检查程序单独核对其内容，不将验证文件加入页面数量或 sitemap。

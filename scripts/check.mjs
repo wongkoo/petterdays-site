@@ -11,6 +11,7 @@ import { guideContent, guidePages, guideLocales } from "./guides.mjs";
 import { homeContent } from "./home-content.mjs";
 import { storyContent } from "./story-content.mjs";
 import { guideVisualContent } from "./guide-visual-content.mjs";
+import { pageMarkdown } from "./search-content.mjs";
 
 // Product navigation must never silently fall back to another language.
 assert.deepEqual([...guideLocales].sort(), Object.keys(homeContent).sort());
@@ -51,7 +52,7 @@ const compatibilityIcon = await readFile(new URL("app-icon.png", root));
 if (createHash("sha256").update(compatibilityIcon).digest("hex") !== product.iconSourceSHA256) throw new Error("Compatibility icon still contains an older brand");
 const required = [
   "index.html", "privacy/index.html", "privacy/choices/index.html", "terms/index.html", "support/index.html",
-  "link/index.html", "zh-Hant/index.html", "en/index.html", "ja/index.html", "ko/index.html", "robots.txt", "sitemap.xml", "_headers", "_redirects", "404.html",
+  "link/index.html", "zh-Hant/index.html", "en/index.html", "ja/index.html", "ko/index.html", "robots.txt", "sitemap.xml", "llms.txt", "llms-full.txt", "_headers", "_redirects", "404.html",
   ".well-known/apple-app-site-association",
 ];
 for (const path of required) {
@@ -134,8 +135,26 @@ const sitemap = await readFile(new URL("sitemap.xml", root), "utf8");
 const indexedURLs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 assert.equal(new Set(indexedURLs).size, expectedHTMLCount - 2);
 for (const url of indexedURLs) {
+  assert.equal(new URL(url).origin, siteOrigin, "Only the new domain belongs in the sitemap");
   const path = new URL(url).pathname;
   const html = await readFile(new URL(`${path.slice(1)}index.html`, root), "utf8");
+  assert.equal(html.match(/rel="canonical" href="([^"]+)"/)[1], url);
+  assert.ok(html.includes(`type="text/markdown" href="${url}index.md"`));
+  const locale = html.match(/<html lang="([^"]+)">/)[1];
+  const markdown = await readFile(new URL(`${path.slice(1)}index.md`, root), "utf8");
+  assert.equal(markdown, pageMarkdown(html, url, locale), `${path} Markdown must match the visible public content`);
+  assert.ok(!/<(?:script|svg|style)\b|wongkoo\.group/.test(markdown));
+  const graph = JSON.parse(html.match(/<script type="application\/ld\+json">([^<]*)<\/script>/)[1])["@graph"];
+  if (path !== "/" && !["/en/", "/ja/", "/ko/", "/zh-Hant/"].includes(path)) {
+    const breadcrumbs = graph.find((node) => node["@type"] === "BreadcrumbList");
+    assert.equal(breadcrumbs.itemListElement.at(-1).item, url);
+    assert.ok(breadcrumbs.itemListElement.every((item, i) => item.position === i + 1 && item.item.startsWith(siteOrigin)));
+  }
+  for (const [, alternate] of html.matchAll(/rel="alternate" hreflang="[^"]+" href="([^"]+)"/g)) {
+    assert.equal(new URL(alternate).origin, siteOrigin);
+    const peer = await readFile(new URL(`${new URL(alternate).pathname.slice(1)}index.html`, root), "utf8");
+    assert.ok(peer.includes(`hreflang="${locale}" href="${url}"`), `${path} has a non-reciprocal language alternate`);
+  }
   assert.ok(!/name="robots"[^>]*content="[^"]*noindex/.test(html), `${path} unexpectedly excluded`);
   for (const [, href] of html.matchAll(/href="([^"]+)"/g)) {
     const target = new URL(href.replaceAll("&amp;", "&"), url);
@@ -143,6 +162,20 @@ for (const url of indexedURLs) {
     const localPath = target.pathname.slice(1) + (target.pathname.endsWith("/") ? "index.html" : "");
     await readFile(new URL(localPath, root));
     if (target.hash && target.pathname === path) assert.ok(html.includes(`id="${decodeURIComponent(target.hash.slice(1))}"`), `${path} has broken anchor ${target.hash}`);
+  }
+}
+const llms = await readFile(new URL("llms.txt", root), "utf8");
+const fullText = await readFile(new URL("llms-full.txt", root), "utf8");
+assert.ok(llms.includes(appStoreURL) && llms.includes("not veterinary diagnosis") && llms.includes("separate Pro subscription"));
+for (const [, href] of llms.matchAll(/\]\((https:\/\/petterdays\.app\/[^)]+)\)/g)) {
+  const path = new URL(href).pathname.slice(1);
+  await readFile(new URL(path + (path.endsWith("/") ? "index.html" : ""), root));
+}
+for (const locale of guideLocales) {
+  const prefix = locale === "zh-Hans" ? "" : `${locale}/`;
+  for (const page of ["guide", "guide/pet-care-records", "guide/nfc"]) {
+    const markdown = await readFile(new URL(`${prefix}${page}/index.md`, root), "utf8");
+    assert.ok(fullText.includes(markdown), `${locale}/${page} missing from full product text`);
   }
 }
 for (const locale of guideLocales) {

@@ -9,10 +9,11 @@ import { guideContent, guidePages, guideLocales, guideUpdatedDate } from "./guid
 import { supportContent } from "./support-content.mjs";
 import { productGuide, developerStory } from "./guide-render.mjs";
 import { storyContent } from "./story-content.mjs";
+import { siteOrigin, searchUpdatedDate, pageMarkdown, writeSearchContent } from "./search-content.mjs";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const out = join(root, "dist");
-const origin = "https://petterdays.app";
+const origin = siteOrigin;
 const effectiveDate = "2026-08-19";
 const updatedDate = "2026-10-23";
 const homeUpdatedDate = "2026-10-22";
@@ -502,11 +503,18 @@ function structuredData(locale, page, title, description) {
   const canonical = absolutePath(locale, page);
   const appID = `${origin}/#app`;
   const graph = [
-    { "@type": "WebSite", "@id": `${origin}/#website`, url: `${origin}/`, name: "Petter Days", inLanguage: Object.keys(locales) },
+    { "@type": "WebSite", "@id": `${origin}/#website`, url: `${origin}/`, name: "Petter Days", inLanguage: Object.keys(locales), publisher: { "@id": `${origin}/#developer` } },
     { "@type": "Person", "@id": `${origin}/#developer`, name: "ZhenHui Wang" },
     { "@type": "MobileApplication", "@id": appID, name: "Petter Days", url: absolutePath(locale, "home"), description: homeContent[locale].description, image: `${origin}${productIdentity.icon}`, applicationCategory: "LifestyleApplication", operatingSystem: "iOS 18.0 or later; iPadOS 18.0 or later", downloadUrl: appStoreURL, sameAs: [appStoreURL], author: { "@id": `${origin}/#developer` }, inLanguage: Object.keys(locales) },
-    { "@type": "WebPage", "@id": `${canonical}#webpage`, url: canonical, name: `${title} · Petter Days`, description, inLanguage: locale, isPartOf: { "@id": `${origin}/#website` }, about: { "@id": appID } },
+    { "@type": "WebPage", "@id": `${canonical}#webpage`, url: canonical, name: `${title} · Petter Days`, description, inLanguage: locale, isPartOf: { "@id": `${origin}/#website` }, about: { "@id": appID }, ...(page !== "home" ? { breadcrumb: { "@id": `${canonical}#breadcrumbs` } } : {}) },
   ];
+  if (page !== "home") {
+    const crumbs = [{ name: locales[locale].nav.home, item: absolutePath(locale, "home") }];
+    if (guidePages.includes(page) && page !== "guide") crumbs.push({ name: guideContent[locale].label, item: absolutePath(locale, "guide") });
+    if (page === "choices") crumbs.push({ name: locales[locale].nav.privacy, item: absolutePath(locale, "privacy") });
+    crumbs.push({ name: title, item: canonical });
+    graph.push({ "@type": "BreadcrumbList", "@id": `${canonical}#breadcrumbs`, itemListElement: crumbs.map((crumb, index) => ({ "@type": "ListItem", position: index + 1, ...crumb })) });
+  }
   const json = JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replaceAll("<", "\\u003c");
   return `<script type="application/ld+json">${json}</script>`;
 }
@@ -516,8 +524,9 @@ function document(locale, page, title, description, content, product = false) {
   const canonical = absolutePath(locale, page);
   const alternates = pageLocales(page).map((code) => `<link rel="alternate" hreflang="${code}" href="${absolutePath(code, page)}">`).join("");
   const fontSuffix = { "zh-Hans": "sc", en: "sc", "zh-Hant": "tc", ja: "j", ko: "k" }[locale];
-  const schema = page === "home" && product || guidePages.includes(page) ? structuredData(locale, page, title, description) : "";
-  return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#FFFDFA"><title>${escape(title)} · Petter Days</title><meta name="description" content="${escape(description)}"><meta name="apple-itunes-app" content="app-id=${productIdentity.appStoreAppleID}"><meta property="og:title" content="${escape(title)} · Petter Days"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${canonical}"><meta property="og:type" content="website"><meta property="og:image" content="${origin}${productIdentity.icon}"><meta name="twitter:card" content="summary">${schema}<link rel="canonical" href="${canonical}">${alternates}<link rel="alternate" hreflang="x-default" href="${absolutePath("zh-Hans", page)}"><link rel="icon" type="image/png" sizes="32x32" href="${productIdentity.favicon}"><link rel="apple-touch-icon" sizes="180x180" href="${productIdentity.touchIcon}"><link rel="preload" href="/assets/fonts/rounded-${fontSuffix}.woff2" as="font" type="font/woff2" crossorigin><script src="/assets/language.js"></script><link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/assets/rounded.css">${product ? '<link rel="stylesheet" href="/assets/home.css"><script src="/assets/home.js" defer></script>' : ''}</head><body class="site-page${product ? ' product-page' : ''}">${header(locale, page, product)}<main id="content">${content}</main>${footer(locale, product)}</body></html>`;
+  const schema = structuredData(locale, page, title, description);
+  const discovery = `<meta name="robots" content="index, follow, max-image-preview:large"><link rel="alternate" type="text/markdown" href="${canonical}index.md"><link rel="alternate" type="text/plain" title="llms.txt" href="${origin}/llms.txt">`;
+  return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#FFFDFA"><title>${escape(title)} · Petter Days</title><meta name="description" content="${escape(description)}">${discovery}<meta name="apple-itunes-app" content="app-id=${productIdentity.appStoreAppleID}"><meta property="og:title" content="${escape(title)} · Petter Days"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${canonical}"><meta property="og:type" content="website"><meta property="og:image" content="${origin}${productIdentity.icon}"><meta property="og:image:alt" content="Petter Days"><meta name="twitter:card" content="summary">${schema}<link rel="canonical" href="${canonical}">${alternates}<link rel="alternate" hreflang="x-default" href="${absolutePath("zh-Hans", page)}"><link rel="icon" type="image/png" sizes="32x32" href="${productIdentity.favicon}"><link rel="apple-touch-icon" sizes="180x180" href="${productIdentity.touchIcon}"><link rel="preload" href="/assets/fonts/rounded-${fontSuffix}.woff2" as="font" type="font/woff2" crossorigin><script src="/assets/language.js"></script><link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/assets/rounded.css">${product ? '<link rel="stylesheet" href="/assets/home.css"><script src="/assets/home.js" defer></script>' : ''}</head><body class="site-page${product ? ' product-page' : ''}">${header(locale, page, product)}<main id="content">${content}</main>${footer(locale, product)}</body></html>`;
 }
 
 function home(locale) {
@@ -576,15 +585,20 @@ await cp(join(out, "styles.css"), join(out, "assets", "styles.css"));
 await rm(join(out, "styles.css"));
 
 const urls = [];
+const searchPages = [];
 for (const locale of Object.keys(locales)) {
   for (const page of [...pages, ...(guideContent[locale] ? guidePages : [])]) {
     const html = page === "home" ? home(locale) : page === "support" ? support(locale) : guidePages.includes(page) ? guidePage(locale, page) : legalPage(locale, page);
     const file = outputFile(locale, page);
     await mkdir(dirname(file), { recursive: true });
     await writeFile(file, html);
-    urls.push({ location: absolutePath(locale, page), modified: page === "home" ? homeUpdatedDate : guidePages.includes(page) || page === "support" ? guideUpdatedDate : updatedDate });
+    const canonical = absolutePath(locale, page);
+    searchPages.push({ locale, page, canonical, markdown: `${canonical}index.md`, title: html.match(/<title>(.*?)<\/title>/)[1].replaceAll("&amp;", "&"), markdownContent: pageMarkdown(html, canonical, locale) });
+    urls.push({ location: canonical, modified: [searchUpdatedDate, page === "home" ? homeUpdatedDate : guidePages.includes(page) || page === "support" ? guideUpdatedDate : updatedDate].sort().at(-1) });
   }
 }
+
+await writeSearchContent(out, searchPages, appStoreURL);
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(({ location, modified }) => `  <url><loc>${location}</loc><lastmod>${modified}</lastmod></url>`).join("\n")}\n</urlset>\n`;
 await writeFile(join(out, "sitemap.xml"), sitemap);
@@ -592,7 +606,7 @@ await writeFile(join(out, "sitemap.xml"), sitemap);
 const notFound = document("zh-Hans", "home", "页面不存在", "找不到这个页面。", `<header class="legal-hero"><p class="eyebrow">404</p><h1>这里没有这份记录。</h1><p>链接可能已经改变。请返回 Petter Days 首页或支持页面。</p><div class="actions"><a class="button" href="/">返回首页</a><a class="button secondary" href="/support/">获取支持</a></div></header>`);
 // Unknown URLs can also contain NFC payloads. Block analytics before any script loads.
 const fallbackPrivacy = `<meta http-equiv="Content-Security-Policy" content="script-src 'self'; connect-src 'none'"><meta name="referrer" content="no-referrer">`;
-await writeFile(join(out, "404.html"), notFound.replace('<meta charset="utf-8">', `<meta charset="utf-8">${fallbackPrivacy}`));
+await writeFile(join(out, "404.html"), notFound.replace('<meta name="robots" content="index, follow, max-image-preview:large">', '<meta name="robots" content="noindex, follow">').replace(/<link rel="alternate" type="[^>]+>/g, "").replace(/<script type="application\/ld\+json">[^<]*<\/script>/, "").replace('<meta charset="utf-8">', `<meta charset="utf-8">${fallbackPrivacy}`));
 
 await optimizeAssets(out);
 const generated = await readFile(join(out, "index.html"), "utf8");
