@@ -32,6 +32,10 @@ npm run preview
 
 首页首屏、页尾下载区和 NFC 链接回退页直接打开 App Store。商店地址由 `product.json` 中的 Apple ID 拼接，来源是 `AppStore/metadata.json`；网站不自行判断或宣称苹果的审核状态。
 
+产品页面的导航、正文结尾、桌面二维码与 Safari Smart App Banner 使用 Apple 官方渠道参数，按 `web_home`（首页）、`web_features`（功能介绍）、`web_guides`（教程与故事）归因。公开的 provider token 来自 App Store Connect，配置在 `campaigns.json`，不是 API 凭据。手机端滚过开头后显示下载栏，结尾下载按钮进入视口时隐藏；逻辑在 `static/assets/download.js`，不发送事件、不保存访客标识。支持、法律、404 和 NFC 回退页不加入渠道归因或下载栏，结构化身份继续使用无渠道参数的商店地址。
+
+二维码是随源码发布的本地 SVG，无外部二维码服务或运行时依赖；配置变化后，在 App 仓库根目录运行 `.local/website-asset-tools/bin/python -m pip install qrcode==8.2` 和 `.local/website-asset-tools/bin/python projects/website/scripts/prepare-download-qr.py`，独立解码确认三个目标后再 build/check。渠道结果在 App Store Connect「分析 → 用户获取 → 营销活动」查看；Apple 的数据延迟和隐私门槛意味着新渠道不会立刻显示，也不能用官网访问量直接推断下载量。
+
 图标使用 `projects/iOS/project.yml` 指定的正式 AppIcon，不能从旧官网或备用图标复制。`scripts/prepare-brand.py` 导出网站图标、32px favicon 和 180px Apple Touch Icon，并为文件名加入源图摘要，避免旧缓存。页眉、页尾、分享卡片和链接回退页统一引用这些资源。根路径 `app-icon.png` 保留为兼容入口，内容也同步为当前图标。
 
 ## 产品指南与搜索识别

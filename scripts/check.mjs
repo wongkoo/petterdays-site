@@ -6,7 +6,7 @@ import { runInNewContext } from "node:vm";
 import { createHash } from "node:crypto";
 import { checkAssets } from "./check-assets.mjs";
 import assert from "node:assert/strict";
-import { product, appStoreURL } from "./product.mjs";
+import { product, appStoreURL, campaignURL, campaignFor, campaigns } from "./product.mjs";
 import { guideContent, guidePages, guideLocales } from "./guides.mjs";
 import { homeContent } from "./home-content.mjs";
 import { storyContent } from "./story-content.mjs";
@@ -28,6 +28,9 @@ for (const locale of guideLocales) {
 const root = new URL("../dist/", import.meta.url);
 const rootPath = fileURLToPath(root);
 const readHTML = await checkAssets(root);
+assert.match(campaigns.providerToken, /^\d+$/);
+assert.equal(new Set(Object.values(campaigns.campaigns)).size, 3);
+for (const name of Object.values(campaigns.campaigns)) assert.match(name, /^[a-z_]{1,30}$/);
 // Verify that published characters are the approved, unmodified IP exports.
 const ipAssets = JSON.parse(await readFile(new URL("../ip-assets.json", import.meta.url), "utf8")).assets;
 for (const id of ["cat-sitting-v2", "dog-sitting", "diary"]) {
@@ -84,13 +87,25 @@ for (const file of files) {
     if (!html.includes(token)) throw new Error(`${file} misses ${token}`);
   }
   const scripts = [...html.matchAll(/<script\b[^>]*src="([^"]+)"[^>]*><\/script>/gi)].map((match) => match[1]);
+  const marketing = homeFiles.has(file) || file.includes("/guide/");
   const expectedScripts = file.endsWith("/link/index.html")
     ? ["/assets/language.js", "/assets/nfc-wire.js"]
-    : homeFiles.has(file) ? ["/assets/language.js", "/assets/home.js"] : ["/assets/language.js"];
+    : homeFiles.has(file) ? ["/assets/language.js", "/assets/home.js", "/assets/download.js"] : marketing ? ["/assets/language.js", "/assets/download.js"] : ["/assets/language.js"];
   if (JSON.stringify(scripts) !== JSON.stringify(expectedScripts)) throw new Error(`${file} contains an unexpected script`);
+  if (marketing) {
+    const page = homeFiles.has(file) ? "home" : file.endsWith("/guide/index.html") ? "guide" : "guide/content";
+    const expected = campaignURL(page);
+    const storeLinks = [...html.matchAll(/href="(https:\/\/apps\.apple\.com[^" ]+)"/g)].map((m) => m[1].replaceAll("&amp;", "&"));
+    assert.ok(storeLinks.length >= 3, `${file} needs navigation, article and mobile download destinations`);
+    assert.ok(storeLinks.every((href) => href === expected), `${file} has inconsistent campaign attribution`);
+    for (const marker of ['data-download-start', 'data-download-end', 'data-download-bar hidden', '/assets/download.css', `/assets/download/${campaignFor(page)}.svg`]) assert.ok(html.includes(marker), `${file} misses ${marker}`);
+    assert.ok(html.includes(`affiliate-data=${expected.split("?")[1].replaceAll("&", "&amp;")}`));
+  } else {
+    assert.ok(!html.includes("data-download-bar") && !html.includes("affiliate-data="), `${file} must not acquire marketing attribution`);
+  }
   const dataBlocks = [...html.matchAll(/<script type="application\/ld\+json">([^<]*)<\/script>/g)];
   const executableHTML = html.replace(/<script type="application\/ld\+json">[^<]*<\/script>/g, "");
-  if (/<script\b(?![^>]*src="\/assets\/(?:language|nfc-wire|home)\.js")[^>]*>/i.test(executableHTML)) throw new Error(`${file} contains inline or third-party executable script`);
+  if (/<script\b(?![^>]*src="\/assets\/(?:language|nfc-wire|home|download)\.js")[^>]*>/i.test(executableHTML)) throw new Error(`${file} contains inline or third-party executable script`);
   for (const [, json] of dataBlocks) {
     const data = JSON.parse(json);
     assert.equal(data["@context"], "https://schema.org");
@@ -115,7 +130,7 @@ for (const file of files) {
   if (homeFiles.has(file)) {
     if (/\bPro\b|\bfree\b|subscription|免费|免費|订阅|訂閱|無料|購読|무료|구독/i.test(html)) throw new Error(`${file} still contains plan marketing`);
     if (/上架准备中|上架準備中|Getting ready for the App Store|公開準備中|출시 준비 중/i.test(html)) throw new Error(`${file} still contains prelaunch copy`);
-    if (html.split(`class="store-button" href="${appStoreURL}"`).length - 1 !== 2) throw new Error(`${file} needs working store destinations in the hero and closing`);
+    if (html.split(`class="store-button" href="${campaignURL("home").replaceAll("&", "&amp;")}"`).length - 1 !== 2) throw new Error(`${file} needs working store destinations in the hero and closing`);
     for (const id of ["features", "care", "supplies", "nfc", "devices-title", "hero-panel-0", "hero-panel-1", "hero-panel-2", "record-panel-0", "record-panel-1"]) {
       if (!html.includes(`id="${id}"`)) throw new Error(`${file} misses feature ${id}`);
     }

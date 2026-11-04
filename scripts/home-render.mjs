@@ -1,4 +1,4 @@
-import { appStoreURL } from "./product.mjs";
+import { storeLink, downloadQR } from "./download-render.mjs";
 
 export const escape = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
 const lines = (text) => text.map((line) => `<span>${escape(line)}</span>`).join("");
@@ -21,7 +21,7 @@ const screenPath = (locale, name) => `/assets/home/${locale}/${name}.png`;
 const phone = (locale, name, alt, extra = "", eager = false) => `<div class="device phone ${extra}"><img src="${screenPath(locale, name)}" width="660" height="1434" alt="${escape(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"></div>`;
 
 export function productHome(locale, h) {
-  const download = `<a class="store-button" href="${appStoreURL}">${escape(h.download)} <span aria-hidden="true">↗</span></a>`;
+  const download = `<a class="store-button" href="${storeLink("home")}">${escape(h.download)} <span aria-hidden="true">↗</span></a>`;
   const screenshot = `${h.screenshot} · `;
   const types = ["water", "food", "weight", "care", "pill", "custom"].map((name, i) => `<div class="type-bubble type-${name}">${icon(name)}<span>${escape(h.records.types[i])}</span></div>`).join("");
   const tabs = h.records.tabs.map((text, i) => `<button type="button" role="tab" id="record-tab-${i}" aria-controls="record-panel-${i}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${escape(text)}</button>`).join("");
@@ -36,7 +36,7 @@ export function productHome(locale, h) {
     <section class="ip-hero" aria-labelledby="hero-title">
       <p class="ip-eyebrow">BETTER DAYS, TOGETHER.</p>
       <h1 id="hero-title">${lines(h.hero)}</h1><p class="ip-intro">${escape(h.intro)}</p>
-      <div class="hero-actions">${download}<a class="explore-link" href="#features">${escape(h.explore)} <span aria-hidden="true">↓</span></a></div>
+      <div class="hero-actions" data-download-start>${download}<a class="explore-link" href="#features">${escape(h.explore)} <span aria-hidden="true">↓</span></a></div>
       <p class="ip-availability">${escape(h.platforms)}</p>
       <div class="ip-stage">
         <div class="ip-ground" aria-hidden="true"></div><div class="ip-sun" aria-hidden="true"></div>
@@ -64,5 +64,5 @@ export function productHome(locale, h) {
     <section class="nfc-section product-section" id="nfc" aria-labelledby="nfc-title"><div class="nfc-copy"><p class="product-kicker">${escape(h.nfc.label)}</p><h2 id="nfc-title">${lines(h.nfc.title)}</h2><p>${escape(h.nfc.intro)}</p><small>${escape(h.nfc.note)}</small></div><figure class="nfc-art"><img src="/assets/home/${locale}/nfc.svg" width="1320" height="1550" alt="${escape(h.nfc.illustration + ' · ' + h.nfc.label)}" loading="lazy" decoding="async"><figcaption>${escape(h.nfc.illustration)}</figcaption></figure></section>
     <section class="devices-story product-section" aria-labelledby="devices-title"><div><p class="product-kicker">iPhone &amp; iPad</p><h2 id="devices-title">${lines(h.showcase.devices)}</h2><p>${escape(h.devices)}</p></div><figure><img src="${screenPath(locale, "ipad-today")}" alt="${escape(screenshot + "iPad")}" width="900" height="1200" loading="lazy" decoding="async"><figcaption>${escape(screenshot + "iPad")}</figcaption></figure></section>
     <section class="ownership-section product-section" aria-labelledby="ownership-title"><h2 id="ownership-title">${lines(h.ownership.title)}</h2><ul>${ownership}</ul></section>
-    <section class="product-closing"><img class="closing-characters" src="/assets/home/ip/diary.png" data-asset-id="diary" width="1400" height="860" alt="${escape(h.showcase.diary)}" loading="lazy" decoding="async"><h2>${escape(h.closing)}</h2><p>${escape(h.platforms)}</p>${download}</section>`;
+    <section class="product-closing"><img class="closing-characters" src="/assets/home/ip/diary.png" data-asset-id="diary" width="1400" height="860" alt="${escape(h.showcase.diary)}" loading="lazy" decoding="async"><h2>${escape(h.closing)}</h2><p>${escape(h.platforms)}</p><div class="download-options"><div data-download-end>${download}</div>${downloadQR(locale, "home")}</div></section>`;
 }

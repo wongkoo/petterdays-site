@@ -1,0 +1,8 @@
+{
+  "providerToken": "117877977",
+  "campaigns": {
+    "home": "web_home",
+    "features": "web_features",
+    "guides": "web_guides"
+  }
+}

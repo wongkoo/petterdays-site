@@ -8,6 +8,8 @@ import { product as productIdentity, appStoreURL } from "./product.mjs";
 import { guideContent, guidePages, guideLocales, guideUpdatedDate } from "./guides.mjs";
 import { supportContent } from "./support-content.mjs";
 import { productGuide, developerStory } from "./guide-render.mjs";
+import { downloadCopy, storeLink, downloadBar, downloadCard } from "./download-render.mjs";
+import { campaignURL } from "./product.mjs";
 import { storyContent } from "./story-content.mjs";
 import { siteOrigin, searchUpdatedDate, pageMarkdown, writeSearchContent } from "./search-content.mjs";
 
@@ -16,7 +18,8 @@ const out = join(root, "dist");
 const origin = siteOrigin;
 const effectiveDate = "2026-08-19";
 const updatedDate = "2026-10-23";
-const homeUpdatedDate = "2026-10-22";
+const homeUpdatedDate = "2026-11-04";
+const privacyUpdatedDate = "2026-11-04";
 const issueURL = "https://github.com/wongkoo/petterdays-site/issues/new/choose";
 const supportEmail = "petterdays.app@gmail.com";
 const supportURL = `mailto:${supportEmail}`;
@@ -92,7 +95,7 @@ const locales = {
           "7. 开发者收集与网站",
           [
             "当前 App 不含开发者账号系统、AI 服务、第三方分析、广告 SDK 或跨 App/网站追踪。Apple 按其自身政策处理 StoreKit、CloudKit、MapKit 地图等系统服务数据。你主动导出、分享或在浏览器打开链接时，接收方或网站服务可接触你交付的内容。",
-            "本网站的公开内容页面使用 Cloudflare Web Analytics，统计访问量、页面浏览、访问来源及页面加载性能。该服务不使用 Cookie，也不跨网站追踪个人。NFC 链接回退页和错误页不运行访问统计。网站不提供广告、在线表单或第三方字体服务。第一方脚本根据浏览器语言选择首页，仅在你主动切换语言时将偏好保存在浏览器本地。NFC 网页处理方式见上一节。"
+            "本网站的公开内容页面使用 Cloudflare Web Analytics，统计访问量、页面浏览、访问来源及页面加载性能。该服务不使用 Cookie，也不跨网站追踪个人。NFC 链接回退页和错误页不运行访问统计。网站不提供广告、在线表单或第三方字体服务。第一方脚本根据浏览器语言选择首页，仅在你主动切换语言时将偏好保存在浏览器本地。下载链接包含页面来源标记，供 Apple 汇总衡量官网带来的商店访问与下载；本网站不为此保存访客标识。NFC 网页处理方式见上一节。"
           ]
         ],
         [
@@ -196,7 +199,7 @@ const locales = {
           "7. 開發者收集與網站",
           [
             "目前 App 不包含開發者帳戶系統、AI 服務、第三方分析、廣告 SDK 或跨 App／網站追蹤。Apple 依自身政策處理 StoreKit、CloudKit、MapKit 地圖等系統服務資料。當你主動匯出、分享或在瀏覽器開啟連結時，接收者或網站服務可接觸你交付的內容。",
-            "本網站的公開內容頁面使用 Cloudflare Web Analytics，統計造訪次數、頁面瀏覽、流量來源及頁面載入效能。此服務不使用 Cookie，也不跨網站追蹤個人。NFC 連結備援頁面和錯誤頁面不執行流量統計。網站不提供廣告、線上表單或第三方字型服務。第一方腳本按瀏覽器語言選擇首頁，只有當你主動切換語言時，才將偏好儲存在瀏覽器本機。NFC 網頁的處理方式見上一節。"
+            "本網站的公開內容頁面使用 Cloudflare Web Analytics，統計造訪次數、頁面瀏覽、流量來源及頁面載入效能。此服務不使用 Cookie，也不跨網站追蹤個人。NFC 連結備援頁面和錯誤頁面不執行流量統計。網站不提供廣告、線上表單或第三方字型服務。第一方腳本按瀏覽器語言選擇首頁，只有當你主動切換語言時，才將偏好儲存在瀏覽器本機。下載連結包含頁面來源標記，供 Apple 彙總衡量官網帶來的商店瀏覽與下載；本網站不為此儲存訪客識別碼。NFC 網頁的處理方式見上一節。"
           ]
         ],
         [
@@ -274,7 +277,7 @@ const locales = {
           "7. Developer collection and the website",
           [
             "The current App has no developer account system, AI service, third-party analytics, advertising SDK, or cross-app/site tracking. Apple processes StoreKit, CloudKit, MapKit maps, and other system-service data under its own policies. Recipients or website services can access content you deliver when you choose to export, share, or open a link in a browser.",
-            "Public content pages on this website use Cloudflare Web Analytics to measure visits, page views, traffic sources, and page loading performance. The service does not use cookies or track individuals across websites. Analytics does not run on NFC link fallback pages or error pages. This website has no ads, web forms, or third-party font services. A first-party script selects the home page using your browser language and saves a language preference locally in your browser only when you explicitly change languages. NFC page handling is described above."
+            "Public content pages on this website use Cloudflare Web Analytics to measure visits, page views, traffic sources, and page loading performance. The service does not use cookies or track individuals across websites. Analytics does not run on NFC link fallback pages or error pages. This website has no ads, web forms, or third-party font services. A first-party script selects the home page using your browser language and saves a language preference locally in your browser only when you explicitly change languages. Download links include page-source campaign tags so Apple can report aggregate App Store visits and downloads from this website. This website does not store visitor identifiers for this purpose. NFC page handling is described above."
           ]
         ],
         [
@@ -352,7 +355,7 @@ const locales = {
           "7. 開発者による収集とウェブサイト",
           [
             "現在の App には独自アカウント、AI サービス、第三者による分析、広告 SDK、App やサイトをまたぐ追跡はありません。Apple は StoreKit、CloudKit、MapKit の地図などのシステムサービスのデータを自社の方針に従って処理します。利用者が書き出し、共有、ブラウザでのリンク表示を選んだ場合、受信者やウェブサービスは渡された内容にアクセスできます。",
-            "このサイトの公開コンテンツページでは、Cloudflare Web Analytics を使って訪問数、ページの閲覧数、流入元、ページの読み込み速度を把握しています。このサービスは Cookie を使用せず、サイトをまたいで個人を追跡しません。NFC リンクの案内ページとエラーページではアクセス解析を行いません。広告、入力フォーム、第三者のフォントサービスは使用していません。自サイトのスクリプトがブラウザの言語に合わせてホームページを選び、利用者が言語を切り替えた場合だけ、その設定をブラウザ内に保存します。NFC ページの扱いは前項のとおりです。"
+            "このサイトの公開コンテンツページでは、Cloudflare Web Analytics を使って訪問数、ページの閲覧数、流入元、ページの読み込み速度を把握しています。このサービスは Cookie を使用せず、サイトをまたいで個人を追跡しません。NFC リンクの案内ページとエラーページではアクセス解析を行いません。広告、入力フォーム、第三者のフォントサービスは使用していません。自サイトのスクリプトがブラウザの言語に合わせてホームページを選び、利用者が言語を切り替えた場合だけ、その設定をブラウザ内に保存します。ダウンロードリンクには流入元ページを示すキャンペーンタグが含まれ、Apple がサイト経由の App Store 閲覧数やダウンロード数を集計します。この目的で当サイトが訪問者の識別子を保存することはありません。NFC ページの扱いは前項のとおりです。"
           ]
         ],
         [
@@ -430,7 +433,7 @@ const locales = {
           "7. 개발자 수집과 웹사이트",
           [
             "현재 App에는 자체 계정 시스템, AI 서비스, 제3자 분석, 광고 SDK 또는 앱·사이트 간 추적 기능이 없습니다. Apple은 StoreKit, CloudKit, MapKit 지도 등 시스템 서비스 데이터를 자체 정책에 따라 처리합니다. 사용자가 내보내기, 공유 또는 브라우저에서 링크 열기를 선택하면 수신자나 웹서비스가 전달받은 내용을 볼 수 있습니다.",
-            "이 웹사이트의 공개 콘텐츠 페이지에서는 Cloudflare Web Analytics로 방문 수, 페이지 조회 수, 유입 경로와 페이지 로딩 성능을 파악합니다. 이 서비스는 쿠키를 사용하거나 여러 웹사이트에 걸쳐 개인을 추적하지 않습니다. NFC 링크 안내 페이지와 오류 페이지에서는 방문 통계를 수집하지 않습니다. 광고, 온라인 입력 양식이나 제3자 글꼴 서비스도 사용하지 않습니다. 자체 스크립트가 브라우저 언어에 맞춰 첫 페이지를 선택하며, 사용자가 언어를 직접 바꿀 때만 그 설정을 브라우저에 저장합니다. NFC 페이지의 처리 방식은 위 항목을 참고하세요."
+            "이 웹사이트의 공개 콘텐츠 페이지에서는 Cloudflare Web Analytics로 방문 수, 페이지 조회 수, 유입 경로와 페이지 로딩 성능을 파악합니다. 이 서비스는 쿠키를 사용하거나 여러 웹사이트에 걸쳐 개인을 추적하지 않습니다. NFC 링크 안내 페이지와 오류 페이지에서는 방문 통계를 수집하지 않습니다. 광고, 온라인 입력 양식이나 제3자 글꼴 서비스도 사용하지 않습니다. 자체 스크립트가 브라우저 언어에 맞춰 첫 페이지를 선택하며, 사용자가 언어를 직접 바꿀 때만 그 설정을 브라우저에 저장합니다. 다운로드 링크에는 페이지 출처를 나타내는 캠페인 태그가 포함되어 Apple이 웹사이트를 통한 App Store 방문과 다운로드를 집계합니다. 이 목적으로 웹사이트에 방문자 식별자를 저장하지 않습니다. NFC 페이지의 처리 방식은 위 항목을 참고하세요."
           ]
         ],
         [
@@ -470,7 +473,7 @@ function pageLocales(page) {
   return guidePages.includes(page) ? guideLocales : Object.keys(locales);
 }
 
-function header(locale, page) {
+function header(locale, page, marketing = false) {
   const c = locales[locale];
   const labels = locale === "zh-Hans"
     ? { home: "初次见面", product: "探索功能", support: "需要帮忙？" }
@@ -486,6 +489,7 @@ function header(locale, page) {
   <header class="site-header"><nav class="nav site-nav" aria-label="${c.nav.home}">
     <a class="brand" href="${pathFor(locale, "home")}"><img class="brand-icon" src="${productIdentity.icon}" alt=""><span>Petter Days</span></a>
     <div class="nav-links site-tabs">${links}</div>
+    ${marketing ? `<a class="nav-download" href="${storeLink(page)}">${escape(downloadCopy[locale].short)} <span aria-hidden="true">↗</span></a>` : ""}
     <details class="lang"><summary>${c.nav.language} ▾</summary><div class="lang-menu">${langLinks(page, locale)}</div></details>
   </nav></header>`;
 }
@@ -525,8 +529,10 @@ function document(locale, page, title, description, content, product = false) {
   const alternates = pageLocales(page).map((code) => `<link rel="alternate" hreflang="${code}" href="${absolutePath(code, page)}">`).join("");
   const fontSuffix = { "zh-Hans": "sc", en: "sc", "zh-Hant": "tc", ja: "j", ko: "k" }[locale];
   const schema = structuredData(locale, page, title, description);
+  const marketing = product || guidePages.includes(page);
+  const affiliate = marketing ? `, affiliate-data=${escape(new URL(campaignURL(page)).search.slice(1))}` : "";
   const discovery = `<meta name="robots" content="index, follow, max-image-preview:large"><link rel="alternate" type="text/markdown" href="${canonical}index.md"><link rel="alternate" type="text/plain" title="llms.txt" href="${origin}/llms.txt">`;
-  return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#FFFDFA"><title>${escape(title)} · Petter Days</title><meta name="description" content="${escape(description)}">${discovery}<meta name="apple-itunes-app" content="app-id=${productIdentity.appStoreAppleID}"><meta property="og:title" content="${escape(title)} · Petter Days"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${canonical}"><meta property="og:type" content="website"><meta property="og:image" content="${origin}${productIdentity.icon}"><meta property="og:image:alt" content="Petter Days"><meta name="twitter:card" content="summary">${schema}<link rel="canonical" href="${canonical}">${alternates}<link rel="alternate" hreflang="x-default" href="${absolutePath("zh-Hans", page)}"><link rel="icon" type="image/png" sizes="32x32" href="${productIdentity.favicon}"><link rel="apple-touch-icon" sizes="180x180" href="${productIdentity.touchIcon}"><link rel="preload" href="/assets/fonts/rounded-${fontSuffix}.woff2" as="font" type="font/woff2" crossorigin><script src="/assets/language.js"></script><link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/assets/rounded.css">${product ? '<link rel="stylesheet" href="/assets/home.css"><script src="/assets/home.js" defer></script>' : ''}</head><body class="site-page${product ? ' product-page' : ''}">${header(locale, page, product)}<main id="content">${content}</main>${footer(locale, product)}</body></html>`;
+  return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#FFFDFA"><title>${escape(title)} · Petter Days</title><meta name="description" content="${escape(description)}">${discovery}<meta name="apple-itunes-app" content="app-id=${productIdentity.appStoreAppleID}${affiliate}"><meta property="og:title" content="${escape(title)} · Petter Days"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${canonical}"><meta property="og:type" content="website"><meta property="og:image" content="${origin}${productIdentity.icon}"><meta property="og:image:alt" content="Petter Days"><meta name="twitter:card" content="summary">${schema}<link rel="canonical" href="${canonical}">${alternates}<link rel="alternate" hreflang="x-default" href="${absolutePath("zh-Hans", page)}"><link rel="icon" type="image/png" sizes="32x32" href="${productIdentity.favicon}"><link rel="apple-touch-icon" sizes="180x180" href="${productIdentity.touchIcon}"><link rel="preload" href="/assets/fonts/rounded-${fontSuffix}.woff2" as="font" type="font/woff2" crossorigin><script src="/assets/language.js"></script><link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/assets/rounded.css">${product ? '<link rel="stylesheet" href="/assets/home.css"><script src="/assets/home.js" defer></script>' : ''}${marketing ? '<link rel="stylesheet" href="/assets/download.css"><script src="/assets/download.js" defer></script>' : ''}</head><body class="site-page${product ? ' product-page' : ''}${marketing ? ' has-download' : ''}">${header(locale, page, marketing)}<main id="content">${content}</main>${footer(locale, product)}${marketing ? downloadBar(locale, page) : ""}</body></html>`;
 }
 
 function home(locale) {
@@ -537,8 +543,9 @@ function home(locale) {
 function legalPage(locale, page) {
   const c = locales[locale];
   const data = c[page];
+  const pageUpdated = page === "privacy" ? c.common.updated.replace(updatedDate, privacyUpdatedDate) : c.common.updated;
   const sections = data.sections.map(([title, paragraphs]) => `<section><h2>${title}</h2>${paragraphs.map((p) => `<p>${p}</p>`).join("")}</section>`).join("");
-  const content = `<header class="legal-hero"><p class="eyebrow">${data.eyebrow}</p><h1>${data.title}</h1><p>${data.intro}</p><div class="meta"><span>${c.common.owner}</span><span>${c.common.effective}</span><span>${c.common.updated}</span></div></header><article class="article">${page === "privacy" ? `<p class="callout">${c.common.medical}</p>` : ""}${sections}</article>`;
+  const content = `<header class="legal-hero"><p class="eyebrow">${data.eyebrow}</p><h1>${data.title}</h1><p>${data.intro}</p><div class="meta"><span>${c.common.owner}</span><span>${c.common.effective}</span><span>${pageUpdated}</span></div></header><article class="article">${page === "privacy" ? `<p class="callout">${c.common.medical}</p>` : ""}${sections}</article>`;
   return document(locale, page, data.eyebrow, data.intro, content);
 }
 
@@ -564,7 +571,7 @@ function guidePage(locale, page) {
   const toc = overview ? "" : `<nav class="guide-toc" aria-label="${copy.contents}">${data.sections.map((s) => `<a href="#${s.id}">${escape(s.title)}</a>`).join("")}${data.faq ? `<a href="#faq">${escape(copy.faqShort)}</a>` : ""}</nav>`;
   const heading = locale === "zh-Hans" ? data.title.split("，").map((part, i, parts) => `<span>${escape(part)}${i < parts.length - 1 ? "，" : ""}</span>`).join("") : escape(data.title);
   const facts = data.facts ? `<ul class="product-facts">${data.facts.map((fact) => `<li>${escape(fact)}</li>`).join("")}</ul>` : `<div class="meta"><span>${copy.updated} <time datetime="${guideUpdatedDate}">${guideUpdatedDate}</time></span></div>`;
-  const content = `<header class="legal-hero guide-hero"><p class="eyebrow"><a href="${pathFor(locale, "guide")}">${escape(overview ? copy.explore : copy.label)}</a></p><h1>${heading}</h1><p>${escape(data.intro)}</p>${facts}${toc}</header><article class="article guide-article${overview ? ' feature-overview' : ''}">${overview ? `<div class="feature-grid">${sections}</div>` : sections}${faq}<section class="related-guides"><h2>${escape(overview ? copy.practice : copy.more)}</h2><div class="support-grid">${related}</div></section></article>`;
+  const content = `<header class="legal-hero guide-hero" data-download-start><p class="eyebrow"><a href="${pathFor(locale, "guide")}">${escape(overview ? copy.explore : copy.label)}</a></p><h1>${heading}</h1><p>${escape(data.intro)}</p>${facts}${toc}</header><article class="article guide-article${overview ? ' feature-overview' : ''}">${overview ? `<div class="feature-grid">${sections}</div>` : sections}${faq}</article>${downloadCard(locale, page)}<article class="article guide-article"><section class="related-guides"><h2>${escape(overview ? copy.practice : copy.more)}</h2><div class="support-grid">${related}</div></section></article>`;
   return document(locale, page, data.searchTitle, data.intro, content);
 }
 
@@ -594,7 +601,7 @@ for (const locale of Object.keys(locales)) {
     await writeFile(file, html);
     const canonical = absolutePath(locale, page);
     searchPages.push({ locale, page, canonical, markdown: `${canonical}index.md`, title: html.match(/<title>(.*?)<\/title>/)[1].replaceAll("&amp;", "&"), markdownContent: pageMarkdown(html, canonical, locale) });
-    urls.push({ location: canonical, modified: [searchUpdatedDate, page === "home" ? homeUpdatedDate : guidePages.includes(page) || page === "support" ? guideUpdatedDate : updatedDate].sort().at(-1) });
+    urls.push({ location: canonical, modified: [searchUpdatedDate, page === "home" ? homeUpdatedDate : page === "privacy" ? privacyUpdatedDate : guidePages.includes(page) || page === "support" ? guideUpdatedDate : updatedDate].sort().at(-1) });
   }
 }
 
@@ -610,5 +617,5 @@ await writeFile(join(out, "404.html"), notFound.replace('<meta name="robots" con
 
 await optimizeAssets(out);
 const generated = await readFile(join(out, "index.html"), "utf8");
-if (!generated.includes('class="site-page product-page"') || !generated.includes('id="features"')) throw new Error("Home generation failed");
+if (!generated.includes('class="site-page product-page has-download"') || !generated.includes('id="features"')) throw new Error("Home generation failed");
 console.log(`Built ${urls.length} localized pages in ${out}`);

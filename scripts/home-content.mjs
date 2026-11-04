@@ -3,7 +3,7 @@ export const homeContent = {
   "zh-Hans": {
     showcase: {"tabs": ["日常记录", "自由定义", "用品管理"], "hello": ["好好记录，", "好好陪伴。"], "devices": ["每个小日常。", "都有合适的位置。"], "label": "选择 App 画面", "nav": "功能章节", "diary": "猫和狗一起写日记"},
     title: "宠物照护记录 App，认真记好每一天", description: "Petter Days 是 iPhone 和 iPad 上的多宠物照护记录 App：记录饮水、饮食、体重、用药与护理，自定义记录，安排照护计划、管理用品，支持离线记录与 NFC 快捷入口。",
-    nav: ["特色", "NFC", "支持"], hero: ["它们的每一天。", "都值得好好记。"], intro: "从一口水，到一份陪伴。", explore: "看看它的小日常", devices: "在 iPhone 和 iPad 上，照顾好每个小日常。",
+    nav: ["特色", "NFC", "支持"], hero: ["它们的每一天。", "都值得好好记。"], intro: "为每只宠物记录饮水、体重与用药，安排照护，管理用品。", explore: "看看它的小日常", devices: "在 iPhone 和 iPad 上，照顾好每个小日常。",
     records: { label: "日常记录", title: ["小小日常。", "大有可记。"], tabs: ["丰富的记录类型", "自由定义记录"], captions: ["吃喝、健康、护理，一起记。", "字段、选项、单位，按你的习惯来。"], types: ["饮水", "进食", "体重", "护理", "用药", "自定义"] },
     care: { label: "照护计划", title: ["记得每件事。", "也记得陪伴。"], intro: "一次安排，日复一日的用心。", weekdays: ["一", "二", "三", "四", "五", "六", "日"], rows: ["梳毛", "刷牙", "营养补充"], repeat: "每天", done: "已完成", pending: "待照护" },
     supplies: { label: "用品管理", title: ["它的小仓库。", "心里有数。"], intro: "库存、临期、采购，一眼看清。", tags: ["库存", "临期", "采购"] },
@@ -14,7 +14,7 @@ export const homeContent = {
   "zh-Hant": {
     showcase: {"tabs": ["日常紀錄", "自由自訂", "用品管理"], "hello": ["用心記錄，", "用心陪伴。"], "devices": ["每個小日常。", "都有適合的位置。"], "label": "選擇 App 畫面", "nav": "功能章節", "diary": "貓和狗一起寫日記"},
     title: "iPhone 與 iPad 寵物照護紀錄 App", description: "Petter Days 為每隻毛孩記下飲水、飲食、體重、用藥與照護，支援自訂紀錄、照護計畫、用品管理、離線紀錄與 NFC 快捷入口，適用於 iPhone 與 iPad。",
-    nav: ["特色", "NFC", "支援"], hero: ["牠們的每一天。", "都值得用心記下。"], intro: "從一口水，到一份陪伴。", explore: "看看牠的小日常", devices: "在 iPhone 和 iPad 上，照顧好每個小日常。",
+    nav: ["特色", "NFC", "支援"], hero: ["牠們的每一天。", "都值得用心記下。"], intro: "為每隻寵物記錄飲水、體重與用藥，安排照護，管理用品。", explore: "看看牠的小日常", devices: "在 iPhone 和 iPad 上，照顧好每個小日常。",
     records: { label: "日常紀錄", title: ["小小日常。", "大有可記。"], tabs: ["豐富的紀錄類型", "自由自訂紀錄"], captions: ["飲食、健康、日常照護，一起記。", "欄位、選項、單位，照你的習慣來。"], types: ["飲水", "進食", "體重", "照護", "用藥", "自訂"] },
     care: { label: "照護計畫", title: ["記得每件事。", "也記得陪伴。"], intro: "一次安排，每一天的用心。", weekdays: ["一", "二", "三", "四", "五", "六", "日"], rows: ["梳毛", "刷牙", "營養補充"], repeat: "每天", done: "已完成", pending: "待照護" },
     supplies: { label: "用品管理", title: ["牠的小倉庫。", "心裡有數。"], intro: "庫存、到期日、採購，一眼看清。", tags: ["庫存", "即將到期", "採購"] },
@@ -25,7 +25,7 @@ export const homeContent = {
   "en": {
     showcase: {"tabs": ["Daily care", "Your way", "Supplies"], "hello": ["Good records.", "Better days."], "devices": ["Little moments.", "Room for them all."], "label": "Choose an app screen", "nav": "Explore features", "diary": "A cat and dog keeping a journal together"},
     title: "Pet care journal for iPhone and iPad", description: "Keep each pet’s water, meals, weight, medication and grooming records in Petter Days. Create custom records, plan care and manage supplies, with offline records and NFC shortcuts.",
-    nav: ["Features", "NFC", "Support"], hero: ["Their little days.", "Worth remembering."], intro: "Every sip. Every moment. Every bit of care.", explore: "Take a closer look", devices: "A little care, on iPhone and iPad.",
+    nav: ["Features", "NFC", "Support"], hero: ["Their little days.", "Worth remembering."], intro: "Track each pet’s water, weight and medication, plan their care, and manage supplies.", explore: "Take a closer look", devices: "A little care, on iPhone and iPad.",
     records: { label: "Everyday records", title: ["Little moments.", "Lots to record."], tabs: ["More ways to record", "Make it your own"], captions: ["Meals, health, grooming. All together.", "Your fields. Your options. Your way."], types: ["Water", "Meals", "Weight", "Grooming", "Medication", "Custom"] },
     care: { label: "Care plans", title: ["Remember the care.", "Enjoy the company."], intro: "Set the routine. Keep the love going.", weekdays: ["M", "T", "W", "T", "F", "S", "S"], rows: ["Brush coat", "Brush teeth", "Supplement"], repeat: "Daily", done: "Done", pending: "Up next" },
     supplies: { label: "Pet supplies", title: ["Their little cupboard.", "All in hand."], intro: "Stock, expiry dates, purchases. At a glance.", tags: ["Stock", "Expiry", "Purchases"] },
@@ -36,7 +36,7 @@ export const homeContent = {
   "ja": {
     showcase: {"tabs": ["日々の記録", "カスタマイズ", "用品管理"], "hello": ["日々を記録。", "いつも一緒に。"], "devices": ["小さな日常に。", "ぴったりの画面で。"], "label": "App の画面を選ぶ", "nav": "機能のご紹介", "diary": "一緒に日記を書く猫と犬"},
     title: "iPhone・iPad 向けペットのお世話記録アプリ", description: "Petter Days はペットごとの飲水、食事、体重、投薬、お手入れを記録する iPhone・iPad アプリ。記録項目のカスタマイズ、ケアの予定、用品管理、オフライン記録、NFC ショートカットに対応。",
-    nav: ["特長", "NFC", "サポート"], hero: ["いつもの毎日を。", "大切な記録に。"], intro: "ひと口の水も、一緒に過ごす時間も。", explore: "できることを見る", devices: "iPhone と iPad で、毎日の小さなケアを。",
+    nav: ["特長", "NFC", "サポート"], hero: ["いつもの毎日を。", "大切な記録に。"], intro: "ペットごとの飲水・体重・投薬を記録し、ケアの予定や用品を管理。", explore: "できることを見る", devices: "iPhone と iPad で、毎日の小さなケアを。",
     records: { label: "日々の記録", title: ["小さな日常。", "記録はたっぷり。"], tabs: ["いろいろな記録", "自分らしくカスタマイズ"], captions: ["食事も、健康も、お手入れも。", "項目、選択肢、単位を、いつものやり方に。"], types: ["水分", "食事", "体重", "お手入れ", "投薬", "カスタム"] },
     care: { label: "ケアプラン", title: ["ケアは忘れず。", "ふれあいはゆっくり。"], intro: "予定を立てて、毎日のケアを習慣に。", weekdays: ["月", "火", "水", "木", "金", "土", "日"], rows: ["ブラッシング", "歯みがき", "栄養補給"], repeat: "毎日", done: "完了", pending: "これから" },
     supplies: { label: "用品管理", title: ["あの子の用品。", "ひと目で把握。"], intro: "在庫も、期限も、購入履歴も。", tags: ["在庫", "期限", "購入"] },
@@ -47,7 +47,7 @@ export const homeContent = {
   "ko": {
     showcase: {"tabs": ["일상 기록", "내 방식대로", "용품 관리"], "hello": ["다정한 기록.", "함께하는 하루."], "devices": ["작은 일상도.", "알맞은 화면에서."], "label": "앱 화면 선택", "nav": "주요 기능 살펴보기", "diary": "함께 일기를 쓰는 고양이와 강아지"},
     title: "iPhone과 iPad를 위한 반려동물 돌봄 기록 앱", description: "Petter Days에서 반려동물별 음수, 식사, 체중, 투약과 돌봄을 기록하세요. 맞춤 기록, 돌봄 계획, 용품 관리, 오프라인 기록과 NFC 바로가기를 iPhone과 iPad에서 이용할 수 있습니다.",
-    nav: ["주요 기능", "NFC", "지원"], hero: ["소중한 하루하루.", "다정하게 기록해요."], intro: "물 한 모금부터, 함께한 순간까지.", explore: "어떤 기능이 있나요?", devices: "iPhone과 iPad에서 이어지는 작은 돌봄.",
+    nav: ["주요 기능", "NFC", "지원"], hero: ["소중한 하루하루.", "다정하게 기록해요."], intro: "반려동물별 음수량·체중·투약을 기록하고, 돌봄 일정과 용품을 관리하세요.", explore: "어떤 기능이 있나요?", devices: "iPhone과 iPad에서 이어지는 작은 돌봄.",
     records: { label: "일상 기록", title: ["작은 일상에도.", "기록할 건 많죠."], tabs: ["다양한 기록 종류", "내 방식대로 기록"], captions: ["식사, 건강, 털 관리까지 한곳에.", "항목, 선택지, 단위를 원하는 대로."], types: ["수분", "식사", "체중", "털 관리", "투약", "사용자 지정"] },
     care: { label: "돌봄 계획", title: ["돌봄은 잊지 않고.", "함께하는 시간은 넉넉히."], intro: "한 번 정한 루틴, 매일 이어지는 마음.", weekdays: ["월", "화", "수", "목", "금", "토", "일"], rows: ["빗질", "양치", "영양 보충"], repeat: "매일", done: "완료", pending: "할 일" },
     supplies: { label: "용품 관리", title: ["작은 용품 창고.", "한눈에 알아요."], intro: "재고, 유효기간, 구매 내역을 한곳에서.", tags: ["재고", "유효기간", "구매"] },

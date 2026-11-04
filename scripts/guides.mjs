@@ -2,7 +2,7 @@ import { guideTranslations } from "./guide-translations.mjs";
 import { storyContent } from "./story-content.mjs";
 
 // Public product facts and practical examples; no private pet data or invented results.
-export const guideUpdatedDate = "2026-10-26";
+export const guideUpdatedDate = "2026-11-04";
 export const guideContent = {
   ...guideTranslations,
   "zh-Hans": {
