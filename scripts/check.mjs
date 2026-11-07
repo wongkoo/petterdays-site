@@ -269,6 +269,7 @@ if (associationDetail.appIDs?.length !== 1 || associationDetail.appIDs[0] !== "5
 if (JSON.stringify(associationDetail.components?.map((item) => item["/"])) !== JSON.stringify(["/1/*", "/2/*"])) {
   throw new Error("AASA must expose only the published version 1 and NFC preset version 2 routes");
 }
+assert.deepEqual(association.appclips?.apps, ["546HJ5BCYA.com.wongkoo.petterdays.Clip"], "AASA App Clip identity");
 const redirects = await readFile(new URL("_redirects", root), "utf8");
 if (!redirects.split("\n").some((line) => line.trim() === "/1/* /link/?route=:splat 200")) {
   throw new Error("Universal Link fallback rewrite is missing");
