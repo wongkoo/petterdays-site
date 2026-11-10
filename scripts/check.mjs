@@ -6,7 +6,7 @@ import { runInNewContext } from "node:vm";
 import { createHash } from "node:crypto";
 import { checkAssets } from "./check-assets.mjs";
 import assert from "node:assert/strict";
-import { product, appStoreURL, campaignURL, campaignFor, campaigns } from "./product.mjs";
+import { product, appClipURL, appStoreURL, campaignURL, campaignFor, campaigns } from "./product.mjs";
 import { guideContent, guidePages, guideLocales } from "./guides.mjs";
 import { homeContent } from "./home-content.mjs";
 import { storyContent } from "./story-content.mjs";
@@ -119,14 +119,17 @@ for (const file of files) {
   if (homeFiles.has(file) || file.includes("/guide/")) assert.equal(dataBlocks.length, 1, `${file} needs structured product facts`);
   if (/google-analytics|googletagmanager|segment\.com|mixpanel|facebook\.net/i.test(html)) throw new Error(`${file} contains tracking reference`);
   for (const [, src] of html.matchAll(/src="(\/assets\/[^"]+)"/g)) await readFile(new URL(src.slice(1), root));
-  if (/\{\{APP_(?:ICON|STORE)_|\{\{(?:FAVICON|TOUCH_ICON)_|(?:src|href)="\/app-icon\.png"/.test(html)) throw new Error(`${file} contains an unresolved or obsolete brand reference`);
+  if (/\{\{APP_(?:CLIP|ICON|STORE)_|\{\{(?:FAVICON|TOUCH_ICON)_|(?:src|href)="\/app-icon\.png"/.test(html)) throw new Error(`${file} contains an unresolved or obsolete brand reference`);
   for (const match of html.matchAll(/(?:src|href)="(\/assets\/brand\/[^"]+)"/g)) {
     if (!Object.hasOwn(product.assets, match[1])) throw new Error(`${file} references an older icon ${match[1]}`);
   }
   for (const token of [`href="${product.favicon}"`, `href="${product.touchIcon}"`, `app-id=${product.appStoreAppleID}`]) {
     if (!html.includes(token)) throw new Error(`${file} misses the current product identity ${token}`);
   }
-  if (file.endsWith("/link/index.html") && !html.includes(`id="nfc-store" href="${appStoreURL}"`)) throw new Error("NFC fallback must offer the actual App Store listing");
+  if (file.endsWith("/link/index.html")) {
+    assert.ok(html.includes(`id="nfc-store" href="${appStoreURL}"`), "NFC fallback must offer the actual App Store listing");
+    assert.ok(html.includes(`id="nfc-clip" href="${appClipURL}" rel="noreferrer"`), "NFC fallback must offer the standalone App Clip link without a referrer");
+  }
   if (homeFiles.has(file)) {
     if (/\bPro\b|\bfree\b|subscription|免费|免費|订阅|訂閱|無料|購読|무료|구독/i.test(html)) throw new Error(`${file} still contains plan marketing`);
     if (/上架准备中|上架準備中|Getting ready for the App Store|公開準備中|출시 준비 중/i.test(html)) throw new Error(`${file} still contains prelaunch copy`);
@@ -269,7 +272,7 @@ if (associationDetail.appIDs?.length !== 1 || associationDetail.appIDs[0] !== "5
 if (JSON.stringify(associationDetail.components?.map((item) => item["/"])) !== JSON.stringify(["/1/*", "/2/*"])) {
   throw new Error("AASA must expose only the published version 1 and NFC preset version 2 routes");
 }
-assert.deepEqual(association.appclips?.apps, ["546HJ5BCYA.com.wongkoo.petterdays.Clip"], "AASA App Clip identity");
+assert.equal(association.appclips, undefined, "The NFC record domain must not advertise an App Clip");
 const redirects = await readFile(new URL("_redirects", root), "utf8");
 if (!redirects.split("\n").some((line) => line.trim() === "/1/* /link/?route=:splat 200")) {
   throw new Error("Universal Link fallback rewrite is missing");
@@ -377,6 +380,7 @@ function renderNFCFallback(token, rewritten, language = "zh-CN") {
   return {
     labels: details.querySelector("dl").appended.filter((_node, index) => index % 2 === 0).map((node) => node.textContent),
     values: details.querySelector("dl").appended.filter((_node, index) => index % 2 === 1).map((node) => node.textContent),
+    clipLabel: document.getElementById("nfc-clip").textContent,
     summaryHidden: document.getElementById("nfc-summary").hidden,
     detailsHidden: details.hidden, detailsOpen: details.open, replacement,
   };
@@ -405,10 +409,17 @@ for (const [token, expectedValues] of renderingFixtures) {
   }
 }
 
-for (const [language, label] of [["zh-CN", "尿团数"], ["zh-TW", "尿團數"], ["en", "Urine Clumps"], ["ja", "おしっこの塊の数"], ["ko", "소변 덩어리 수"]]) {
+for (const [language, label, clipLabel] of [
+  ["zh-CN", "尿团数", "体验轻 App"],
+  ["zh-TW", "尿團數", "體驗輕 App"],
+  ["en", "Urine Clumps", "Try the App Clip"],
+  ["ja", "おしっこの塊の数", "App Clip を試す"],
+  ["ko", "소변 덩어리 수", "앱 클립 체험하기"],
+]) {
   const rendered = renderNFCFallback("UEQBAwEgZbsrH_gryrWurvwBEwEBAwUBAwYBAwgIAAAAAAAAAAOWzW4n", false, language);
   assert.equal(rendered.labels.at(-1), label);
   assert.equal(rendered.values.at(-1), "3");
+  assert.equal(rendered.clipLabel, clipLabel);
 }
 
 console.log(`Validated ${files.length} HTML files: localized pages, NFC fixed vector, local-only scripts, no known trackers.`);

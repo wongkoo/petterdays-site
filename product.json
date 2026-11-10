@@ -1,5 +1,6 @@
 {
   "appStoreAppleID": "6802897091",
+  "appClipBundleIdentifier": "com.wongkoo.petterdays.Clip",
   "iconSource": "projects/iOS/Sources/PetterDaysApp/Resources/Assets.xcassets/AppIcon.appiconset/PetterDaysAppIcon.png",
   "iconSourceSHA256": "55140293fd2489fe894c29713e573d08203332a33daae8636aca64cb91775ea7",
   "assets": {

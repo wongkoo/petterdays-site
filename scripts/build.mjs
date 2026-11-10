@@ -4,7 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { homeContent } from "./home-content.mjs";
 import { productHome, escape } from "./home-render.mjs";
-import { product as productIdentity, appStoreURL } from "./product.mjs";
+import { product as productIdentity, appClipURL, appStoreURL } from "./product.mjs";
 import { guideContent, guidePages, guideLocales, guideUpdatedDate } from "./guides.mjs";
 import { supportContent } from "./support-content.mjs";
 import { productGuide, developerStory } from "./guide-render.mjs";
@@ -586,7 +586,13 @@ await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 await cp(join(root, "static"), out, { recursive: true });
 const linkTemplate = await readFile(join(out, "link/index.html"), "utf8");
-await writeFile(join(out, "link/index.html"), linkTemplate.replaceAll("{{APP_ICON_URL}}", productIdentity.icon).replaceAll("{{FAVICON_URL}}", productIdentity.favicon).replaceAll("{{TOUCH_ICON_URL}}", productIdentity.touchIcon).replaceAll("{{APP_STORE_URL}}", appStoreURL).replaceAll("{{APP_STORE_ID}}", productIdentity.appStoreAppleID));
+await writeFile(join(out, "link/index.html"), linkTemplate
+  .replaceAll("{{APP_ICON_URL}}", productIdentity.icon)
+  .replaceAll("{{FAVICON_URL}}", productIdentity.favicon)
+  .replaceAll("{{TOUCH_ICON_URL}}", productIdentity.touchIcon)
+  .replaceAll("{{APP_STORE_URL}}", appStoreURL)
+  .replaceAll("{{APP_STORE_ID}}", productIdentity.appStoreAppleID)
+  .replaceAll("{{APP_CLIP_URL}}", appClipURL));
 await mkdir(join(out, "assets"), { recursive: true });
 await cp(join(out, "styles.css"), join(out, "assets", "styles.css"));
 await rm(join(out, "styles.css"));
