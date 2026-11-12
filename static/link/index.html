@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#F3EFE7" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)">
-  <title>打开 Petter Days · Petter Days</title>
+  <title>打开 Petter Days</title>
   <meta name="description" content="通过受支持的链接打开 Petter Days。">
   <meta name="robots" content="noindex,nofollow">
   <link rel="canonical" href="https://p.petterdays.app/link/">
@@ -18,39 +18,37 @@
   <script src="/assets/nfc-wire.js" defer></script>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
-<body>
-  <a class="skip-link" href="#content">跳至正文</a>
+<body class="nfc-page">
+  <a class="skip-link" id="nfc-skip" href="#content">跳至正文</a>
   <header class="site-header">
-    <nav class="nav" aria-label="首页">
+    <div class="nav">
       <a class="brand" href="https://petterdays.app/"><img class="brand-icon" src="{{APP_ICON_URL}}" alt=""><span>Petter Days</span></a>
-      <div class="nav-links"><a href="https://petterdays.app/privacy/">隐私</a><a href="https://petterdays.app/support/">支持</a></div>
-    </nav>
+    </div>
   </header>
-  <main id="content">
-    <header class="legal-hero">
-      <p class="eyebrow">Petter Days</p>
-      <h1 id="nfc-title">打开 Petter Days</h1>
-      <p id="nfc-intro">安装或更新到最新版本的 Petter Days 后，iPhone 可以打开对应的记录功能。若仍看到此页面，系统可能选择在浏览器中继续。</p>
-      <section class="nfc-summary" id="nfc-summary" hidden aria-live="polite">
-        <div><span id="nfc-type-label">记录类型</span><strong id="nfc-type"></strong></div>
-        <div><span id="nfc-mode-label">打开方式</span><strong id="nfc-mode"></strong></div>
-        <p id="nfc-prefill"></p>
-      </section>
-      <details class="nfc-details" id="nfc-details" hidden>
-        <summary>查看标签中的详细内容</summary>
-        <p></p>
-        <dl></dl>
-      </details>
-      <div class="actions">
-        <a class="button" id="nfc-store" href="{{APP_STORE_URL}}">App Store 下载</a>
-        <a class="button secondary" id="nfc-clip" href="{{APP_CLIP_URL}}" rel="noreferrer">体验轻 App</a>
-        <a class="button secondary" id="nfc-back" href="https://petterdays.app/">返回官网</a>
-        <a class="text-link" id="nfc-support" href="https://petterdays.app/support/">获取支持</a>
+  <main id="content" class="nfc-main">
+    <p class="eyebrow">NFC</p>
+    <h1 id="nfc-title">打开 Petter Days</h1>
+    <div class="actions nfc-actions">
+      <a class="button" id="nfc-store" href="{{APP_STORE_URL}}">App Store 下载</a>
+      <a class="button secondary" id="nfc-clip" href="{{APP_CLIP_URL}}" rel="noreferrer">体验轻 App</a>
+    </div>
+    <p class="nfc-unavailable" id="nfc-unavailable" hidden></p>
+    <details class="nfc-details" id="nfc-details" hidden>
+      <summary>查看标签内容</summary>
+      <div class="nfc-details-body">
+        <p id="nfc-privacy-note"></p>
+        <dl id="nfc-summary">
+          <dt id="nfc-type-label">记录类型</dt><dd id="nfc-type"></dd>
+          <dt id="nfc-mode-label">保存方式</dt><dd id="nfc-mode"></dd>
+        </dl>
+        <dl id="nfc-prefill" hidden></dl>
       </div>
-    </header>
+    </details>
   </main>
-  <footer class="site-footer">
-    <div class="footer-inner"><div><a class="brand" href="https://petterdays.app/"><img class="brand-icon" src="{{APP_ICON_URL}}" alt=""><span>Petter Days</span></a><p class="footer-note">© 2026 ZhenHui Wang</p></div></div>
+  <footer class="nfc-footer">
+    <a class="text-link" id="nfc-back" href="https://petterdays.app/">返回官网</a>
+    <a class="text-link" id="nfc-support" href="https://petterdays.app/support/">获取支持</a>
+    <a class="text-link" id="nfc-privacy" href="https://petterdays.app/privacy/">隐私政策</a>
   </footer>
 </body>
 </html>

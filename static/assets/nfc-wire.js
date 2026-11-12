@@ -202,11 +202,41 @@
   }
 
   const COPY = {
-    "zh-Hans": { title: "Petter Days 记录标签", intro: "页面已在本设备解析标签，不会发送解析结果或发起额外数据请求。安装或更新到最新版本的 App 后，轻触标签可继续记录。", type: "记录类型", mode: "打开方式", form: "预填后确认", direct: "直接保存", prefill: "包含预填内容", noPrefill: "不含预填内容", details: "查看标签中的详细内容", privacy: "详细内容可能包含健康信息，请仅在可信设备上展开。打开网页时，托管服务仍会接触链接本身。", invalidTitle: "打开 Petter Days", invalidIntro: "此链接无法在网页中安全解析。它可能来自旧版标签、已损坏，或不是受支持的记录链接。", download: "App Store 下载", clip: "体验轻 App", back: "返回官网", support: "获取支持" },
-    "zh-Hant": { title: "Petter Days 記錄標籤", intro: "頁面已在本裝置解析標籤，不會傳送解析結果或發出額外資料請求。安裝或更新至最新版本的 App 後，輕觸標籤可繼續記錄。", type: "記錄類型", mode: "開啟方式", form: "預填後確認", direct: "直接儲存", prefill: "包含預填內容", noPrefill: "不含預填內容", details: "查看標籤中的詳細內容", privacy: "詳細內容可能包含健康資料，請只在可信裝置上展開。開啟網頁時，託管服務仍會接觸連結本身。", invalidTitle: "開啟 Petter Days", invalidIntro: "此連結無法在網頁中安全解析，可能來自舊版、已損壞或並非受支援的記錄連結。", download: "在 App Store 下載", clip: "體驗輕 App", back: "返回官網", support: "取得支援" },
-    en: { title: "This is a Petter Days record tag", intro: "The page decoded the tag on this device. It does not send decoded results or make extra data requests. Install or update the app to the latest version to use the tag for recording.", type: "Record type", mode: "Action", form: "Review prefill", direct: "Save directly", prefill: "Includes prefilled details", noPrefill: "No prefilled details", details: "Show details stored on the tag", privacy: "Details may contain health information. Reveal them only on a trusted device. The hosting service still receives the link when this page opens.", invalidTitle: "Open Petter Days", invalidIntro: "This link could not be decoded safely. It may be an older or damaged tag, or an unsupported record link.", download: "Download on the App Store", clip: "Try the App Clip", back: "Website", support: "Support" },
-    ja: { title: "Petter Days の記録タグです", intro: "ページはこの端末内でタグを解析し、解析結果の送信や追加のデータ通信は行いません。App をインストールまたは最新版にアップデートすると記録に使用できます。", type: "記録の種類", mode: "動作", form: "入力内容を確認", direct: "直接保存", prefill: "入力済みの詳細あり", noPrefill: "入力済みの詳細なし", details: "タグ内の詳細を表示", privacy: "健康情報が含まれる場合があります。信頼できる端末でのみ表示してください。ページを開く際、ホスティングサービスはリンク自体を受信します。", invalidTitle: "Petter Days を開く", invalidIntro: "このリンクは安全に解析できませんでした。旧版、破損、未対応の記録リンクの可能性があります。", download: "App Store でダウンロード", clip: "App Clip を試す", back: "公式サイト", support: "サポート" },
-    ko: { title: "Petter Days 기록 태그입니다", intro: "페이지는 이 기기에서 태그를 해석하며 해석 결과를 전송하거나 추가 데이터 요청을 하지 않습니다. App을 설치하거나 최신 버전으로 업데이트하면 기록에 사용할 수 있습니다.", type: "기록 유형", mode: "동작", form: "미리 입력된 내용 확인", direct: "바로 저장", prefill: "미리 입력된 세부 정보 포함", noPrefill: "미리 입력된 세부 정보 없음", details: "태그의 세부 정보 보기", privacy: "건강 정보가 포함될 수 있습니다. 신뢰할 수 있는 기기에서만 펼치세요. 페이지를 열 때 호스팅 서비스는 링크 자체를 받습니다.", invalidTitle: "Petter Days 열기", invalidIntro: "이 링크를 안전하게 해석할 수 없습니다. 이전 버전, 손상된 태그 또는 지원되지 않는 링크일 수 있습니다.", download: "App Store에서 다운로드", clip: "앱 클립 체험하기", back: "웹사이트", support: "지원" },
+    "zh-Hans": {
+      title: "打开 Petter Days", download: "App Store 下载", clip: "体验轻 App",
+      details: "查看标签内容", type: "记录类型", mode: "保存方式", form: "预填后确认", direct: "直接保存",
+      unavailable: "无法读取标签内容。",
+      privacyNote: "标签可能含健康信息，请仅在可信设备上查看。打开链接时，托管服务会收到该链接。",
+      skip: "跳至正文", back: "返回官网", support: "获取支持", privacy: "隐私政策",
+    },
+    "zh-Hant": {
+      title: "開啟 Petter Days", download: "在 App Store 下載", clip: "體驗輕 App",
+      details: "查看標籤內容", type: "記錄類型", mode: "儲存方式", form: "預填後確認", direct: "直接儲存",
+      unavailable: "無法讀取標籤內容。",
+      privacyNote: "標籤可能含健康資料，請只在可信裝置上查看。開啟連結時，託管服務會收到該連結。",
+      skip: "跳至正文", back: "返回官網", support: "取得支援", privacy: "隱私政策",
+    },
+    en: {
+      title: "Open Petter Days", download: "Download on the App Store", clip: "Try the App Clip",
+      details: "View tag contents", type: "Record type", mode: "Save mode", form: "Review before saving", direct: "Save directly",
+      unavailable: "Couldn’t read the tag contents.",
+      privacyNote: "View health details only on a trusted device. The hosting service receives the link when you open it.",
+      skip: "Skip to content", back: "Website", support: "Support", privacy: "Privacy",
+    },
+    ja: {
+      title: "Petter Days を開く", download: "App Store でダウンロード", clip: "App Clip を試す",
+      details: "タグの内容を表示", type: "記録の種類", mode: "保存方法", form: "入力内容を確認", direct: "直接保存",
+      unavailable: "タグの内容を読み取れませんでした。",
+      privacyNote: "健康情報は信頼できる端末でのみ確認してください。リンクを開くと、ホスティングサービスにリンクが送信されます。",
+      skip: "本文へスキップ", back: "公式サイト", support: "サポート", privacy: "プライバシー",
+    },
+    ko: {
+      title: "Petter Days 열기", download: "App Store에서 다운로드", clip: "앱 클립 체험하기",
+      details: "태그 내용 보기", type: "기록 유형", mode: "저장 방식", form: "확인 후 저장", direct: "바로 저장",
+      unavailable: "태그 내용을 읽을 수 없습니다.",
+      privacyNote: "건강 정보는 신뢰할 수 있는 기기에서만 확인하세요. 링크를 열면 호스팅 서비스가 해당 링크를 받습니다.",
+      skip: "본문으로 건너뛰기", back: "웹사이트", support: "지원", privacy: "개인정보 처리방침",
+    },
   };
   const RECORD_LABELS = {
     "zh-Hans": { urination: "尿尿", defecation: "便便", toiletBoth: "尿便", toiletAttempted: "如厕尝试", walk: "遛弯", weight: "体重", medication: "用药", respiratory: "静息呼吸", heartRate: "心率", symptom: "症状", clinicalVisit: "就诊", vaccination: "疫苗", medicalProcedure: "医疗操作" },
@@ -233,7 +263,7 @@
   function locale() {
     const language = (root.navigator && (root.navigator.languages || [root.navigator.language])) || [];
     const value = language.find(Boolean) || "zh-CN";
-    if (/^zh-(TW|HK|MO)/i.test(value)) return "zh-Hant";
+    if (/^zh-(Hant|TW|HK|MO)\b/i.test(value)) return "zh-Hant";
     if (/^en/i.test(value)) return "en";
     if (/^ja/i.test(value)) return "ja";
     if (/^ko/i.test(value)) return "ko";
@@ -252,26 +282,30 @@
     let decoded;
     try { decoded = token ? decodeToken(token) : undefined; } catch (_) { decoded = undefined; }
     root.document.documentElement.lang = language;
-    const title = root.document.getElementById("nfc-title"), intro = root.document.getElementById("nfc-intro");
-    const storeLink = root.document.getElementById("nfc-store");
-    if (storeLink) storeLink.textContent = copy.download;
-    const clipLink = root.document.getElementById("nfc-clip");
-    if (clipLink) clipLink.textContent = copy.clip;
-    root.document.getElementById("nfc-back").textContent = copy.back;
-    root.document.getElementById("nfc-support").textContent = copy.support;
-    if (!decoded) { title.textContent = copy.invalidTitle; intro.textContent = copy.invalidIntro; return; }
-    title.textContent = copy.title; intro.textContent = copy.intro;
-    root.document.getElementById("nfc-summary").hidden = false;
+    root.document.title = copy.title;
+    for (const [id, label] of Object.entries({
+      title: copy.title, store: copy.download, clip: copy.clip, skip: copy.skip,
+      back: copy.back, support: copy.support, privacy: copy.privacy,
+    })) {
+      root.document.getElementById(`nfc-${id}`).textContent = label;
+    }
+    if (!decoded) {
+      if (token) {
+        const notice = root.document.getElementById("nfc-unavailable");
+        notice.textContent = copy.unavailable;
+        notice.hidden = false;
+      }
+      return;
+    }
     root.document.getElementById("nfc-type-label").textContent = copy.type;
     root.document.getElementById("nfc-type").textContent = RECORD_LABELS[language][decoded.record];
     root.document.getElementById("nfc-mode-label").textContent = copy.mode;
     root.document.getElementById("nfc-mode").textContent = copy[decoded.mode];
-    root.document.getElementById("nfc-prefill").textContent = decoded.hasPrefill ? copy.prefill : copy.noPrefill;
     const detail = root.document.getElementById("nfc-details");
-    if (decoded.hasPrefill) {
-      detail.hidden = false; detail.querySelector("summary").textContent = copy.details;
-      detail.querySelector("p").textContent = copy.privacy;
-      const list = detail.querySelector("dl");
+    detail.querySelector("summary").textContent = copy.details;
+    root.document.getElementById("nfc-privacy-note").textContent = copy.privacyNote;
+    if (decoded.fields.length) {
+      const list = root.document.getElementById("nfc-prefill");
       for (const field of decoded.fields) {
         const term = root.document.createElement("dt"), value = root.document.createElement("dd");
         term.textContent = FIELD_LABELS[language][field.key] || field.key;
@@ -279,7 +313,9 @@
           ? VALUE_LABELS[language][field.value] : String(field.value);
         list.append(term, value);
       }
+      list.hidden = false;
     }
+    detail.hidden = false;
     if (root.history && root.history.replaceState) root.history.replaceState(null, "", "/link/");
   }
 

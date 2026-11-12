@@ -129,6 +129,12 @@ for (const file of files) {
   if (file.endsWith("/link/index.html")) {
     assert.ok(html.includes(`id="nfc-store" href="${appStoreURL}"`), "NFC fallback must offer the actual App Store listing");
     assert.ok(html.includes(`id="nfc-clip" href="${appClipURL}" rel="noreferrer"`), "NFC fallback must offer the standalone App Clip link without a referrer");
+    const disclosure = html.match(/<details\b([^>]*)id="nfc-details"([^>]*)>([\s\S]*?)<\/details>/);
+    assert.ok(disclosure && !/\bopen\b/.test(disclosure[1] + disclosure[2]), "NFC details must start closed");
+    assert.ok(html.indexOf('id="nfc-store"') < html.indexOf('id="nfc-clip"') && html.indexOf('id="nfc-clip"') < disclosure.index, "Download and App Clip must precede the tag contents");
+    for (const id of ["nfc-type", "nfc-mode", "nfc-prefill"]) {
+      assert.ok(disclosure[3].includes(`id="${id}"`), `${id} must be inside the tag disclosure`);
+    }
   }
   if (homeFiles.has(file)) {
     if (/\bPro\b|\bfree\b|subscription|免费|免費|订阅|訂閱|無料|購読|무료|구독/i.test(html)) throw new Error(`${file} still contains plan marketing`);
@@ -346,7 +352,7 @@ for (const token of [
   assert.throws(() => wireContext.PetterDaysNFCWire.decodeToken(token), /Invalid NFC payload/);
 }
 
-function renderNFCFallback(token, rewritten, language = "zh-CN") {
+function renderNFCFallback(path, language = "zh-CN") {
   function element() {
     const children = new Map();
     let textContent = "";
@@ -373,15 +379,18 @@ function renderNFCFallback(token, rewritten, language = "zh-CN") {
   runInNewContext(wireScript, {
     atob, TextDecoder, URL, document,
     navigator: { language, languages: [language] },
-    location: new URL(rewritten ? `https://p.petterdays.app/link/?route=e/${token}` : `https://p.petterdays.app/2/e/${token}`),
+    location: new URL(path, "https://p.petterdays.app"),
     history: { replaceState: (_state, _title, path) => { replacement = path; } },
   });
   const details = document.getElementById("nfc-details");
+  const prefill = document.getElementById("nfc-prefill");
   return {
-    labels: details.querySelector("dl").appended.filter((_node, index) => index % 2 === 0).map((node) => node.textContent),
-    values: details.querySelector("dl").appended.filter((_node, index) => index % 2 === 1).map((node) => node.textContent),
+    labels: prefill.appended.filter((_node, index) => index % 2 === 0).map((node) => node.textContent),
+    values: prefill.appended.filter((_node, index) => index % 2 === 1).map((node) => node.textContent),
     clipLabel: document.getElementById("nfc-clip").textContent,
-    summaryHidden: document.getElementById("nfc-summary").hidden,
+    record: document.getElementById("nfc-type").textContent,
+    prefillHidden: prefill.hidden,
+    noticeHidden: document.getElementById("nfc-unavailable").hidden,
     detailsHidden: details.hidden, detailsOpen: details.open, replacement,
   };
 }
@@ -399,15 +408,22 @@ renderingFixtures.push(
   ["UEQBAwEgZbsrH_gryrWurvwBEwEBAwUBAwYBAwgIf_________8Ymboy", ["中等", "未知", "未知", "未知", "未知", "未知", "9223372036854775807"]],
 );
 for (const [token, expectedValues] of renderingFixtures) {
-  for (const rewritten of [false, true]) {
-    const rendered = renderNFCFallback(token, rewritten);
+  for (const path of [`/2/e/${token}`, `/link/?route=e/${token}`]) {
+    const rendered = renderNFCFallback(path);
     assert.deepEqual(rendered.values, expectedValues, "NFC details must preserve user text and translate only built-in options");
-    assert.equal(rendered.summaryHidden, false);
+    assert.equal(rendered.prefillHidden, false);
     assert.equal(rendered.detailsHidden, false);
     assert.equal(rendered.detailsOpen, false, "Health details must remain collapsed until requested");
     assert.equal(rendered.replacement, "/link/", "Decoded payload must leave the address bar");
   }
 }
+
+const tagWithoutPrefill = renderNFCFallback("/2/e/UEQBAAUgZbsrH_gXAhnX");
+assert.ok(tagWithoutPrefill.record && !tagWithoutPrefill.detailsHidden && tagWithoutPrefill.prefillHidden && !tagWithoutPrefill.detailsOpen,
+  "A tag without prefill still needs a closed disclosure for its record type and mode");
+assert.ok(renderNFCFallback("/1/r/a").noticeHidden, "A legacy link must still offer the two actions without a decode error");
+const unreadableTag = renderNFCFallback(`/2/e/${corrupted}`);
+assert.ok(unreadableTag.detailsHidden && !unreadableTag.noticeHidden, "An unreadable encoded tag should only show a brief status");
 
 for (const [language, label, clipLabel] of [
   ["zh-CN", "尿团数", "体验轻 App"],
@@ -416,7 +432,7 @@ for (const [language, label, clipLabel] of [
   ["ja", "おしっこの塊の数", "App Clip を試す"],
   ["ko", "소변 덩어리 수", "앱 클립 체험하기"],
 ]) {
-  const rendered = renderNFCFallback("UEQBAwEgZbsrH_gryrWurvwBEwEBAwUBAwYBAwgIAAAAAAAAAAOWzW4n", false, language);
+  const rendered = renderNFCFallback("/2/e/UEQBAwEgZbsrH_gryrWurvwBEwEBAwUBAwYBAwgIAAAAAAAAAAOWzW4n", language);
   assert.equal(rendered.labels.at(-1), label);
   assert.equal(rendered.values.at(-1), "3");
   assert.equal(rendered.clipLabel, clipLabel);
